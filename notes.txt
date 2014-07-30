@@ -1,0 +1,21 @@
+testSymmetric.m:
+
+1. Set up sphere and grid of internal points for reaction potential
+sampling. Call this pqrReacGrid
+
+2. Also set up a (fine) grid of points on a line from the sphere
+center to near the surface.  
+
+3. For each source in pqrSourceChargeLine, compute the "perfect" self
+solvation energy (E_SourceChargeLine), and compute the corresponding
+effective Born radius (R_eff_SourceChargeLine)
+
+4. For each grid point in pqrReacGrid, also compute the effective Born
+radius R_eff_ReacGrid.
+
+5. For each source in pqrSourceChargeLine, compute the GB reaction
+potential for each pqrReacGrid point (this is why you need step 4
+above).
+
+
+

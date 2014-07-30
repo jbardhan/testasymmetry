@@ -1,0 +1,8 @@
+ATOM      1  CAF CAF V 501       0.000   0.000   0.000  1.00  1.00      A    C 
+ATOM      2  CAF CAF V 502       1.400   0.000   0.000  1.00  1.00      A    C 
+ATOM      3  CAF CAF V 503       2.273   1.095   0.000  1.00  1.00      A    C 
+ATOM      4  CAF CAF V 504       1.961   2.460   0.000  1.00  1.00      A    C 
+ATOM      5  CAF CAF V 505       0.700   3.067   0.000  1.00  1.00      A    C 
+ATOM      6  CAF CAF V 506      -0.561   2.460   0.000  1.00  1.00      A    C 
+ATOM      7  CAF CAF V 507      -0.873   1.095   0.000  1.00  1.00      A    C
+END
