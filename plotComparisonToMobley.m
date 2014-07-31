@@ -1,10 +1,10 @@
-printOn = 0;
+printOn = 1;
 
 % reproduce Figure 4 of Mobley, with our results added
 figure; set(gca,'fontsize',16);
-plot(Ndistrib(:,1),Ndistrib(:,2),'r^--','linewidth',2,'markersize', 10);
+plot(Ndistrib(:,1),Ndistrib(:,2),'r^-','linewidth',2,'markersize', 10);
 hold on;
-plot(Pdistrib(:,1),Pdistrib(:,2),'b^--','linewidth',2,'markersize', 10);
+plot(Pdistrib(:,1),Pdistrib(:,2),'b^-','linewidth',2,'markersize', 10);
 axis([2 9 -60 0]);
 plot(var1_numSides,NdistribBEM,'rs-.','linewidth',1.6,'markersize', ...
      8);
@@ -20,7 +20,7 @@ if printOn
 end
 
 figure; set(gca,'fontsize',16);
-plot(Adistrib(:,1),Adistrib(:,2),'g^--','linewidth',2,'markersize', ...
+plot(Adistrib(:,1),Adistrib(:,2),'g^-','linewidth',2,'markersize', ...
      10);
 hold on;
 plot(var1_numSides,AdistribBEM,'ks-.','linewidth',1.6,'markersize', ...
@@ -36,11 +36,11 @@ end
 
 % Figure 5
 figure; set(gca,'fontsize',16); 
-plot(Noppose(:,1),Noppose(:,2),'r^--','linewidth',2,'markersize', ...
+plot(Noppose(:,1),Noppose(:,2),'r^-','linewidth',2,'markersize', ...
      10);
 hold on;
 title('(a) Hydration free energies, opposing case');
-plot(Poppose(:,1),Poppose(:,2),'b^--','linewidth',2,'markersize', ...
+plot(Poppose(:,1),Poppose(:,2),'b^-','linewidth',2,'markersize', ...
      10);
 axis([2 9 -70 0]);
 plot(var1_numSides,NopposeBEM,'rs-.','linewidth',1.6,'markersize', ...
@@ -74,11 +74,11 @@ end
 
 
 figure; set(gca,'fontsize',16); 
-plot(Ndipole(:,1),Ndipole(:,2),'r^--','linewidth',2,'markersize', ...
+plot(Ndipole(:,1),Ndipole(:,2),'r^-','linewidth',2,'markersize', ...
      10);
 hold on;
 title('(c) Hydration free energies, fixed dipole case');
-plot(Pdipole(:,1),Pdipole(:,2),'b^--','linewidth',2,'markersize', ...
+plot(Pdipole(:,1),Pdipole(:,2),'b^-','linewidth',2,'markersize', ...
      10);
 axis([2 9 -70 0]);
 plot(var1_numSides,NdipoleBEM,'rs-.','linewidth',1.6,'markersize', ...
@@ -95,7 +95,7 @@ if printOn
 end
 
 figure; set(gca,'fontsize',16);
-plot(Adipole(:,1),Adipole(:,2),'g^--','linewidth',2,'markersize', ...
+plot(Adipole(:,1),Adipole(:,2),'g^-','linewidth',2,'markersize', ...
      10);
 hold on;
 title('(d) Asymmetry free energies, fixed dipole case');
