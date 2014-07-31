@@ -1,11 +1,11 @@
-printOn = 0;
+printOn = 1;
 
 % Figure 9
 figure; set(gca,'fontsize',16);
-plot(Prods(:,2),'b^--','linewidth',2,'markersize',10);
+plot(Prods(:,2),'b^-','linewidth',2,'markersize',10);
 hold on;
 title('(a) Hydration Free Energies');
-plot(Nrods(:,2),'r^--','linewidth',2,'markersize',10);
+plot(Nrods(:,2),'r^-','linewidth',2,'markersize',10);
 plot(ProdBEM,'bs-.','linewidth',1.6,'markersize',8);
 plot(NrodBEM,'rs-.','linewidth',1.6,'markersize',8);
 xlabel('Problem Index');
@@ -18,7 +18,7 @@ if printOn
 end
 
 figure; set(gca,'fontsize',16);
-plot(Arods(:,2),'g^--','linewidth',2,'markersize',10);
+plot(Arods(:,2),'g^-','linewidth',2,'markersize',10);
 hold on;
 title('(b) Asymmetry Free Energies');
 plot(ArodBEM,'ks-.','linewidth',1.6,'markersize',8);
