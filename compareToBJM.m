@@ -1,14 +1,15 @@
-printOn = 0;
+printOn = 1;
 
 addpath('../pointbem');
 loadConstants
-asymParams = struct('alpha', 0.6, 'beta', -20.0,'EfieldOffset',0,'deltaOffset',0);
+asymParams = struct('alpha', 0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
 
 curdir = pwd;
 %%%%%%%%%%%% Needs to be replaced with actual data
+clear origin
 cd ~/research/static/newsphere/offsetsFine_sph4
 cd ../sph4
 origin

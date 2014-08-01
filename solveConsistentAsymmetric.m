@@ -4,7 +4,7 @@ function [phiReac, sigma] = solveConsistentAsymmetric(surfdata, ...
 						  epsIn, epsOut, ...
 						  convFactor, pqr, asymParams)
 
-picardIterLimit = 50;
+picardIterLimit = 10;
 maxGMRESIter = 100;
 sigma = zeros(size(bem.A,1),1);
 rhs = bem.B * pqr.q;

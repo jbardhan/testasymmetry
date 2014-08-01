@@ -2,7 +2,7 @@ printOn = 1;
 
 addpath('../pointbem');
 loadConstants
-asymParams = struct('alpha', 0.6, 'beta', -20.0,'EfieldOffset',0,'deltaOffset',0);
+asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
 R_list = linspace(1,4,30);
