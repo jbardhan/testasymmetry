@@ -22,13 +22,13 @@ cd ../l5_q14
 ~/repos/fftsvd/meshmaker L5.pdb ../radii.siz L5_6.srf 1.4 2.0 6 1 1 0 .
 cd ../l5_q23
 ~/repos/fftsvd/meshmaker L5.pdb ../radii.siz L5_6.srf 1.4 2.0 6 1 1 0 .
-cd ../l6_12
+cd ../l6_q12
 ~/repos/fftsvd/meshmaker L6.pdb ../radii.siz L6_6.srf 1.4 2.0 6 1 1 0 .
-cd ../l6_13
+cd ../l6_q13
 ~/repos/fftsvd/meshmaker L6.pdb ../radii.siz L6_6.srf 1.4 2.0 6 1 1 0 .
-cd ../l6_14
+cd ../l6_q14
 ~/repos/fftsvd/meshmaker L6.pdb ../radii.siz L6_6.srf 1.4 2.0 6 1 1 0 .
-cd ../l6_15
+cd ../l6_q15
 ~/repos/fftsvd/meshmaker L6.pdb ../radii.siz L6_6.srf 1.4 2.0 6 1 1 0 .
 
 
