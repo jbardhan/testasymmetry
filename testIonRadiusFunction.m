@@ -2,6 +2,7 @@ printOn = 1;
 
 addpath('../pointbem');
 loadConstants
+% alpha = 0.3, beta = -60, EfieldOffset = 0 works well for the ions
 asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
@@ -49,7 +50,7 @@ xlabel('R_{ion} (Angstrom)');
 ylabel('Charging free energy (kcal/mol)');
 
 % from Bardhan12_Jungwirth_Makowski
-sodiumRminOver2 = 1.36375;
+sodiumRminOver2 = 1.41075; % new Roux toppar 1.36375;  % standard charmm
 sodiumStatic = 11.16;
 sodiumPlus = -93.4 - (1.0) * sodiumStatic; 
 sodiumMinus = -175.7 - (-1.0) * sodiumStatic; 
@@ -59,12 +60,71 @@ chlorideStatic = 9.15;
 chloridePlus = -57.0 - (1.0) * chlorideStatic;
 chlorideMinus = -95.3 - (-1.0) * chlorideStatic;
 
+potassiumRminOver2 = 1.76375; % new Roux toppar
+potassiumStatic = 10.028;
+potassiumPlus  = -73.4 - (1.0) * potassiumStatic;
+potassiumMinus = -128.3895 - (-1.0) * potassiumStatic;
+
+rubidiumRminOver2 = 1.90;
+rubidiumStatic = 9.3987;
+rubidiumPlus = -66.78 - (1.0) * rubidiumStatic;
+rubidiumMinus = -114.1 - (-1.0) * rubidiumStatic;
+
+magnesiumRminOver2 = 1.185; % new Roux toppar
+magnesiumStatic = 13.4133;
+magnesiumPlus = -108.6 - (1.0) * magnesiumStatic;
+magnesiumMinus = -218.5 - (-1.0) * magnesiumStatic;;
+
+cesiumRminOver2 = 2.1;
+cesiumStatic  = 9.373;
+cesiumPlus = -60.42 - (1.0) * cesiumStatic;
+cesiumMinus = -101.9 - (-1.0) * cesiumStatic;
+
+calciumRminOver2  = 1.367;
+calciumStatic = 10.8085;
+calciumPlus = -88.91 - (1.0) * calciumStatic;
+calciumMinus = -163.4 - (-1.0) * calciumStatic;
+
+bariumRminOver2 = 1.89;
+bariumStatic = 9.7107;
+bariumPlus = -67.03 - (1.0) * bariumStatic;
+bariumMinus = -115.1 - (-1.0) * bariumStatic;
+
+zincRminOver2 = 1.09;
+zincStatic = 12.3103;
+zincPlus = -99.05 - (1.0) * zincStatic;
+zincMinus = -191.2 - (-1.0) * zincStatic;
+
+cadmiumRminOver2 = 1.357;
+cadmiumStatic = 10.7392;
+cadmiumPlus = -89.08 - (1.0) * cadmiumStatic;
+cadmiumMinus = -164.3 - (-1.0) * cadmiumStatic;
+
 deltaR = 0.15;
 plot([sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',8,'linewidth',2);
+
+plot([chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'bs','markersize',8,'linewidth',2);
+
+plot([potassiumRminOver2 potassiumRminOver2], [potassiumMinus ...
+		    potassiumPlus], 'ks','markersize',8,'linewidth',2);
+
+plot([rubidiumRminOver2 rubidiumRminOver2], [rubidiumMinus rubidiumPlus], 'gs','markersize',8,'linewidth',2);
+
+plot([magnesiumRminOver2 magnesiumRminOver2], [magnesiumMinus magnesiumPlus], 'ms','markersize',8,'linewidth',2);
+
+plot([cesiumRminOver2 cesiumRminOver2], [cesiumMinus cesiumPlus], 'rs','markersize',8,'linewidth',2);
+
+plot([calciumRminOver2 calciumRminOver2], [calciumMinus calciumPlus], 'ko','markersize',8,'linewidth',2);
+
+plot([bariumRminOver2 bariumRminOver2], [bariumMinus bariumPlus], 'ro','markersize',8,'linewidth',2);
+
+plot([zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'bo','markersize',8,'linewidth',2);
+
+plot([cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'mo','markersize',8,'linewidth',2);
+
+
 %plot([sodiumRminOver2-deltaR sodiumRminOver2+deltaR],[sodiumMinus sodiumMinus],'k-.');
 %plot([sodiumRminOver2-deltaR sodiumRminOver2+deltaR],[sodiumPlus sodiumPlus],'k-.');
-
-plot([chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'ks','markersize',8,'linewidth',2);
 %plot([chlorideRminOver2-deltaR chlorideRminOver2+deltaR],[chlorideMinus chlorideMinus],'k-.');
 %plot([chlorideRminOver2-deltaR chlorideRminOver2+deltaR],[chloridePlus chloridePlus],'k-.');
 

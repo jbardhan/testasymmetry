@@ -2,6 +2,7 @@ printOn = 1;
 
 addpath('../pointbem');
 loadConstants
+% alpha = 0.3, beta = -50, Efield = -0.5 works a bit better. 
 asymParams = struct('alpha', 0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 epsIn  =  1;
 epsOut = 80;

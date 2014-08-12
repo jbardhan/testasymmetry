@@ -1,0 +1,85 @@
+Info) VMD for MACOSXX86, version 1.8.6 (April 6, 2007)
+Info) http://www.ks.uiuc.edu/Research/vmd/                         
+Info) Email questions and bug reports to vmd@ks.uiuc.edu           
+Info) Please include this reference in published work using VMD:   
+Info)    Humphrey, W., Dalke, A. and Schulten, K., `VMD - Visual   
+Info)    Molecular Dynamics', J. Molec. Graphics 1996, 14.1, 33-38.
+Info) -------------------------------------------------------------
+Info) Multithreading available, 2 CPUs detected.
+{/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts/tcl} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts} /Users/jbardhan/lib /System/Library/Frameworks/Tcl.framework/Versions/8.4/Resources/Scripts ~/Library/Tcl /Library/Tcl /System/Library/Tcl ~/Library/Frameworks /Library/Frameworks /System/Library/Frameworks {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts/vmd} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/plugins/MACOSXX86/tcl} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/plugins/noarch/tcl} /System/Library/Tcl/tcllib1.8 /System/Library/Tcl/tklib0.4 /Users/jbardhan/software/vmd_plugins/la1.0
+{/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts/tcl} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts} /Users/jbardhan/lib /System/Library/Frameworks/Tcl.framework/Versions/8.4/Resources/Scripts ~/Library/Tcl /Library/Tcl /System/Library/Tcl ~/Library/Frameworks /Library/Frameworks /System/Library/Frameworks {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/scripts/vmd} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/plugins/MACOSXX86/tcl} {/Applications/Jay's Applications/VMD 1.8.6.app/Contents/vmd/plugins/noarch/tcl} /System/Library/Tcl/tcllib1.8 /System/Library/Tcl/tklib0.4 /Users/jbardhan/software/vmd_plugins/la1.0 /Users/jbardhan/software/vmd_plugins/orient
+Info) Using plugin pdb for structure file glu21.pdb
+Info) Using plugin pdb for coordinates from file glu21.pdb
+Info) Determining bond structure from distance search ...
+Info) Analyzing structure ...
+Info)    Atoms: 15
+Info)    Bonds: 14
+Info)    Residues: 1
+Info)    Waters: 0
+Info)    Segments: 1
+Info)    Fragments: 1   Protein: 1   Nucleic: 0
+Info) Finished with coordinate file glu21.pdb.
+0
+1.4.5
+reading topology file /Users/jbardhan/Parameters/top_all27_prot_lipid_more.rtf
+
+> CHARMM22 All-Hydrogen Topology File for Proteins and Lipids <<
+>>>>>> Includes phi, psi cross term map (CMAP) correction <<<<<<
+>>>>>>>>>>>>>>>>>>>>>>   July 2004    <<<<<<<<<<<<<<<<<<<<<<<<<<
+ All comments to ADM jr. via the CHARMM web site: www.charmm.org
+               parameter set discussion forum
+
+Created by CHARMM version 31 1
+cross-term entries present in topology definitions
+aliasing residue GLU atom H to HN
+aliasing residue GLU atom HB2 to HB1
+aliasing residue GLU atom HB3 to HB2
+aliasing residue GLU atom HG2 to HG1
+aliasing residue GLU atom HG3 to HG2
+building segment A
+reading residues from pdb file glu21.pdb
+extracted 1 residues from pdb file
+setting patch for first residue to ACE
+setting patch for last residue to CT3
+Info: generating structure...
+Info: skipping bond C-N at beginning of segment.
+Info: skipping improper C-CA-N-O at beginning of segment.
+Info: skipping improper N-C-CA-HN at beginning of segment.
+Info: skipping cross-term C-N-CA-C-N-CA-C-N at beginning of segment.
+Info: skipping conformation CA-C-N-CA at beginning of segment.
+Info: skipping conformation N-CA-C-O at beginning of segment.
+Info: skipping conformation N-CA-C-N at beginning of segment.
+Info: skipping conformation C-N-CA-C at beginning of segment.
+Info: skipping conformation C-CA-N-HN at beginning of segment.
+Info: segment complete.
+reading coordinates from pdb file glu21.pdb for segment A
+Info: guessing coordinates for 14 atoms (5 non-hydrogen)
+Warning: poorly guessed coordinates for 12 atoms (5 non-hydrogen):
+Warning: poorly guessed coordinate for atom NT	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HNT	 GLU:21	  A
+Warning: poorly guessed coordinate for atom CAT	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HT1	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HT2	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HT3	 GLU:21	  A
+Warning: poorly guessed coordinate for atom CAY	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HY1	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HY2	 GLU:21	  A
+Warning: poorly guessed coordinate for atom HY3	 GLU:21	  A
+Warning: poorly guessed coordinate for atom CY	 GLU:21	  A
+Warning: poorly guessed coordinate for atom OY	 GLU:21	  A
+Info: writing psf file glu_capped.psf
+total of 27 atoms
+total of 26 bonds
+total of 45 angles
+total of 56 dihedrals
+total of 5 impropers
+total of 0 cross-terms
+Info: psf file complete.
+Info: writing pdb file glu_capped.pdb
+Info: Atoms with guessed coordinates will have occupancy of 0.0.
+Info: pdb file complete.
+A:21 
+A:21 
+Info) VMD for MACOSXX86, version 1.8.6 (April 6, 2007)
+Info) Exiting normally.
+vmd > 

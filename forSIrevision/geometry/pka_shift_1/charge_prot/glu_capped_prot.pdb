@@ -1,0 +1,30 @@
+REMARK original generated coordinate pdb file
+ATOM      1  C   GLU R  21       0.546   5.129  12.925  1.00  0.00      A    C
+ATOM      2  O   GLU R  21      -0.476   4.313  13.047  1.00  0.00      A    O
+ATOM      3  NT  GLU R  21       0.934   5.559  12.110  0.00  0.00      A    N
+ATOM      4  HNT GLU R  21       1.665   6.175  11.816  0.00  0.00      A    H
+ATOM      5  CAT GLU R  21       0.407   5.274  11.309  0.00  0.00      A    C
+ATOM      6  HT1 GLU R  21      -0.544   5.560  11.426  0.00  0.00      A    H
+ATOM      7  HT2 GLU R  21       0.795   5.704  10.494  0.00  0.00      A    H
+ATOM      8  HT3 GLU R  21       0.456   4.279  11.225  0.00  0.00      A    H
+ATOM      9  CAY GLU R  21      -0.763   6.534  15.787  0.00  0.00      A    C
+ATOM     10  HY1 GLU R  21      -0.472   5.911  16.513  0.00  0.00      A    H
+ATOM     11  HY2 GLU R  21      -1.703   6.325  15.515  0.00  0.00      A    H
+ATOM     12  HY3 GLU R  21      -0.703   7.480  16.105  0.00  0.00      A    H
+ATOM     13  CY  GLU R  21      -0.162   6.417  14.997  0.00  0.00      A    C
+ATOM     14  OY  GLU R  21      -0.453   7.041  14.271  0.00  0.00      A    O
+ATOM     15  N   GLU R  21       0.521   5.718  15.208  1.00  0.00      A    N
+ATOM     16  HN  GLU R  21       0.309   4.934  15.792  1.00  0.00      A    H
+ATOM     17  CA  GLU R  21       1.340   5.559  14.132  1.00  0.00      A    C
+ATOM     18  HA  GLU R  21       1.764   6.537  13.905  1.00  0.00      A    H
+ATOM     19  CB  GLU R  21       2.467   4.532  14.438  1.00  0.00      A    C
+ATOM     20  HB1 GLU R  21       2.011   3.570  14.668  1.00  0.00      A    H
+ATOM     21  HB2 GLU R  21       3.082   4.363  13.525  0.00  0.00      A    H
+ATOM     22  CG  GLU R  21       3.409   4.963  15.665  1.00  0.00      A    C
+ATOM     23  HG1 GLU R  21       2.798   5.122  16.553  1.00  0.00      A    H
+ATOM     24  HG2 GLU R  21       4.134   4.161  15.910  0.00  0.00      A    H
+ATOM     25  CD  GLU R  21       4.155   6.211  15.387  1.00  0.00      A    C
+ATOM     26  OE1 GLU R  21       3.932   7.155  16.089  1.00  0.00      A    O
+ATOM     27  OE2 GLU R  21       5.069   6.195  14.483  1.00  0.00      A    O
+ATOM     28  HE2 GLU R  21       5.537   7.079  14.477  0.00  0.00      A    H
+END

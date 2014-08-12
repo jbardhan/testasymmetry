@@ -1,0 +1,27 @@
+### Load pdb
+
+mol new glu21.pdb
+
+### generate psf
+package require psfgen
+topology /Users/jbardhan/Parameters/top_all27_prot_lipid_more.rtf
+
+alias atom GLU H HN
+alias atom GLU HB2 HB1
+alias atom GLU HB3 HB2
+alias atom GLU HG2 HG1
+alias atom GLU HG3 HG2
+
+segment A {
+pdb "glu21.pdb"
+first ace
+last ct3
+}
+coordpdb glu21.pdb A
+
+guesscoord
+
+writepsf glu_capped.psf
+writepdb glu_capped.pdb
+
+quit
