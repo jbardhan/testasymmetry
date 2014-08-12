@@ -30,6 +30,7 @@ Ndistrib = [3 -19.15
 	    8 -31.55 ];
 
 Adistrib = Pdistrib - Ndistrib;
+Adistrib(:,1) = Pdistrib(:,1);
 
 for i=1:length(var1_numSides)
   for j=1:length(var2_posOrNeg)
@@ -74,6 +75,7 @@ Noppose = [3 -19.28
 	   8 -56.76];
 
 Aoppose = Poppose - Noppose;
+Aoppose(:,1) = Poppose(:,1);
 
 testQ = var3_typeOfChargeDist{3}; % oppose
 
@@ -121,7 +123,7 @@ Ndipole = [3 -19.14
 	   8 -13.94];
 
 Adipole = Pdipole - Ndipole;
-
+Adipole(:,1) = Pdipole(:,1);
 testQ = var3_typeOfChargeDist{1};
 
 for i=1:length(var1_numSides)
