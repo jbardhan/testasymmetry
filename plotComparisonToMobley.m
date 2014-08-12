@@ -1,4 +1,4 @@
-printOn = 1;
+printOn = 0;
 
 % reproduce Figure 4 of Mobley, with our results added
 figure; set(gca,'fontsize',16);

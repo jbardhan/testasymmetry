@@ -1,4 +1,4 @@
-printOn = 1;
+printOn = 0;
 
 % Figure 9
 figure; set(gca,'fontsize',16);
