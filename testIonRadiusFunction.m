@@ -50,6 +50,7 @@ xlabel('R_{ion} (Angstrom)');
 ylabel('Charging free energy (kcal/mol)');
 
 % from Bardhan12_Jungwirth_Makowski
+rscale = 0.92;
 sodiumRminOver2 = 1.41075; % new Roux toppar 1.36375;  % standard charmm
 sodiumStatic = 11.16;
 sodiumPlus = -93.4 - (1.0) * sodiumStatic; 
@@ -101,26 +102,26 @@ cadmiumPlus = -89.08 - (1.0) * cadmiumStatic;
 cadmiumMinus = -164.3 - (-1.0) * cadmiumStatic;
 
 deltaR = 0.15;
-plot([sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',8,'linewidth',2);
+plot(rscale*[sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',8,'linewidth',2);
 
-plot([chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'bs','markersize',8,'linewidth',2);
+plot(rscale*[chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'bs','markersize',8,'linewidth',2);
 
-plot([potassiumRminOver2 potassiumRminOver2], [potassiumMinus ...
+plot(rscale*[potassiumRminOver2 potassiumRminOver2], [potassiumMinus ...
 		    potassiumPlus], 'ks','markersize',8,'linewidth',2);
 
-plot([rubidiumRminOver2 rubidiumRminOver2], [rubidiumMinus rubidiumPlus], 'gs','markersize',8,'linewidth',2);
+plot(rscale*[rubidiumRminOver2 rubidiumRminOver2], [rubidiumMinus rubidiumPlus], 'gs','markersize',8,'linewidth',2);
 
-plot([magnesiumRminOver2 magnesiumRminOver2], [magnesiumMinus magnesiumPlus], 'ms','markersize',8,'linewidth',2);
+plot(rscale*[magnesiumRminOver2 magnesiumRminOver2], [magnesiumMinus magnesiumPlus], 'ms','markersize',8,'linewidth',2);
 
-plot([cesiumRminOver2 cesiumRminOver2], [cesiumMinus cesiumPlus], 'rs','markersize',8,'linewidth',2);
+plot(rscale*[cesiumRminOver2 cesiumRminOver2], [cesiumMinus cesiumPlus], 'rs','markersize',8,'linewidth',2);
 
-plot([calciumRminOver2 calciumRminOver2], [calciumMinus calciumPlus], 'ko','markersize',8,'linewidth',2);
+plot(rscale*[calciumRminOver2 calciumRminOver2], [calciumMinus calciumPlus], 'ko','markersize',8,'linewidth',2);
 
-plot([bariumRminOver2 bariumRminOver2], [bariumMinus bariumPlus], 'ro','markersize',8,'linewidth',2);
+plot(rscale*[bariumRminOver2 bariumRminOver2], [bariumMinus bariumPlus], 'ro','markersize',8,'linewidth',2);
 
-plot([zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'bo','markersize',8,'linewidth',2);
+plot(rscale*[zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'bo','markersize',8,'linewidth',2);
 
-plot([cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'mo','markersize',8,'linewidth',2);
+plot(rscale*[cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'mo','markersize',8,'linewidth',2);
 
 
 %plot([sodiumRminOver2-deltaR sodiumRminOver2+deltaR],[sodiumMinus sodiumMinus],'k-.');
