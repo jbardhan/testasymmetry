@@ -3,7 +3,7 @@ printOn = 1;
 addpath('../pointbem');
 loadConstants
 % alpha = 0.3, beta = -60, EfieldOffset = 0 works well for the ions
-asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
+asymParams = struct('alpha',0.3, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
 R_list = linspace(1,4,30);
@@ -61,7 +61,7 @@ chlorideStatic = 9.15;
 chloridePlus = -57.0 - (1.0) * chlorideStatic;
 chlorideMinus = -95.3 - (-1.0) * chlorideStatic;
 
-potassiumRminOver2 = 1.76375; % new Roux toppar
+potassiumRminOver2 =1.76375; % new Roux toppar
 potassiumStatic = 10.028;
 potassiumPlus  = -73.4 - (1.0) * potassiumStatic;
 potassiumMinus = -128.3895 - (-1.0) * potassiumStatic;
