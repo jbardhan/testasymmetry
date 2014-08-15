@@ -1,4 +1,4 @@
-printOn = 0;
+printOn = 1;
 
 % the "natural order" was alphabetical by amino acid.
 % for plot clarity we may want to change that with an index set,
@@ -8,17 +8,17 @@ indexSet = 1:7;
 
 %  MD results from Nina et al. '97; the protonated histidine(5) results below are from 
 % http://thallium.bsd.uchicago.edu/RouxLab/downloads/charmm/pbeq/radii_prot_na.str
-rouxProt = [1 3 5 6 7];
-rouxProtEnergies = [-66.0 -15.5 -68.15 -72.9 -19.0];
-rouxDeprot = [2 4 5];
-rouxDeprotEnergies = [-91.9 -87.8 -25.7];
+rouxProt = [1 3 5 6 7]';
+rouxProtEnergies = [-66.0 -15.5 -68.15 -72.9 -19.0]';
+rouxDeprot = [2 4 5]';
+rouxDeprotEnergies = [-91.9 -87.8 -25.7]';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % results below are from Roux Born radii * 1.02 using molecular surface
 % the above webpage says that the OD* and OE* radii for ASP and GLU
 % should be 1.40 not 1.42, as reported in the Nina97 pub
-rouxProtPoisson  = [-67.0 -15.4 -68.10 -72.2 -19.1]; 
-rouxDeprotPoisson = [-91.5 -87.5 -24.4];
+rouxProtPoisson  = [-67.0 -15.4 -68.10 -72.2 -19.1]'; 
+rouxDeprotPoisson = [-91.5 -87.5 -24.4]';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 parseProt = [ -91.8124
@@ -39,15 +39,15 @@ parseDeprot = [  -34.6894
 
 ksi = 2.837; % from B Brooks, see Bardhan12_Jungwirth_Makowski
 correction = 0.5 * ksi * conv_factor  / 40.0; %box length
-bkProt = [1 2 3 4 5 6 7];
+bkProt = [1 2 3 4 5 6 7]';
 bkProtEnergies = [(-54.44-correction) % JR1 (prot=charged)
 		  -12.57 % JD1 (prot = neutral)
 		  -12.82 % JC1 (prot = neutral)
-		  0 % JE1 (prot = neutral) no answer yet
+		  -9.42 % JE1 (prot = neutral) NEEDS FINAL ANSWER
 		  (-49.95-correction)  %JH1 (prot=charged)
 		  (-56.94-correction) % JK1 (prot=charged)
 		  -18.29]; % JY1,
-bkDeprot = [1 2 3 4 5 6 7];
+bkDeprot = [1 2 3 4 5 6 7]';
 bkDeprotEnergies = [-29.84 % JR2, deprot = neutral
 		    (-82.65-correction) % JD2, deprot = charged
 		    (-84.46-correction) % JC2, deprot = charged
@@ -57,23 +57,28 @@ bkDeprotEnergies = [-29.84 % JR2, deprot = neutral
 		    (-104.68-correction)]; % JY2, deprot = charged,
 
 figure; set(gca,'fontsize',16);
-plot(bkProt,bkProtEnergies,'ks','linewidth',4,'markersize',12);
-hold on;
-plot(bkDeprot,bkDeprotEnergies,'ks','linewidth',4,'markersize',12);
+plot([bkProt; bkDeprot] ,[bkProtEnergies; bkDeprotEnergies],'ks','linewidth',4,'markersize',12);
+hold on
+plot([bkProt; bkDeprot], [asym(:,1); asym(:,2)],'bo','linewidth',4,'markersize',10);
 
-plot(bkProt, asym(:,1),'bo','linewidth',4,'markersize',10);
-plot(bkDeprot, asym(:,2),'bo','linewidth',4,'markersize',10);
-% 
-plot(bkProt,sym(:,1),'mx','linewidth',2,'markersize',12);
-plot(bkDeprot, sym(:,2),'mx','linewidth',2,'markersize',12);
+plot([bkProt; bkDeprot],[sym(:,1); sym(:,2)],'mx','linewidth',2,'markersize',12);
 
-plot(bkProt,parseProt,'g*','linewidth',2,'markersize',12);
-plot(bkDeprot, parseDeprot,'g*','linewidth',2,'markersize',12);
+plot([bkProt; bkDeprot],[parseProt; parseDeprot],'g*','linewidth',2,'markersize',12);
 
-plot(rouxProt,rouxProtEnergies,'rs','linewidth',2,'markersize',8);
-plot(rouxDeprot,rouxDeprotEnergies,'rs','linewidth',2,'markersize',8);
+plot([rouxProt; rouxDeprot],[rouxProtEnergies; rouxDeprotEnergies],'rs','linewidth',2,'markersize',8);
 
 ylabel('Charging free enegy (kcal/mol)')
+legend('MD, this work','NLBC', 'Poisson (Nina radii)',...
+       'Poisson (PARSE radii)', 'MD, Nina et al.','location','southwest');
+
+plot(bkProt,bkProtEnergies,'ks','linewidth',4,'markersize',12);
+plot(bkDeprot,bkDeprotEnergies,'ks','linewidth',4,'markersize',12);
+plot(bkProt, asym(:,1),'bo','linewidth',4,'markersize',10);
+plot(bkDeprot, asym(:,2),'bo','linewidth',4,'markersize',10);
+
+axis([0 8 -160 0])
+set(gca,'Xtick',1:7)
+set(gca,'XTickLabel',{'ARG','ASP','CYS','GLU','HIS','LYS','TYR'})
 
 if printOn 
   print -depsc2 residues.eps
