@@ -5,12 +5,12 @@ loadConstants
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
-asymParams = struct('alpha',0.0, 'beta', 0.0,'EfieldOffset',- ...
-		    0.0);
+asymParams = struct('alpha',0.5, 'beta', -60.0,...
+		    'EfieldOffset',-0.5);
 
-res = 'asp'; 
-crgname = 'jd2';
-surftype = '_roux_6';
+res = 'arg'; 
+crgname = 'jr1';
+surftype = '_scaledcharmm_2';
 srfFile = sprintf('residues/%s/%s%s.srf',res,res,surftype)
 pdbFile = sprintf('residues/%s/%s.pdb',res,res);
 crgFile = sprintf('residues/%s/%s.crg',res,crgname);
