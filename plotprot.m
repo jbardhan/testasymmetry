@@ -43,8 +43,8 @@ bkProt = [1 2 3 4 5 6 7]';
 bkProtEnergies = [(-54.44-correction) % JR1 (prot=charged)
 		  -12.57 % JD1 (prot = neutral)
 		  -12.82 % JC1 (prot = neutral)
-		  -9.42 % JE1 (prot = neutral) NEEDS FINAL ANSWER
-		  (-49.95-correction)  %JH1 (prot=charged)
+		  -12.48 % JE1 (prot = neutral) NEEDS FINAL ANSWER
+		  (-49.96-correction)  %JH1 (prot=charged)
 		  (-56.94-correction) % JK1 (prot=charged)
 		  -18.29]; % JY1,
 bkDeprot = [1 2 3 4 5 6 7]';
