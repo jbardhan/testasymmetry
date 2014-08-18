@@ -14,6 +14,7 @@ var2_posOrNeg = {'N','P'};
 var3_typeOfChargeDist = {'dipole','distrib','oppose'};
 
 
+
 testQ = var3_typeOfChargeDist{2}; % distrib
 
 % from Mobley et al supporting information
@@ -67,12 +68,14 @@ AdistribBEM = PdistribBEM - NdistribBEM;
 Poppose = [3 -14.03
 	   4 -8.19
 	   5 -35.36
+	   6 -28.79
 	   7 -53.07
 	   8 -45.76];
 
 Noppose = [3 -19.28
 	   4 -14.35
 	   5 -42.0
+	   6 -39.42
 	   7 -59.10
 	   8 -56.76];
 
@@ -115,12 +118,14 @@ AopposeBEM = PopposeBEM - NopposeBEM;
 Pdipole = [3 -14.13
 	   4 -11.31
 	   5 -9.91
+	   6 -8.46
 	   7 -7.39
 	   8 -6.19];
 
 Ndipole = [3 -19.14
 	   4 -18.20
 	   5 -17.57
+	   6 -16.26
 	   7 -15.48
 	   8 -13.94];
 

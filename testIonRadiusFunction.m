@@ -6,7 +6,7 @@ loadConstants
 asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
-R_list = linspace(1,4,30);
+R_list = linspace(1,2.5,30);
 q_list = [-1 1]; %linspace(-1,1,20);
 
 epsIn  =  1;
@@ -102,30 +102,30 @@ cadmiumPlus = -89.08 - (1.0) * cadmiumStatic;
 cadmiumMinus = -164.3 - (-1.0) * cadmiumStatic;
 
 deltaR = 0.15;
-plot(rscale*[sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',8,'linewidth',2);
-
-plot(rscale*[chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'bs','markersize',8,'linewidth',2);
+plot(rscale*[sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',10,'linewidth',2);
 
 plot(rscale*[potassiumRminOver2 potassiumRminOver2], [potassiumMinus ...
-		    potassiumPlus], 'ks','markersize',8,'linewidth',2);
+		    potassiumPlus], 'bs','markersize',10,'linewidth',2);
 
-plot(rscale*[rubidiumRminOver2 rubidiumRminOver2], [rubidiumMinus rubidiumPlus], 'gs','markersize',8,'linewidth',2);
+plot(rscale*[rubidiumRminOver2 rubidiumRminOver2], [rubidiumMinus rubidiumPlus], 'rs','markersize',10,'linewidth',2);
 
-plot(rscale*[magnesiumRminOver2 magnesiumRminOver2], [magnesiumMinus magnesiumPlus], 'ms','markersize',8,'linewidth',2);
+plot(rscale*[cesiumRminOver2 cesiumRminOver2], [cesiumMinus cesiumPlus], 'ms','markersize',10,'linewidth',2);
 
-plot(rscale*[cesiumRminOver2 cesiumRminOver2], [cesiumMinus cesiumPlus], 'rs','markersize',8,'linewidth',2);
+plot(rscale*[chlorideRminOver2 chlorideRminOver2], [chlorideMinus chloridePlus], 'k*','markersize',10,'linewidth',2);
 
-plot(rscale*[calciumRminOver2 calciumRminOver2], [calciumMinus calciumPlus], 'ko','markersize',8,'linewidth',2);
+plot(rscale*[magnesiumRminOver2 magnesiumRminOver2], [magnesiumMinus magnesiumPlus], 'bo','markersize',10,'linewidth',2);
 
-plot(rscale*[bariumRminOver2 bariumRminOver2], [bariumMinus bariumPlus], 'ro','markersize',8,'linewidth',2);
+plot(rscale*[calciumRminOver2 calciumRminOver2], [calciumMinus calciumPlus], 'ro','markersize',10,'linewidth',2);
 
-plot(rscale*[zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'bo','markersize',8,'linewidth',2);
+plot(rscale*[bariumRminOver2 bariumRminOver2], [bariumMinus bariumPlus], 'ko','markersize',10,'linewidth',2);
 
-plot(rscale*[cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'mo','markersize',8,'linewidth',2);
+plot(rscale*[zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'md','markersize',10,'linewidth',2);
 
-legend('NLBC, q = -1', 'NLBC, q = +1', 'Poisson', 'Na \pm 1', 'Cl \pm 1',...
-       'K \pm 1', 'Rb \pm 1', 'Mg \pm 1', ...
-       'Cs \pm 1', 'Ca \pm 1', 'Ba \pm 1', 'Zn \pm 1', 'Cd \pm 1');
+plot(rscale*[cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'kd','markersize',10,'linewidth',2);
+
+legend('NLBC, q = -1', 'NLBC, q = +1', 'Poisson', 'Na \pm 1', 'K \pm 1',...
+       'Rb \pm 1', 'Cs \pm 1', 'Cl \pm 1', ...
+       'Mg \pm 1', 'Ca \pm 1', 'Ba \pm 1', 'Zn \pm 1', 'Cd \pm 1', 'Location','EastOutside');
 
 %plot([sodiumRminOver2-deltaR sodiumRminOver2+deltaR],[sodiumMinus sodiumMinus],'k-.');
 %plot([sodiumRminOver2-deltaR sodiumRminOver2+deltaR],[sodiumPlus sodiumPlus],'k-.');
