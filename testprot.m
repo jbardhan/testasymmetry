@@ -14,7 +14,7 @@ surftype = {'_roux_6','_scaledcharmm_6'};  % s/roux/parse/ for that set
 % 2nd is for NLBC: use uniform 0.92 scalefact like Mobley examples
 
 
-for k=1:1%length(modeltype)
+for k=1:length(modeltype)
   if k == 1
     asymParams  = struct('alpha', 0.0, 'beta', 0.0, 'EfieldOffset', ...
 			0.0);
@@ -34,7 +34,7 @@ for k=1:1%length(modeltype)
       surfsurfop = makeSurfaceToSurfaceOperators(srfData);
       chargesurfop = makeSurfaceToChargeOperators(srfData, pqrData);
       
-      bem = makeBemMatrices(srfData, pqrData, surfsurfop, chargesurfop, ...
+      bem = makeBemEcfQualMatrices(srfData, pqrData, surfsurfop, chargesurfop, ...
 			    epsIn, epsOut);
       
       [phiReac, sigma] = solveConsistentAsymmetric(srfData, surfsurfop, chargesurfop, ...
