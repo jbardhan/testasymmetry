@@ -1,8 +1,18 @@
+DONE 0. for makeBemYoonDiel, verify convergence to Born if alpha = 0
+
+**** This is testYoonDielConvergenceBorn.
+
 1. for makeBemYoonDiel, verify convergence to Kirkwood if alpha = 0
+
+This is testYoonDielConvergenceKirkwood.
 
 2. verify both EcfQual and YoonDiel converge to the same answer if alpha = 0
 
+**** Both testYoonDielConvergenceBorn and testYoonDielConvergenceKirkwood show this in their plots.
+
 3. verify both EcfQual and YoonDiel converge to the same answer if alpha != 0
+
+**** 
 
 4. implement panelBem for asymmetric EcfQual and YoonDiel
 
