@@ -46,15 +46,11 @@ for i=1:length(var1_numSides)
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
     srfData = loadSrfIntoSurfacePoints(srfFile);
 
-    surfsurfop = makeSurfaceToSurfaceOperators(srfData);
-    chargesurfop = makeSurfaceToChargeOperators(srfData, pqrData);
-
-    bem = makeBemMatrices(srfData, pqrData, surfsurfop, chargesurfop, ...
-			  epsIn, epsOut);
+    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
     
-    [phiReac, sigma] = solveConsistentAsymmetric(srfData, surfsurfop, chargesurfop, ...
-				       bem, epsIn, epsOut, conv_factor, ...
-				       pqrData, asymParams);
+    [phiReac, sigma] = solveConsistentAsymmetric(srfData, bem, epsIn, ...
+						 epsOut, conv_factor, ...
+						 pqrData, asymParams);
     
     distribBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 
@@ -96,15 +92,11 @@ for i=1:length(var1_numSides)
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
     srfData = loadSrfIntoSurfacePoints(srfFile);
 
-    surfsurfop = makeSurfaceToSurfaceOperators(srfData);
-    chargesurfop = makeSurfaceToChargeOperators(srfData, pqrData);
-
-    bem = makeBemMatrices(srfData, pqrData, surfsurfop, chargesurfop, ...
-			  epsIn, epsOut);
+    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
     
-    [phiReac, sigma] = solveConsistentAsymmetric(srfData, surfsurfop, chargesurfop, ...
-				       bem, epsIn, epsOut, conv_factor, ...
-				       pqrData, asymParams);
+    [phiReac, sigma] = solveConsistentAsymmetric(srfData, bem, epsIn, ...
+						 epsOut, conv_factor, ...
+						 pqrData, asymParams);
     
     opposeBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 
@@ -144,17 +136,11 @@ for i=1:length(var1_numSides)
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
     srfData = loadSrfIntoSurfacePoints(srfFile);
 
-    surfsurfop = makeSurfaceToSurfaceOperators(srfData);
-    chargesurfop = makeSurfaceToChargeOperators(srfData, pqrData);
-
-    bem = makeBemMatrices(srfData, pqrData, surfsurfop, chargesurfop, ...
-			  epsIn, epsOut);
+    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
     
-    [phiReac, sigma] = solveConsistentAsymmetric(srfData, surfsurfop, ...
-						 chargesurfop, bem, ...
-						 epsIn, epsOut, ...
-						 conv_factor, pqrData, ...
-						 asymParams);
+    [phiReac, sigma] = solveConsistentAsymmetric(srfData, bem, epsIn, ...
+						 epsOut, conv_factor, ...
+						 pqrData, asymParams);
     
     dipoleBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 

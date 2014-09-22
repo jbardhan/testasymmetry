@@ -68,9 +68,7 @@ for i=1:length(lineCharges)
   for j=1:length(q_list)
     q = q_list(j);
     pqr = struct('xyz',[0 0 lineCharges(i)],'q',q,'R',0);
-    chargesurfop = makeSurfaceToChargeOperators(surfdata, pqr);
-    bem = makeBemMatrices(surfdata, pqr, surfsurfop, ...
-			  chargesurfop,  epsIn, epsOut);
+    bem = makeBemEcfQualMatrices(surfdata, pqr,  epsIn, epsOut);
     
     E = getSelfEnergies(pqr,bem);
     R_eff = getEffectiveRadii(E,epsIn,epsOut);
@@ -84,8 +82,7 @@ for i=1:length(lineCharges)
 						       epsIn, epsOut);
     dG_cha(i,j) = 0.5 * q * curv_cha(i,j);
 
-    [phiReac, sigma] = solveConsistentAsymmetric(surfdata, surfsurfop, ...
-						 chargesurfop, bem, ...
+    [phiReac, sigma] = solveConsistentAsymmetric(surfdata, bem, ...
 						 epsIn, epsOut, ...
 						 conv_factor, pqr, asymParams);
     dG_bem(i,j) = 0.5 * pqr.q' * phiReac + pqr.q*staticPotential;

@@ -13,17 +13,14 @@ waterModel = struct('tau',1,'R_OH',0.58,'rho_w',1.4,'R_s',0.52);
 density = 1.0;
 numPoints = ceil(4 * pi * density * R^2)
 surfdata   = makeSphereSurface(origin, R, numPoints);
-surfsurfop = makeSurfaceToSurfaceOperators(surfdata);
 
 % set up interior grid of charges
 h      = 0.25;
 hMin   = 1.0; % for now
 [pqrReacGrid,Ygrid,Zgrid]  = addPqrGridSpherePlane(R-hMin, struct('q',[],'xyz',[],'R',[]),h); 
-chargesurfopReacGrid = makeSurfaceToChargeOperators(surfdata, pqrReacGrid);
 
 % now we can set up the full BEM system (charges to surface and back)
-bemReacGrid = makeBemMatrices(surfdata, pqrReacGrid, surfsurfop, ...
-			      chargesurfopReacGrid,  epsIn, epsOut);
+bemReacGrid = makeBemEcfQualMatrices(surfdata, pqrReacGrid, epsIn, epsOut);
 
 % solve BEM system for individual self energies, and get Born radii
 E_ReacGrid_preconvfactor = getSelfEnergies(pqrReacGrid,bemReacGrid);
@@ -33,9 +30,8 @@ R_eff_ReacGrid = getEffectiveRadii(E_ReacGrid_preconvfactor,epsIn,epsOut);
 % surface along the Z axis
 pqrSourceChargeLine = struct('xyz', [0 0.5 R-hMin; 0 -0.5 R-hMin], 'q', [1; ...
 		    -1], 'R', [0; 0]);
-chargesurfopSourceChargeLine = makeSurfaceToChargeOperators(surfdata, pqrSourceChargeLine);
-bemSourceChargeLine = makeBemMatrices(surfdata, pqrSourceChargeLine, surfsurfop, ...
-			      chargesurfopSourceChargeLine,  epsIn, epsOut);
+bemSourceChargeLine = makeBemEcfQualMatrices(surfdata, pqrSourceChargeLine, ...
+					     epsIn, epsOut);
 E_SourceChargeLine_preconvfactor = getSelfEnergies(pqrSourceChargeLine,bemSourceChargeLine);
 R_eff_SourceChargeLine = ...
     getEffectiveRadii(E_SourceChargeLine_preconvfactor,epsIn,epsOut);

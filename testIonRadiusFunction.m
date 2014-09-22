@@ -23,17 +23,13 @@ for i=1:length(R_list)
   R = R_list(i);
   numPoints = ceil(4 * pi * density * R^2)
   surfdata   = makeSphereSurface(origin, R, numPoints);
-  surfsurfop = makeSurfaceToSurfaceOperators(surfdata);
 
   for j=1:length(q_list)
     q = q_list(j);
     pqr = struct('xyz',[0 0 0],'q',q,'R',0);
-    chargesurfop = makeSurfaceToChargeOperators(surfdata, pqr);
-    bem = makeBemMatrices(surfdata, pqr, surfsurfop, ...
-			  chargesurfop,  epsIn, epsOut);
+    bem = makeBemEcfQualMatrices(surfdata, pqr,  epsIn, epsOut);
 
-    [phiReac, sigma] = solveConsistentAsymmetric(surfdata, surfsurfop, ...
-						 chargesurfop, bem, ...
+    [phiReac, sigma] = solveConsistentAsymmetric(surfdata, bem, ...
 						 epsIn, epsOut, ...
 						 conv_factor, pqr, asymParams);
     L(i,j) = 0.5 * q'*phiReac;
