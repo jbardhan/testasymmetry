@@ -3,10 +3,10 @@ printOn = 1;
 addpath('../pointbem');
 loadConstants
 % alpha = 0.3, beta = -60, EfieldOffset = 0 works well for the ions
-asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
+asymParams = struct('alpha',0.0, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
-R_list = linspace(1,2.5,30);
+R_list = linspace(1,2.5,5);
 q_list = [-1 1]; %linspace(-1,1,20);
 
 epsIn  =  1;
@@ -27,16 +27,22 @@ for i=1:length(R_list)
   for j=1:length(q_list)
     q = q_list(j);
     pqr = struct('xyz',[0 0 0],'q',q,'R',0);
-    bem = makeBemEcfQualMatrices(surfdata, pqr,  epsIn, epsOut);
-
-    [phiReac, sigma] = solveConsistentAsymmetric(surfdata, bem, ...
+    bemEcf = makeBemEcfQualMatrices(surfdata, pqr,  epsIn, epsOut);
+    bemYoonDiel = makeBemYoonDielMatrices(surfdata, pqr,  epsIn, epsOut);
+    [phiReacEcf, sigma] = solveConsistentAsymmetric(surfdata, bemEcf, ...
 						 epsIn, epsOut, ...
 						 conv_factor, pqr, asymParams);
-    L(i,j) = 0.5 * q'*phiReac;
+    [phiReacYoonDiel, phiBndy,dPhiBndy] = solveConsistentYoonDielAsym(surfdata, bemYoonDiel, ...
+						 epsIn, epsOut, ...
+						 conv_factor, pqr, asymParams);
+    L_ecf(i,j) = 0.5 * q'*phiReacEcf;
+    L_yoondiel(i,j) = 0.5 * q'*phiReacYoonDiel;
+
   end 
   E_born(i) = 0.5 * conv_factor * (1/epsOut - 1/epsIn)/R;
 end
-  
+return
+
 figure; set(gca,'fontsize',16);
 plot(R_list, L(:,1),'r-','linewidth',2,'markersize',10); hold on;
 plot(R_list, L(:,end),'b-.','linewidth',2,'markersize',10);

@@ -1,0 +1,24 @@
+1. for makeBemYoonDiel, verify convergence to Kirkwood if alpha = 0
+
+2. verify both EcfQual and YoonDiel converge to the same answer if alpha = 0
+
+3. verify both EcfQual and YoonDiel converge to the same answer if alpha != 0
+
+4. implement panelBem for asymmetric EcfQual and YoonDiel
+
+5. re-parameterize for YoonDiel pointBem and verify first-asym paper results
+
+6. re-parameterize for YoonDiel/ecfQual panelBem and verify first-asym paper results
+
+7. implement YoonLPB and verify convergence to Kirkwood if alpha = 0, kappa -> 0
+
+8. verify YoonLPB converges to right answer for alpha=0, alpha!= 0 if kappa->0
+
+9. implement panelBem for asymmetric YoonLPB
+
+10. implement SternLPB pointBem and verify ddG as kappa -> 0 if alpha = 0
+
+11. implement panelBem for SternLPB and verify convergence 
+
+12. implement twoSoluteStern and
+
