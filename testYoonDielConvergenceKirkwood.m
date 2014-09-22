@@ -6,16 +6,20 @@ origin = [0 0 0];
 R = 5.0;
 chargeLocation = [3 0 0];
 q = 1;
-epsIn  =  1;
+epsIn  =  2;
 epsOut = 80;
 
-densities = 0.5:1:12;
+densities = 0.4:0.4:3.2;
 
 conv_factor = 332.112;
 
 
 pqr = struct('xyz',chargeLocation,'q',q,'R',R);
 
+phi_Born = conv_factor * q * doAnalytical(R, epsIn, epsOut, pqr, ...
+					     80);
+E_born = 0.5 * phi_Born* q';
+  
 for i=1:length(densities)
   density = densities(i);
   numPoints(i) = ceil(4 * pi * density * R^2);
@@ -32,7 +36,8 @@ for i=1:length(densities)
 						  pqr, asymParams);
   L_ecf(i) = 0.5 * q'*phiReacEcf;
   L_yoondiel(i) = 0.5 * q'*phiReacYoonDiel;
-  E_born(i) = 0.5 * conv_factor * (1/epsOut - 1/epsIn)/R;
+  fprintf('numPoints = %d, ECF = %f, YL = %f\n',numPoints(i), L_ecf(i), ...
+	  L_yoondiel(i));
 end
 
 deltaE = [abs(E_born-L_ecf); abs(E_born-L_yoondiel)];
