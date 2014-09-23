@@ -2,17 +2,27 @@ DONE 0. for makeBemYoonDiel, verify convergence to Born if alpha = 0
 
 **** This is testYoonDielConvergenceBorn.
 
-1. for makeBemYoonDiel, verify convergence to Kirkwood if alpha = 0
+DONE 1. for makeBemYoonDiel, verify convergence to Kirkwood if alpha = 0
 
 This is testYoonDielConvergenceKirkwood.
 
-2. verify both EcfQual and YoonDiel converge to the same answer if alpha = 0
+DONE 2. verify both EcfQual and YoonDiel converge to the same answer if alpha = 0
 
-**** Both testYoonDielConvergenceBorn and testYoonDielConvergenceKirkwood show this in their plots.
+**** Both testYoonDielConvergenceBorn and
+     testYoonDielConvergenceKirkwood show this in their plots.
 
-3. verify both EcfQual and YoonDiel converge to the same answer if alpha != 0
+CHECK 3. verify both EcfQual and YoonDiel converge to the same answer if alpha != 0
 
-**** 
+**** Both converge to their Richardson extrapolated values at the
+     appropriate rates (as Npanels to the -0.5).
+
+**** However, the +1 charge extrapolations for the two measures
+     deviate by 0.5 kcal/mol.  For a symmetric model, the
+     extrapolations differ by 0.05 kcal/mol, an order of magnitude
+     less deviation.  I suspect that one reason is the use of the
+     hypersingular operator.  Not sure how to test this, other than to
+     substitute all of their analytical eigenvalues.  That would be
+     suggestive but not definitive.
 
 4. implement panelBem for asymmetric EcfQual and YoonDiel
 
