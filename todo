@@ -45,3 +45,6 @@ CHECK 3. verify both EcfQual and YoonDiel converge to the same answer if alpha !
 13. move Richardson extrapolation routines to pointbem/panelbem.
 Also, write a routine that establishes the rate of convergence.
 
+14. Change solveConsistent* calling order to be like solveConsistentStern
+
+15. Create an option in makeSurfaceToSurface that can be explicit W or the Calderon W.

@@ -12,6 +12,6 @@ Efield = -bem.dielChargeOp.dphidnCoul * pqr.q - bem.dielDielOp.K'*dphiDnBndy ...
 h = (alpha*(tanh(beta*Efield-EfieldOffset)) +deltaOffset);
 f = (epsIn/(epsOut-epsIn)) - h;
 
-A = [bem.A11 bem.A12; bem.A21 diag(f./(1+f))*bem.A22_base];
+A = [bem.A11 bem.A12; bem.A21 bem.A22_base*diag(f./(1+f))];
 P = [diag(diag(bem.A11)) diag(diag(bem.A12));
      diag(diag(bem.A21)) diag(diag(bem.A22_base).*(f./(1+f)))];
