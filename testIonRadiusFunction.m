@@ -1,9 +1,9 @@
-printOn = 1;
+printOn = 0;
 
 addpath('../pointbem');
 loadConstants
 % alpha = 0.3, beta = -60, EfieldOffset = 0 works well for the ions
-asymParams = struct('alpha',0.0, 'beta', -60.0,'EfieldOffset',-0.5);
+asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
 R_list = linspace(1,2.5,5);
@@ -32,7 +32,7 @@ for i=1:length(R_list)
     [phiReacEcf, sigma] = solveConsistentAsymmetric(surfdata, bemEcf, ...
 						 epsIn, epsOut, ...
 						 conv_factor, pqr, asymParams);
-    [phiReacYoonDiel, phiBndy,dPhiBndy] = solveConsistentYoonDielAsym(surfdata, bemYoonDiel, ...
+    [phiReacYoonDiel, phiBndy,dPhiBndy] = solveConsistentYoonNoSternAsym(surfdata, bemYoonDiel, ...
 						 epsIn, epsOut, ...
 						 conv_factor, pqr, asymParams);
     L_ecf(i,j) = 0.5 * q'*phiReacEcf;
