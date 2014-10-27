@@ -6,8 +6,8 @@ beta  = asymParams.beta;
 EfieldOffset = asymParams.EfieldOffset;
 deltaOffset  = -alpha * tanh(beta*0-EfieldOffset);
 
-Efield = -bem.dielChargeOp.dphidnCoul * pqr.q - bem.dielDielOp.K'*dphiDnBndy ...
-	 + bem.dielDielOp.W*phiBndy;
+sigmaEff = bem.dielDielOp.V\(bem.dielDielOp.V * dphiDnBndy - bem.dielDielOp.K*phiBndy);
+Efield = -bem.dielChargeOp.dphidnCoul * pqr.q - bem.dielDielOp.K'*sigmaEff;
 
 h = (alpha*(tanh(beta*Efield-EfieldOffset)) +deltaOffset);
 f = (epsIn/(epsOut-epsIn)) - h;
