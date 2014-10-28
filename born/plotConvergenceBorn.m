@@ -1,5 +1,5 @@
 printOn = 1;
-maxDensity = 6;
+maxDensity = 12;
 
 addpath('../');
 addpath('../../pointbem');
@@ -67,6 +67,7 @@ end
 figure;
 i = 1;  % which member of R_list
 j = 1;  % which member of q_list
+axis([10 200 6 70]); % specially chosen for i=1, j=1!
 errPCM = abs(E_picard_pcm(i,j)-squeeze(L_pcm(i,j,:)));
 loglog(numPoints(i,:),errPCM,'bs', 'linewidth',2);
 hold on;
