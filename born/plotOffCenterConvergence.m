@@ -1,5 +1,5 @@
 printOn = 0;
-maxDensity = 5;
+maxDensity = 8;
 
 addpath('../');
 addpath('../../pointbem');
