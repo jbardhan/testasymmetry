@@ -1,7 +1,6 @@
-function asymBem = makePanelAsymCollocMatrices(surf, bem, pqr)
+function asymBem = makePanelAsymEcfMeanMatrices(surf, bem, pqr)
 
-Kp_NLBC = bem.surfsurfop.Kp; % i.e. Kp * sigma will be the electric
-                         % field at the centroid.
+Kp_NLBC = diag(1./surf.areas) * bem.surfsurfop.K'; %Kp * sigma = mean normal field
 			 
 dphidnCoul_NLBC = bem.chargesurfop.dphidnCoul;
 

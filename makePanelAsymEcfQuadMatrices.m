@@ -1,4 +1,4 @@
-function asymBem = makePanelAsymQuadMatrices(surf, bem, pqr, nquad)
+function asymBem = makePanelAsymEcfQuadMatrices(surf, bem, pqr, nquad)
 
 [points, normals, weights] = makePanelQuadraturePoints(surf, ...
 						  nquad);
