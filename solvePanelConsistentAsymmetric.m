@@ -3,7 +3,7 @@ function [phiReac, sigma] = solvePanelConsistentAsymmetric(surfdata, bem, ...
 						  convFactor, pqr, ...
 						  asymParams, asymBem)
 
-picardIterLimit = 2;
+picardIterLimit = 5;
 maxGMRESIter = min(100,size(bem.A,1)); % to avoid warning from gmres.
 sigma = zeros(size(bem.A,1),1);
 rhs = bem.B * pqr.q;

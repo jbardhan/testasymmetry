@@ -11,7 +11,7 @@ origin = [0 0 0];
 q_list = [-1 1];
 % R_list = linspace(1,2.5,5) becomes
 R_list = {'1'};%, '1.375', '1.75', '2.125', '2.5'}; 
-density_list = 1:6;
+density_list = 2:2:24;
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
@@ -36,18 +36,29 @@ for k=1:length(density_list)
     R = str2double(Rstr);
     srfFile = sprintf('born_%sA_%d.srf',Rstr, density);
     srfData = loadSrfIntoPanels(srfFile);
-    
+    numPoints(i,k) = length(srfData.areas);
     for j=1:length(q_list)
       q = q_list(j);
 
       pqrData = struct('xyz',[0 0 0],'q',q,'R',0);
       bemPcm = makePanelBemEcfQualMatrices(srfData, pqrData,  epsIn, epsOut);
-      asymBem = makePanelAsymCollocMatrices(srfData, bemPcm, pqrData);
+      asymBemPcm = makePanelAsymEcfCollocMatrices(srfData, bemPcm, pqrData);
       [phiReacPcm, sigma] = solvePanelConsistentAsymmetric(srfData, ...
 						  bemPcm, epsIn, ...
 						  epsOut, conv_factor, ...
-						  pqrData, asymParams,asymBem);
+						  pqrData, asymParams,asymBemPcm);
       L_pcm(i,j,k) = 0.5 * pqrData.q'*phiReacPcm;
+
+      bemYoonDiel = makePanelBemYoonDielMatrices(srfData,pqrData,epsIn,epsOut);
+      asymBemYL   = asymBemPcm; % we're reusing asymBemPcm
+      [phiReacYL, phiBndy, dphiDnBndy] = ...
+	  solvePanelConsistentYoonNoSternAsym(srfData, bemYoonDiel, ...
+					      epsIn, epsOut, ...
+					      conv_factor, pqrData, ...
+					      asymParams, asymBemYL);
+
+      L_yoondiel(i,j,k) = 0.5 * pqrData.q' * phiReacYL;
+
       
     end 
   end
@@ -58,10 +69,11 @@ end
 for i=1:length(R_list)
   for j=1:length(q_list)
     E_extrap_pcm(i,j) = RichardsonExtrapolation(length(density_list)-1,length(density_list),...
-						density_list, squeeze(L_pcm(i,j,:)),-0.5);
+						density_list, squeeze(L_pcm(i,j,:)),-1);
+    E_extrap_yl(i,j) = RichardsonExtrapolation(length(density_list)-1,length(density_list),...
+						density_list, squeeze(L_yoondiel(i,j,:)),-1);
   end
 end
-return
 
 figure;
 i = 1;  % which member of R_list
@@ -75,11 +87,13 @@ loglog(numPoints(i,:),errYL,'ro', 'linewidth',2);
 np1 = numPoints(i,1);
 np2 = numPoints(i,end);
 meanError2 = sqrt(errPCM(end)*errYL(end));
-meanError1 = meanError2 * (np1/np2)^(-0.5);
+meanError1 = meanError2 * (np1/np2)^(-1);
 loglog([np1 np2], [meanError1 meanError2],'k','linewidth',1.5);
+loglog([np1 np2],meanError2*[(np1/np2)^(-0.85) 1],'m--','linewidth', ...
+       1.5)
 ax=axis;
-axis([0.9*ax(1) 1.1*ax(2) 0.9*ax(3) 1.1*ax(4)]);
 set(gca,'fontsize',16);
+legend('PCM','Yoon-Lenhoff','O(N^{-1}) convergence','O(N^{-0.85}) convergence');
 xlabel('Number of BEM Unknowns');
 ylabel('Error relative to Picard solution (kcal/mol)');
 
