@@ -16,9 +16,9 @@ for picardIter = 1:picardIterLimit
   [curA, curP] = calcPanelYoonNoSternAsymPert(asymParams, asymBem, surfdata, ...
 					      bem, pqr, epsIn, epsOut, ...
 					      phiBndy, dphiDnBndy);
-  
+  [L,U]=lu(curP);
   [x, flag, relres, iter, resvec] = gmres(curA, rhs, [], 1e-5, ...
-					  maxGMRESIter, curP);
+					  maxGMRESIter, L,U);
 
   phiBndy = x(1:numPanels);
   dphiDnBndy = x(numPanels+1:end);

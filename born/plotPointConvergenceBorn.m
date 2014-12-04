@@ -1,5 +1,5 @@
 printOn = 1;
-maxDensity = 6;
+maxDensity = 12;
 
 addpath('../');
 addpath('../../pointbem');
@@ -7,8 +7,8 @@ loadConstants
 asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 origin = [0 0 0];
-R_list = linspace(1,2.5,5);
-q_list = [-1 1];
+R_list = 1; %linspace(1,2.5,5);
+q_list = 1; %[-1 1];
 
 epsIn  =  1;
 epsOut = 80;
@@ -79,13 +79,14 @@ meanError2 = sqrt(errPCM(end)*errYL(end));
 meanError1 = meanError2 * (np1/np2)^(-0.5);
 loglog([np1 np2], [meanError1 meanError2],'k','linewidth',1.5);
 ax=axis;
-axis([0.9*ax(1) 1.1*ax(2) 0.9*ax(3) 1.1*ax(4)]);
+axis([ax(1) 0.3*ax(2) ax(3) 0.3*ax(4)])
 set(gca,'fontsize',16);
+legend('PCM','Yoon-Lenhoff','O(N^{-1/2}) convergence');
 xlabel('Number of BEM Unknowns');
 ylabel('Error relative to Picard solution (kcal/mol)');
 
 if printOn
-  print -depsc2 convergence-pointbem-Born.eps
-  print -dpng convergence-pointbem-Born.png
+  print -depsc2 convergence-pointbem-nosalt-Born.eps
+  print -dpng convergence-pointbem-nosalt-Born.png
 end
 

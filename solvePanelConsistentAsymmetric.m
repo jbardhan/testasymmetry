@@ -11,7 +11,7 @@ rhs = bem.B * pqr.q;
 for picardIter = 1:picardIterLimit
   asymPert = calcPanelAsymmetricPert(asymParams, asymBem, surfdata, bem.surfsurfop, ...
 				bem.chargesurfop, pqr, sigma);
-  [sigma,flag,relres,iter,resvec] = gmres(bem.A+asymPert, rhs, [], 1e-5, maxGMRESIter);
+  [sigma,flag,relres,iter,resvec] = gmres(bem.A+asymPert, rhs, [], 1e-5, maxGMRESIter,sparse(diag(diag(bem.A+asymPert))));
   phiReac = convFactor * bem.C * sigma;
   
   if iter >= maxGMRESIter

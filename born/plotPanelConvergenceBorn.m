@@ -1,4 +1,4 @@
-printOn = 0;
+printOn = 1;
 
 addpath('../');
 addpath('../../pointbem');
@@ -8,10 +8,10 @@ asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 
 origin = [0 0 0];
-q_list = [-1 1];
+q_list = [1];
 % R_list = linspace(1,2.5,5) becomes
 R_list = {'1'};%, '1.375', '1.75', '2.125', '2.5'}; 
-density_list = 2:2:24;
+density_list = 2:2:20;
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
@@ -98,7 +98,7 @@ xlabel('Number of BEM Unknowns');
 ylabel('Error relative to Picard solution (kcal/mol)');
 
 if printOn
-  print -depsc2 convergence-pointbem-Born.eps
-  print -dpng convergence-pointbem-Born.png
+  print -depsc2 convergence-panelbem-nosalt-Born.eps
+  print -dpng convergence-panelbem-nosalt-Born.png
 end
 

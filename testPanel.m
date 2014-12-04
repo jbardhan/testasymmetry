@@ -12,8 +12,8 @@ oneletter = {'r','d','c','e','h','k','y'};
 
 pstate = {'prot','deprot'};
 surftype = {'_scaledcharmm_1','_scaledcharmm_2','_scaledcharmm_3', ...
-	    '_scaledcharmm_4','_scaledcharmm_5','_scaledcharmm_6','_scaledcharmm_7',...
-	    '_scaledcharmm_8'};
+	    '_scaledcharmm_4','_scaledcharmm_5','_scaledcharmm_6'};%'_scaledcharmm_7',...
+%	    '_scaledcharmm_8'};
 
 for k=1:length(surftype)
     
@@ -50,8 +50,8 @@ for k=1:length(surftype)
   end
 end
 
-density_list = 1:8;
-for i=1:1;%length(R_list)
+density_list = 1:6;
+for i=1:7;%length(R_list)
   for j=1:2%length(q_list)
     E_extrap_pcm(i,j) = RichardsonExtrapolation(length(density_list)-1,length(density_list),...
 						density_list, squeeze(dG_pcm(i,j,:)),-1);

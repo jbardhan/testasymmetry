@@ -14,7 +14,7 @@ epsOut = 80;
 kappa  = 0.125;
 conv_factor = 332.112;
 
-densities = 0.5:1:8;
+densities = 1:2:24;
 
 for i=1:length(densities)
   density = densities(i);

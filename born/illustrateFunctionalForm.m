@@ -1,4 +1,4 @@
-printOn = 1;
+printOn = 0;
 addpath('..');
 addpath('../../pointbem');
 loadConstants
@@ -78,7 +78,7 @@ sigma = [sigmaPlus sigmaMinus];
 h = (1 + fsym) - dPhidn./sigma;
 
 figure;set(gca,'fontsize',16);
-plot(dPhidn, dPhidn ./ sigma,'bo','linewidth',2); % don't change this
+plot(dPhidn, dPhidn ./ sigma,'bo','linewidth',2,'markersize',10); % don't change this
                                                   % without changing
                                                   % the last plot
                                                   % command
@@ -100,7 +100,8 @@ legend('Explicit-solvent molecular dynamics FEP',...
        'Standard Maxwell boundary condition',...
        'Proposed nonlinear boundary condition');
 
-
+xlabel('E_n^{Coul}');
+ylabel('E_n^{Coul} / \sigma');
 if printOn
   print -depsc2 boundary-condition-motivation.eps
   print -dpng boundary-condition-motivation.png

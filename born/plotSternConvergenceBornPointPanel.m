@@ -1,0 +1,203 @@
+printOn = 0;
+addpath('../');
+addpath('../../pointbem');
+addpath('../../panelbem');
+loadConstants
+symParams  = struct('alpha',0.0, 'beta',  0.0, 'EfieldOffset', 0.0);
+asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
+
+origin = [0 0 0];
+Rstr = '1';
+R = str2double(Rstr);
+sternLayerThickness = 2.0;
+Rstern = R + sternLayerThickness;
+chargeLocation = [0 0 0];
+q_list = [1];
+epsIn  =  1;
+epsOut = 80;
+conv_factor = 332.112;
+kappa = 0.125;
+
+densities = [1:1:8];% 6:2:20];
+densityStern = 1;
+
+for i=1:length(densities)
+  density = densities(i);
+  densityStern = density;
+  numDielPoints(i)  = ceil(4 * pi * density * R^2);
+  dielSurfData   = makeSphereSurface(origin, R, numDielPoints(i));
+  numSternPoints(i) = ceil(4 * pi * densityStern * Rstern^2);
+  sternSurfData  = makeSphereSurface(origin, Rstern, numSternPoints(i));
+  numTotalPoints(i) = numDielPoints(i) + numSternPoints(i);
+
+  srfFile = sprintf('stern_uniform_%sA_%d.srf',Rstr, density)
+  sternSrfData = loadSternSrfIntoPanels(srfFile);
+  numDielPanels(i) = sternSrfData.numDielPanels(1);
+  numSternPanels(i) = sternSrfData.numSternPanels(1);
+  numTotalPanels(i) = numDielPanels(i) + numSternPanels(i);
+  
+  for j=1:length(q_list)
+    q = q_list(j);
+    pqr = struct('xyz',chargeLocation,'q',q,'R',R);
+
+    bemPanelEcf   = makePanelBemEcfQualMatrices(sternSrfData.dielBndy(1), ...
+						pqr, epsIn, epsOut);
+    bemPanelStern = makePanelBemSternMatrices(sternSrfData, ...
+					      pqr,epsIn,epsOut,kappa);
+    asymBemPcm = makePanelAsymEcfCollocMatrices(sternSrfData.dielBndy(1), ...
+						bemPanelEcf, pqr);
+    
+    [phiReacPanelSternAsym,phiBndy,dPhiBndy] = ...
+	solvePanelConsistentSternAsym(sternSrfData.dielBndy(1),...
+				      sternSrfData.sternBndy(1),...
+				      pqr, bemPanelStern, epsIn, ...
+				      epsOut, kappa, conv_factor, ...
+				      asymParams, asymBemPcm);
+    
+    [phiReacPanelSternSym,phiBndy,dPhiBndy] = ...
+	solvePanelConsistentSternAsym(sternSrfData.dielBndy(1),...
+				      sternSrfData.sternBndy(1),...
+				      pqr, bemPanelStern, epsIn, ...
+				      epsOut, kappa, conv_factor, ...
+				      symParams, asymBemPcm);
+    
+    E_panelSternAsym(i,j) = 0.5 * pqr.q' * phiReacPanelSternAsym;
+    E_panelSternSym(i,j) = 0.5 * pqr.q' * phiReacPanelSternSym;
+    
+    bemEcfAsym      = makeBemEcfQualMatrices(dielSurfData, pqr,  epsIn, epsOut);
+    bemStern        = makeBemSternMatrices(dielSurfData, sternSurfData, pqr, ...
+				   epsIn, epsOut, kappa);
+    [phiReacPointSternAsym, phiBndy,dPhiBndy] = ...
+	solveConsistentSternAsym(dielSurfData, sternSurfData, pqr, ...
+				 bemStern, epsIn, epsOut, kappa, ...
+				 conv_factor, asymParams); % symParams!!
+    [phiReacPointSternSym, phiBndy,dPhiBndy] = ...
+	solveConsistentSternAsym(dielSurfData, sternSurfData, pqr, ...
+				 bemStern, epsIn, epsOut, kappa, ...
+				 conv_factor, symParams); % symParams!!
+    E_pointSternAsym(i,j) = 0.5 * pqr.q'*phiReacPointSternAsym;
+    E_pointSternSym(i,j) = 0.5 * pqr.q'*phiReacPointSternSym;
+
+if 0
+    bemYoonDielAsym = makeBemYoonDielMatrices(dielSurfData, pqr,  epsIn, epsOut);
+    bemYoonLPB   = makeBemYoonLPBMatrices(dielSurfData, pqr, epsIn, ...
+					     epsOut, kappa);
+    [phiReacYoonDielAsym, phiBndy,dPhiBndy] = ...
+	solveConsistentYoonNoSternAsym(dielSurfData, bemYoonDielAsym, epsIn, ...
+				       epsOut, conv_factor, pqr, ...
+				       asymParams); % asymParams!!
+
+    [phiReacYoonLPBsym, phiBndy,dPhiBndy] = ...
+	solveConsistentYoonNoSternAsym(dielSurfData, bemYoonLPB, epsIn, ...
+				       epsOut, conv_factor, pqr, ...
+				       symParams); % symParams!!
+
+    [phiReacYoonLPBAsym, phiBndy,dPhiBndy] = ...
+	solveConsistentYoonNoSternAsym(dielSurfData, bemYoonLPB, epsIn, ...
+				       epsOut, conv_factor, pqr, ...
+				       asymParams); % symParams!!
+    [phiReacSternSym, phiBndy,dPhiBndy] = ...
+	solveConsistentSternAsym(dielSurfData, sternSurfData, pqr, ...
+				 bemStern, epsIn, epsOut, kappa, ...
+				 conv_factor, symParams); % symParams!!
+
+
+    E_yoondiel(i,j) = 0.5 * q'*phiReacYoonDielAsym;
+    E_LPBs(i,j) = 0.5 * q'*phiReacYoonLPBsym;
+    E_LPBa(i,j) = 0.5 * q'*phiReacYoonLPBAsym;
+    E_sternSym(i,j) = 0.5 * q'*phiReacSternSym;
+    fprintf('numDielPoints = %d,YL = %f, LPB_s = %f, LPB_a = %f, Stern_s = %f, Stern_a = %f\n',...
+	    numDielPoints(i), ...
+	    E_yoondiel(i), E_LPBs(i), E_LPBa(i),...
+	    E_sternSym(i), E_sternAsym(i));
+
+end
+  end
+end
+
+if length(densities) < 5
+  fprintf('Error: not enough densities to do Richardson extrapolation\n');
+  return
+end
+
+expectedOrderPoint = -0.5; % with respect to the number of points
+expectedOrderPanel = -1.0;
+index1 = length(densities) - 1; 
+index2 = length(densities);
+
+for j=1:length(q_list)
+E_pointAsym_extrap(j) = RichardsonExtrapolation(index1, index2, ...
+						numTotalPoints, ...
+						E_pointSternAsym(:,j), ...
+						expectedOrderPoint);
+E_pointSym_extrap(j) = RichardsonExtrapolation(index1, index2, ...
+					       numTotalPoints, ...
+					       E_pointSternSym(:,j), ...
+					       expectedOrderPoint);
+E_panelAsym_extrap(j) = RichardsonExtrapolation(index1, index2, ...
+						numTotalPoints, ...
+						E_panelSternAsym(:,j), ...
+						expectedOrderPanel);
+E_panelSym_extrap(j) = RichardsonExtrapolation(index1, index2, ...
+					       numTotalPoints, ...
+					       E_panelSternSym(:,j), ...
+					       expectedOrderPanel);
+end
+% If at some point you work out the Picard iteration, put the
+% answers here 
+E_panelSym_answer  = E_panelSym_extrap;
+E_panelAsym_answer = E_panelAsym_extrap;
+E_pointSym_answer  = E_pointSym_extrap;
+E_pointAsym_answer = E_pointAsym_extrap;
+% End (if at some point...)
+
+
+% Plot deviation from answer
+
+figure; plotxmin = 100; plotxmax = 3000; plotymin = 1; plotymax = 200;
+loglog(numTotalPanels, abs(E_panelSym_answer-E_panelSternSym), ...
+       'b-s','linewidth',2);
+hold on
+loglog(numTotalPanels, abs(E_panelAsym_answer-E_panelSternAsym), ...
+       'b-s','linewidth',2,'markersize',12);
+nPanels1 = numTotalPanels(1);
+nPanels2 = numTotalPanels(end);
+errorPanels2 = sqrt(abs(E_panelAsym_answer-E_panelSternAsym(end))*...
+		    abs(E_panelSym_answer-E_panelSternSym(end)));
+errorPanels = errorPanels2 * [(nPanels1/nPanels2)^(expectedOrderPanel) ...
+		    1];
+loglog([nPanels1 nPanels2],errorPanels,'k','linewidth',2);
+
+loglog(numTotalPoints, abs(E_pointSym_answer-E_pointSternSym),...
+       'r--o','linewidth',2);
+loglog(numTotalPoints, abs(E_pointAsym_answer-E_pointSternAsym),...
+       'r--o','linewidth',2,'markersize',12);
+nPoints1 = numTotalPoints(1);
+nPoints2 = numTotalPoints(end);
+errorPoints2 = sqrt(abs(E_pointAsym_answer-E_pointSternAsym(end))*...
+		    abs(E_pointSym_answer-E_pointSternSym(end)));
+errorPoints = errorPoints2 * [(nPoints1/nPoints2)^(expectedOrderPoint) ...
+		    1];
+loglog([nPoints1 nPoints2],errorPoints,'k-.','linewidth',2);
+
+axis([plotxmin plotxmax plotymin plotymax]);
+set(gca,'fontsize',16);
+xlabel('Number of BEM Unknowns');
+ylabel('Estimated Error (kcal/mol)');
+
+legend('Panel BEM, SMBC','Panel BEM, NLBC','O(N^{-1}) convergence', ...
+       'Point BEM, SMBC','Point BEM, NLBC', 'O(N^{-0.5}) convergence');
+
+%% plot panel BEM stuff again to put it on top
+
+loglog(numTotalPanels, abs(E_panelSym_answer-E_panelSternSym), ...
+       'b-s','linewidth',2);
+loglog(numTotalPanels, abs(E_panelAsym_answer-E_panelSternAsym), ...
+       'b-s','linewidth',2,'markersize',12);
+nPanels1 = numTotalPanels(1);
+nPanels2 = numTotalPanels(end);
+errorPanels2 = sqrt(abs(E_panelAsym_answer-E_panelSternAsym(end))*...
+		    abs(E_panelSym_answer-E_panelSternSym(end)));
+errorPanels = errorPanels2 * [(nPanels1/nPanels2)^(expectedOrderPanel) ...
+		    1];
+loglog([nPanels1 nPanels2],errorPanels,'k','linewidth',2);

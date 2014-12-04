@@ -19,5 +19,5 @@ h = (alpha*(tanh(beta*Efield-EfieldOffset)) +deltaOffset);
 f = (epsIn/(epsOut-epsIn)) - h;
 
 A = [bem.A11 bem.A12; bem.A21 bem.A22_base*diag(f./(1+f))];
-P = [diag(diag(bem.A11)) diag(diag(bem.A12));
-     diag(diag(bem.A21)) diag(diag(bem.A22_base).*(f./(1+f)))];
+P = sparse([diag(diag(bem.A11)) diag(diag(bem.A12));
+     diag(diag(bem.A21)) diag(diag(bem.A22_base).*(f./(1+f)))]);
