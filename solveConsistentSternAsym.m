@@ -13,8 +13,8 @@ rhs = bem.B * pqr.q;
 phiDielBndy = x(1:numDielPanels);
 dphiDnDielBndy = x(numDielPanels+1:2*numDielPanels);
 phiSternBndy = x(2*numDielPanels+1:2*numDielPanels+numSternPanels);
-dphiDnSternBndy = ones(length(numSternPanels),1)*(-sum(pqr.q)/ ...
-						  epsOut)/sum(sternSurfData.weights);
+dphiDnSternBndy = ones(numSternPanels,1)*(-sum(pqr.q)/ epsOut)/ ...
+    sum(sternSurfData.weights);
 
 for picardIter = 1:picardIterLimit
   [curA, curP] = calcYoonSternAsymPert(asymParams, dielSurfData, sternSurfData, bem, ...

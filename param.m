@@ -1,4 +1,5 @@
 addpath('../pointbem');
+addpath('../panelbem');
 loadConstants
 
 asymParams = struct('alpha', 0.5, 'beta', -60.0,'EfieldOffset',-0.5);
@@ -6,9 +7,10 @@ asymParams = struct('alpha', 0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
+kappa = 0.0;
 
-vertexDensity = 6;
-var1_numSides = [3 8]; %3:8;
+vertexDensity = 4;
+var1_numSides = [3 4]; %3:8;
 var2_posOrNeg = {'N','P'};
 var3_typeOfChargeDist = {'dipole','distrib','oppose'};
 
@@ -40,20 +42,28 @@ testQ = var3_typeOfChargeDist{2}; % distrib
 
 for i=1:length(var1_numSides)
   for j=1:length(var2_posOrNeg)
-    srfFile = sprintf('./bracelet/n%d/n%d_%d.srf',var1_numSides(i), ...
+    srfFile = sprintf('./bracelet/n%d/n%d_stern_%d_1.srf',var1_numSides(i), ...
 		      var1_numSides(i), vertexDensity);
     pdbFile = sprintf('./bracelet/n%d/N%d.pdb',var1_numSides(i), var1_numSides(i));
     crgFile = sprintf('./bracelet/n%d/%s%d_%s.crg', var1_numSides(i), ...
 		      var2_posOrNeg{j}, var1_numSides(i), testQ)
 
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
-    srfData = loadSrfIntoSurfacePoints(srfFile);
+    srfData = loadSternSrfIntoPanels(srfFile);
 
-    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
+    bemPanelEcf   = makePanelBemEcfQualMatrices(srfData.dielBndy(1), ...
+						pqrData, epsIn, epsOut);
+    bemPanelStern = makePanelBemSternMatrices(srfData, ...
+					      pqrData,epsIn,epsOut,kappa);
+    asymBemPcm = makePanelAsymEcfCollocMatrices(srfData.dielBndy(1), ...
+						bemPanelEcf, pqrData);
     
-    [phiReac, sigma] = solveConsistentAsymmetric(srfData, bem, epsIn, ...
-						 epsOut, conv_factor, ...
-						 pqrData, asymParams);
+    phiReac = solvePanelConsistentSternAsym(srfData.dielBndy(1),...
+					    srfData.sternBndy(1),...
+					    pqrData, bemPanelStern, ...
+					    epsIn, epsOut, kappa, ...
+					    conv_factor, asymParams, ...
+					    asymBemPcm);
     
     distribBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 
@@ -93,20 +103,28 @@ testQ = var3_typeOfChargeDist{3}; % oppose
 
 for i=1:length(var1_numSides)
   for j=1:length(var2_posOrNeg)
-    srfFile = sprintf('./bracelet/n%d/n%d_%d.srf',var1_numSides(i), ...
+    srfFile = sprintf('./bracelet/n%d/n%d_stern_%d_1.srf',var1_numSides(i), ...
 		      var1_numSides(i), vertexDensity);
     pdbFile = sprintf('./bracelet/n%d/N%d.pdb',var1_numSides(i), var1_numSides(i));
     crgFile = sprintf('./bracelet/n%d/%s%d_%s.crg', var1_numSides(i), ...
 		      var2_posOrNeg{j}, var1_numSides(i), testQ)
 
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
-    srfData = loadSrfIntoSurfacePoints(srfFile);
+    srfData = loadSternSrfIntoPanels(srfFile);
 
-    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
+    bemPanelEcf   = makePanelBemEcfQualMatrices(srfData.dielBndy(1), ...
+						pqrData, epsIn, epsOut);
+    bemPanelStern = makePanelBemSternMatrices(srfData, ...
+					      pqrData,epsIn,epsOut,kappa);
+    asymBemPcm = makePanelAsymEcfCollocMatrices(srfData.dielBndy(1), ...
+						bemPanelEcf, pqrData);
     
-    [phiReac, sigma] = solveAsymmetric(srfData, bem, epsIn, epsOut, ...
-				       conv_factor, pqrData, asymParams);
-    
+    phiReac = solvePanelConsistentSternAsym(srfData.dielBndy(1),...
+					    srfData.sternBndy(1),...
+					    pqrData, bemPanelStern, ...
+					    epsIn, epsOut, kappa, ...
+					    conv_factor, asymParams, ...
+					    asymBemPcm);
     opposeBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 
   end
@@ -145,20 +163,28 @@ testQ = var3_typeOfChargeDist{1};
 
 for i=1:length(var1_numSides)
   for j=1:length(var2_posOrNeg)
-    srfFile = sprintf('./bracelet/n%d/n%d_%d.srf',var1_numSides(i), ...
+    srfFile = sprintf('./bracelet/n%d/n%d_stern_%d_1.srf',var1_numSides(i), ...
 		      var1_numSides(i), vertexDensity);
     pdbFile = sprintf('./bracelet/n%d/N%d.pdb',var1_numSides(i), var1_numSides(i));
     crgFile = sprintf('./bracelet/n%d/%s%d_%s.crg', var1_numSides(i), ...
 		      var2_posOrNeg{j}, var1_numSides(i), testQ)
 
     pqrData = loadPdbAndCrg(pdbFile,crgFile);
-    srfData = loadSrfIntoSurfacePoints(srfFile);
+    srfData = loadSternSrfIntoPanels(srfFile);
 
-    bem = makeBemEcfQualMatrices(srfData, pqrData, epsIn, epsOut);
+    bemPanelEcf   = makePanelBemEcfQualMatrices(srfData.dielBndy(1), ...
+						pqrData, epsIn, epsOut);
+    bemPanelStern = makePanelBemSternMatrices(srfData, ...
+					      pqrData,epsIn,epsOut,kappa);
+    asymBemPcm = makePanelAsymEcfCollocMatrices(srfData.dielBndy(1), ...
+						bemPanelEcf, pqrData);
     
-    [phiReac, sigma] = solveAsymmetric(srfData, bem, epsIn, epsOut, ...
-				       conv_factor, pqrData, asymParams);
-    
+    phiReac = solvePanelConsistentSternAsym(srfData.dielBndy(1),...
+					    srfData.sternBndy(1),...
+					    pqrData, bemPanelStern, ...
+					    epsIn, epsOut, kappa, ...
+					    conv_factor, asymParams, ...
+					    asymBemPcm);
     dipoleBEM(i,j) = 0.5 * pqrData.q' * phiReac;
 
   end
