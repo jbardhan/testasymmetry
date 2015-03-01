@@ -126,7 +126,14 @@ xlabel('R_{ion} (Angstrom)');
 ylabel('Charging free energy (kcal/mol)');
 
 plot(R_list, stern_nosalt_cation,'b','linewidth',2);
-plot(R_list, stern_nosalt_sym, 'k--','linewidth',2);
+plot(R_list, squeeze(dG_Sym_stern(:,1,1)), 'k--','linewidth',2);
+
+R_list_original = R_list;
+load oldnlbc.mat
+R_list_old = R_list;
+R_list = R_list_original;
+plot(R_list_old, L(:,1),'r');
+plot(R_list_old, L(:,end),'b');
 
 plot(rscale*[sodiumRminOver2 sodiumRminOver2], [sodiumMinus sodiumPlus], 'ks','markersize',10,'linewidth',2);
 
@@ -149,7 +156,9 @@ plot(rscale*[zincRminOver2 zincRminOver2], [zincMinus zincPlus], 'md','markersiz
 
 plot(rscale*[cadmiumRminOver2 cadmiumRminOver2], [cadmiumMinus cadmiumPlus], 'kd','markersize',10,'linewidth',2);
 
-legend('NLBC, q = -1', 'NLBC, q = +1', 'Poisson', 'Na \pm 1', 'K \pm 1',...
+legend('New NLBC, q = -1', 'New NLBC, q = +1', 'Poisson', ...
+       'Old NLBC, q = -1', 'Old NLBC, q = +1', ...
+       'Na \pm 1', 'K \pm 1',...
        'Rb \pm 1', 'Cs \pm 1', 'Cl \pm 1', ...
        'Mg \pm 1', 'Ca \pm 1', 'Ba \pm 1', 'Zn \pm 1', 'Cd \pm 1', 'Location','EastOutside');
 
@@ -157,7 +166,7 @@ axis([1 2.3 -230 -50])
 print -depsc2 withstatic-renormalized.eps
 print -dpng withstatic-renormalized.png
 
-
+return
 rootI = 0.304 * kappa_list;
 
 figure;
