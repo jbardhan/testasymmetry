@@ -1,4 +1,4 @@
-printOn = 0;
+printOn = 1;
 addpath('..');
 addpath('../../pointbem');
 loadConstants
@@ -91,7 +91,7 @@ beta  = -60.0;
 gamma = 0.3742;
 mu = -0.1073;
 plot(dPhidn, 1+fsym-(alpha*tanh(beta*(-dPhidn-0.5*sigma)-gamma)+ ...
-		     mu),'ks','linewidth',2);
+		     mu),'ks','linewidth',4,'markersize',12);
 
 plot(dPhidn, dPhidn ./ sigma,'bo','linewidth',2); % makes sure this
                                                   % is on top
