@@ -1,9 +1,9 @@
-function [phiReac, phiDielBndy, dphiDnDielBndy] = ...
+function [phiReac, phiDielBndy, dphiDnDielBndy,x,curA] = ...
     solvePanelConsistentSternAsym(dielSurfData, sternSurfData, pqr, bem, ...
 			     epsIn, epsOut, kappa, convFactor, ...
 				  asymParams, asymBem)
 
-picardIterLimit = 10;
+picardIterLimit = 5;
 maxGMRESIter = min(100, size(bem.A,1));
 numDielPanels = length(dielSurfData.areas);
 numSternPanels = length(sternSurfData.areas);
@@ -24,8 +24,10 @@ for picardIter = 1:picardIterLimit
 					    phiSternBndy, dphiDnSternBndy);
   [L,U]=lu(curP);
   [x, flag, relres, iter, resvec] = gmres(curA, rhs, [], 1e-5, ...
-					  maxGMRESIter, L,U);
-
+					  maxGMRESIter, L,U,x);
+  fprintf('took %d GMRES iters at picard iteration %d\n', max(iter), ...
+	  picardIter)
+  %  keyboard
   phiDielBndy = x(1:numDielPanels);
   dphiDnDielBndy = x(numDielPanels+1:2*numDielPanels);
   phiSternBndy  = x(2*numDielPanels+1:2*numDielPanels+numSternPanels);
