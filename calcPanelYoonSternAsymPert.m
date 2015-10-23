@@ -17,7 +17,7 @@ f = (epsIn/(epsOut-epsIn)) - h;
 
 r1 = -sum(pqr.q)/epsOut;
 r2 = sum(sternSurfData.areas' .* dphiDnSternBndy);
-if (r1==r2) || (abs(r1)<1e-6)
+if (r1==r2) || (abs(r1)<1e-2)
   r1Overr2 = 1;
 else
   r1Overr2 = r1/r2; %epsOut/epsOut;
