@@ -1,0 +1,6 @@
+function Error = ObjectiveFunction(i,alpha,beta,gamma)
+%ERROR          Returns the error via lsm of the MD FEP energy minus the
+%               calculated FEP free energy.
+for i = 1 : length(FEP)
+    Error = Error + [MD(i) - Calc(i)]
+end
