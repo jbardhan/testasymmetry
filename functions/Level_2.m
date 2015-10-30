@@ -1,4 +1,9 @@
-% Calculate the free energies for each ion.
+% Calculate the free energies for each ion using bornPicardNoStern.m.  This
+% script takes each ion and calculates the energy of solvation for a single
+% atom of central charge q.  These Energies are then put into an array 'E'
+% which is then fed into 'ObjectiveFunction.m' which takes the square of
+% the difference between these calculated energies and the experimental MD
+% data for each situation.
 addpath('..')
 addpath('../..')
 addpath('../../Asymmetric/born')
