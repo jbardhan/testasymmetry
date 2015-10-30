@@ -1,0 +1,125 @@
+In each of these results, the protonated form is listed first and the
+deprotonated form is listed second.  As a result, the second energy is
+more negative for the ASP results (that's the negatively charged form,
+because it's acidic) and the first energy is more negative for the HIS
+results (that's the positively charged form, because it's basic).
+
+SYMMETRIC
+>> asp_nosalt
+  -19.0759
+  -89.8805
+
+>> asp_nostern
+  -19.5337  -19.4674
+  -90.7919  -91.0818
+
+>> asp_stern
+  -19.0997  -19.1122
+  -89.9980  -90.2870
+
+NON SYMMETRIC
+>> asp_nosalt
+  -17.1562
+ -101.8688
+
+>> asp_nostern
+  -17.2182  -17.1598  -17.1122  -16.9352
+  -97.6239  -94.2204  -92.5059  -88.2787
+
+>> asp_stern
+  -17.1236  -17.1400  -17.1362  -17.1026
+  -99.9355  -97.2966  -96.1979  -94.0288
+
+SYMMETRIC
+>> his_nosalt
+  -99.5152
+  -38.4430
+
+>> his_nostern
+ -100.7274 -101.0534
+  -39.2902  -39.2213
+
+>> his_stern
+  -99.6472  -99.9667
+  -38.4919  -38.5275
+  
+NON SYMMETRIC
+>> his_nosalt
+  -62.9384
+  -31.0703
+
+>> his_nostern
+  -72.6547  -77.6053  -79.9419  -85.1195
+  -33.3760  -33.3591  -33.3455  -33.2994
+
+>> his_stern
+  -65.6966  -69.5313  -71.0696  -73.9764
+  -31.1283  -31.2354  -31.2738  -31.3331
+
+SYMMETRIC
+>> arg_nosalt
+
+NON SYMMETRIC
+>> arg_nosalt
+  -75.3734
+  -35.9011
+
+>> arg_nostern
+  -90.4574  -96.4797  -99.3369 -105.6428
+  -41.4237  -41.3536  -41.3334  -41.2504
+
+>> arg_stern
+  -78.8305  -83.3258  -85.1374  -88.5893
+  -36.0710  -36.2232  -36.3010  -36.4712
+
+NON SYMMETRIC
+>> cys_nosalt
+  -19.7313
+  -95.2261
+
+>> cys_nostern
+  -22.5419  -23.0546  -23.3038  -23.8788
+  -92.7891  -89.8490  -88.3516  -84.6264
+
+>> cys_stern
+  -20.1239  -20.6000  -20.7974  -21.1813
+  -93.5575  -91.3296  -90.3982  -88.5481
+
+NON SYMMETRIC
+>> glu_nosalt
+  -17.3366
+ -104.3134
+
+>> glu_nostern
+  -17.1857  -17.1259  -17.0746  -16.8713
+  -99.6351  -96.1302  -94.3383  -89.8831
+
+>> glu_stern
+  -17.2757  -17.2912  -17.2863  -17.2471
+ -102.1981  -99.5031  -98.3695  -96.1028
+
+NON SYMMETRIC
+>> lys_nosalt
+  -69.3362
+  -20.6062
+
+>> lys_nostern
+  -78.1843  -83.0548  -85.4673  -91.1943
+  -23.0103  -22.9510  -22.8713  -22.5256
+
+>> lys_stern
+  -72.4612  -76.2389  -77.7930  -80.8343
+  -20.5010  -20.5621  -20.5718  -20.5567
+
+NON SYMMETRIC
+>> tyr_nosalt
+  -22.6458
+ -128.8680
+
+>> tyr_nostern
+  -26.6203  -26.5274  -26.4645  -26.2873
+ -123.3316 -119.3455 -117.3397 -112.2124
+
+>> tyr_stern
+  -22.7528  -22.8164  -22.8414  -22.8832
+ -126.1267 -122.9505 -121.6419 -119.0370
