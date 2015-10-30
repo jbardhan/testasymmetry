@@ -1,4 +1,4 @@
-function E_yl = bornPicardNoStern(R, q, epsIn, epsOut, kappa, asymParams, ...
+function E_yl = bornPicardNoStern2(R, q, epsIn, epsOut, kappa, asymParams, ...
 				  conv_factor, numPicardIterations)           
               
 tildeEps = (epsOut - epsIn)/epsOut;
@@ -13,22 +13,16 @@ mu    = -alpha * tanh(-gamma);
 sigma = zeros(1,1, numPicardIterations);
 a     = 0 * sigma; % surface varphi
 b     = 0 * sigma; % surface dvarphidn
-i = 1;
+i = 1:32;
 j = 1;
-dphidnCoul = -(q/4/pi/R^2);
+dphidnCoul = -(q./4/pi./R.^2);
 sigma(i,j,1) = 0;
 
-a(i,j,1) = (epsIn/epsOut) * q/4/pi/R;
-b(i,j,1) = -q/4/pi/R^2;
-b_yl = [q/4/pi/R; 0];
+a(i,j,1) = (epsIn/epsOut) .* q./4/pi./R;
+b(i,j,1) = -q./4/pi./R.^2;
+b_yl = [q./4/pi./R; zeros(length(dphidnCoul))];
 
-if kappa > 1e-4
-  [lambdaV,lambdaK] = computeYukawaEigenvalues(R, kappa, 10);
-else 
-  fprintf(['For kappa = %f, using Laplace boundary integral' ...
-	   ' operator.\n'],kappa);
-  [lambdaV,lambdaK] = computeLaplaceEigenvalues(R,10);
-end
+[lambdaV,lambdaK] = computeYukawaEigenvalues(R, kappa, 10);
 lambdaVY0 = lambdaV(1);
 lambdaKY0 = lambdaK(1);
 
