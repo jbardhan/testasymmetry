@@ -21,7 +21,13 @@ a(i,j,1) = (epsIn/epsOut) * q/4/pi/R;
 b(i,j,1) = -q/4/pi/R^2;
 b_yl = [q/4/pi/R; 0];
 
-[lambdaV,lambdaK] = computeYukawaEigenvalues(R, kappa, 10);
+if kappa > 1e-4
+  [lambdaV,lambdaK] = computeYukawaEigenvalues(R, kappa, 10);
+else 
+  fprintf(['For kappa = %f, using Laplace boundary integral' ...
+	   ' operator.\n'],kappa);
+  [lambdaV,lambdaK] = computeLaplaceEigenvalues(R,10);
+end
 lambdaVY0 = lambdaV(1);
 lambdaKY0 = lambdaK(1);
 
