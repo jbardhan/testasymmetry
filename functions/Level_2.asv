@@ -1,8 +1,9 @@
 % Calculate the free energies for each ion.
 addpath('..')
-addpath('../..')
-addpath('../../Asymmetric/born')
-addpath('../../pointbem')
+addpath('../functions')
+addpath('../Asymmetric')
+addpath('../Asymmetric/born')
+addpath('../pointbem')
 loadconstants
 
 rscale = 0.92;
@@ -115,27 +116,27 @@ elseif i == 14 % Ca minus
     
 elseif i == 15 % Ba plus
    
-    E(i) = bornPicardNoStern(bariumRminOver2*rscale,bariumPlus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(bariumRminOver2*rscale,riumPlus,epsIn,epsOut,k,Params,conv_factor,k);
    
 elseif i == 16 % Ba minus
   
-    E(i) = bornPicardNoStern(bariumRminOver2*rscale,bariumMinus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,rubidiumMinus,epsIn,epsOut,k,Params,conv_factor,k);
     
-elseif i == 17 % Zn plus
+elseif i == 17 % Rb plus
    
-    E(i) = bornPicardNoStern(zincRminOver2*rscale,zincPlus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,rubidiumPlus,epsIn,epsOut,k,Params,conv_factor,k);
    
-elseif i == 18 % Zn minus
+elseif i == 18 % Rb minus
   
-    E(i) = bornPicardNoStern(zincRminOver2*rscale,zincMinus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,rubidiumMinus,epsIn,epsOut,k,Params,conv_factor,k);
     
-elseif i == 19 % Cd plus
+elseif i == 19 % Rb plus
    
-    E(i) = bornPicardNoStern(cadmiumRminOver2*rscale,cadmiumPlus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,rubidiumPlus,epsIn,epsOut,k,Params,conv_factor,k);
    
-elseif i == 20 % Cd minus
+elseif i == 20 % Rb minus
   
-    E(i) = bornPicardNoStern(cadmiumRminOver2*rscale,cadmiumMinus,epsIn,epsOut,k,Params,conv_factor,k);
+    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,rubidiumMinus,epsIn,epsOut,k,Params,conv_factor,k);
     
 end
 end
