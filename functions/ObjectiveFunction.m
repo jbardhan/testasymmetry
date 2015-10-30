@@ -3,7 +3,7 @@ function Error = ObjectiveFunction(i,Params,E)
 %               calculated FEP free energy.
 
 
-MD = [-44.9508 -13.006 2 3];
+MD = [1 2 3 4 5 6 7 8 ];
 
 for i = 1 : length(MD)
     Error(i) = [(MD(i) - E(i)).^2];
