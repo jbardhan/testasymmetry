@@ -1,12 +1,16 @@
-function Error = ObjectiveFunction(i,Params,E)
-%ERROR          Returns the error via lsm of the MD FEP energy minus the
-%               calculated FEP free energy.  OBJECTIVEFUNCTION(i,Params,E)
-%               takes in i situations and calculates the square of the
-%               difference between the MD, experimental energy of solvation, 
+function Error = ObjectiveFunction(Params)
+%ERROR          Returns the deviance of the experimental MD FEP energy results from the
+%               calculated FEP free energy.  OBJECTIVEFUNCTION(Params)
+%               takes in i situations and calculates the difference between the MD,
+%               experimental energy of solvation, 
 %               MD(i) and the calculated energy of solvation E(i).
-%               Eventually, we will want to minimize this function by
-%               varying 'Params' to get a best fit to the data.
 %               
+%               
+
+addpath('..')
+addpath('../Asymmetric/functions')
+addpath('../Asymmetric/born/')
+addpath('../pointbem/')
 
 
 MD = [ -93.4    % Na+
@@ -30,7 +34,14 @@ MD = [ -93.4    % Na+
        -89.08   % Cd+
        -164.3   % Cd-
        ];
+   
+
 
 for i = 1 : length(MD)
-    Error(i) = [(MD(i) - E(i)).^2];
+   
+  
+    F = [Level_2(i)]; % Calls the function Level_2.m which calculates the energy using bornPicardNoStern.
+ 
+    
+    Error(i) = [(MD(i) - F(i))];
 end

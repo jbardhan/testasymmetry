@@ -1,14 +1,11 @@
-% Calculate the free energies for each ion using bornPicardNoStern.m.  This
-% script takes each ion and calculates the energy of solvation for a single
-% atom of central charge q.  These Energies are then put into an array 'E'
-% which is then fed into 'ObjectiveFunction.m' which takes the square of
-% the difference between these calculated energies and the experimental MD
-% data for each situation.
+function E = Level_2(Params)
+%F           Returns the energy of an ion of charge q and radius R using
+%            funtion bornPicardNoStern.
 addpath('..')
-addpath('../..')
-addpath('../../Asymmetric/born')
-addpath('../../pointbem')
-loadconstants
+addpath('../Asymmetric/functions/')
+addpath('../Asymmetric/born/')
+addpath('../pointbem')
+
 
 rscale = 0.92;
 
@@ -64,95 +61,90 @@ cadmiumRminOver2 = 1.357;
 % cadmiumPlus i = 19
 % cadmiumMinus  i = 20
 
-for i = 1:20
 
-if i == 1 % Na plus
+
+% Na plus
    
-    E(i) = bornPicardNoStern(sodiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(1) = bornPicardNoStern(sodiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 2 % Na minus
+% Na minus
   
-    E(i) = bornPicardNoStern(sodiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(2) = bornPicardNoStern(sodiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 3 % Cl plus
+% Cl plus
   
-    E(i) = bornPicardNoStern(chlorideRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(3) = bornPicardNoStern(chlorideRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 4 % Cl minus
+% Cl minus
   
-    E(i) = bornPicardNoStern(chlorideRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(4) = bornPicardNoStern(chlorideRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 5 % K plus
+% K plus
    
-    E(i) = bornPicardNoStern(potassiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(5) = bornPicardNoStern(potassiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 6 % K minus
+% K minus
   
-    E(i) = bornPicardNoStern(potassiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(6) = bornPicardNoStern(potassiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 7 % Rb plus
+% Rb plus
    
-    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(7) = bornPicardNoStern(rubidiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 8 % Rb minus
+% Rb minus
   
-    E(i) = bornPicardNoStern(rubidiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(8) = bornPicardNoStern(rubidiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 9 % Mg plus
+% Mg plus
    
-    E(i) = bornPicardNoStern(magnesiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(9) = bornPicardNoStern(magnesiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 10 % Mg minus
+% Mg minus
   
-    E(i) = bornPicardNoStern(magnesiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(10) = bornPicardNoStern(magnesiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 11 % Cs plus
+% Cs plus
    
-    E(i) = bornPicardNoStern(cesiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(11) = bornPicardNoStern(cesiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 12 % Cs minus
+% Cs minus
   
-    E(i) = bornPicardNoStern(cesiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(12) = bornPicardNoStern(cesiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 13 % Ca plus
+% Ca plus
    
-    E(i) = bornPicardNoStern(calciumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(13) = bornPicardNoStern(calciumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 14 % Ca minus
+% Ca minus
   
-    E(i) = bornPicardNoStern(calciumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(14) = bornPicardNoStern(calciumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 15 % Ba plus
+% Ba plus
    
-    E(i) = bornPicardNoStern(bariumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(15) = bornPicardNoStern(bariumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 16 % Ba minus
+% Ba minus
   
-    E(i) = bornPicardNoStern(bariumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(16) = bornPicardNoStern(bariumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 17 % Zn plus
+% Zn plus
    
-    E(i) = bornPicardNoStern(zincRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(17) = bornPicardNoStern(zincRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 18 % Zn minus
+% Zn minus
   
-    E(i) = bornPicardNoStern(zincRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(18) = bornPicardNoStern(zincRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
     
-elseif i == 19 % Cd plus
+% Cd plus
    
-    E(i) = bornPicardNoStern(cadmiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E(19) = bornPicardNoStern(cadmiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
-elseif i == 20 % Cd minus
+% Cd minus
   
-    E(i) = bornPicardNoStern(cadmiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+    E(20) = bornPicardNoStern(cadmiumRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
+  
     
 end
-end
-
-
-D = ObjectiveFunction(i,Params,E)
-    
-    
     
     
     
