@@ -18,10 +18,10 @@ conv_factor = 332.112;
 Params = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 i = 1; 
-k = 1;
-n = 10;
-q1 = 1;
-q2 = -1;
+k = 1; % Kappa
+n = 10; % numPicardIterations
+q1 = 1; % plus charge
+q2 = -1; % minus charge
 
 
 sodiumRminOver2 = 1.41075; % new Roux toppar 1.36375;  % standard charmm
