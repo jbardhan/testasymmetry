@@ -8,9 +8,8 @@ function Error = ObjectiveFunction(Params)
 %               
 
 addpath('..')
-addpath('../Asymmetric/functions')
-addpath('../Asymmetric/born/')
-addpath('../pointbem/')
+addpath('../born/')
+addpath('../../pointbem/')
 
 
 MD = [ -93.4    % Na+

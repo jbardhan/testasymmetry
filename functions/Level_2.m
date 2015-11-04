@@ -2,9 +2,9 @@ function E = Level_2(Params)
 %F           Returns the energy of an ion of charge q and radius R using
 %            funtion bornPicardNoStern.
 addpath('..')
-addpath('../Asymmetric/functions/')
-addpath('../Asymmetric/born/')
-addpath('../pointbem')
+addpath('../functions/')
+addpath('../born/')
+addpath('../../pointbem')
 
 
 rscale = 0.92;
