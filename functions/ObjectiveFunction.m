@@ -1,4 +1,4 @@
-function Error = ObjectiveFunction(Params)
+function Error = ObjectiveFunction(x)
 %ERROR          Returns the deviance of the experimental MD FEP energy results from the
 %               calculated FEP free energy.  OBJECTIVEFUNCTION(Params)
 %               takes in i situations and calculates the difference between the MD,
@@ -32,15 +32,10 @@ MD = [ -93.4    % Na+
        -191.2   % Zn-
        -89.08   % Cd+
        -164.3   % Cd-
-       ];
+       ]';
    
-
-
-for i = 1 : length(MD)
+Params = struct('alpha',x(1), 'beta', x(2),'EfieldOffset',x(3));
    
-  
-    F = [Level_2(i)]; % Calls the function Level_2.m which calculates the energy using bornPicardNoStern.
- 
-    
-    Error(i) = [(MD(i) - F(i))];
-end
+F = Level_2(Params); % Calls the function Level_2.m which calculates the energy using bornPicardNoStern.
+
+Error = MD - F;

@@ -12,7 +12,13 @@ rscale = 0.92;
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
-Params = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
+
+
+alpha = Params.alpha;
+beta = Params.beta;
+gamma = Params.EfieldOffset;
+mu =  -alpha * tanh(-gamma);
+
 
 i = 1; 
 k = 1; % Kappa
