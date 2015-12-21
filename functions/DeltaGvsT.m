@@ -14,7 +14,7 @@ A = [1.061 1.068 1.075 1.083 1.09 1.098 1.106 1.114 1.123];
 B = -1.*[118.542 120.061 121.606 123.157 124.734 126.394 128.008 129.657 131.343];
 G = -1.*[.857 .872 .888 .904 .92 .937 .953 .969 .986];
 Ion = [1 2 3 4 5 6 7 8 9];
-
+%   [Li Na K Rb Cs F Cl Br I]
 for i = 1:9
 epsOut(i) = epsilon_t(T(i));
 Params(i) = struct('alpha', A(i), 'beta', B(i), 'EfieldOffset', G(i));
@@ -58,28 +58,28 @@ F5 = polyval(CS1,T);
 %% fluorineMinus i = 6
 fluorineRminOver2 = 2.303; 
 for l = 1:9
-    F_eng(l) = bornPicardNoStern(fluorineRminOver2*rscale,q1,epsIn,epsOut(l),k,Params(l),conv_factor,n);
+    F_eng(l) = bornPicardNoStern(fluorineRminOver2*rscale,q2,epsIn,epsOut(l),k,Params(l),conv_factor,n);
 end
 FL1 = polyfit(T,F_eng,1);
 F6 = polyval(FL1,T);
 %% chlorideMinus  i = 7
 chlorideRminOver2 = 2.513;
 for l = 1:9
-    CL_eng(l) = bornPicardNoStern(chlorideRminOver2*rscale,q1,epsIn,epsOut(l),k,Params(l),conv_factor,n);
+    CL_eng(l) = bornPicardNoStern(chlorideRminOver2*rscale,q2,epsIn,epsOut(l),k,Params(l),conv_factor,n);
 end
 CL1 = polyfit(T,CL_eng,1);
 F7 = polyval(CL1,T);
 %% bromineMinus i = 8
 bromineRminOver2 = 2.608; 
 for l = 1:9
-    BR_eng(l) = bornPicardNoStern(bromineRminOver2*rscale,q1,epsIn,epsOut(l),k,Params(l),conv_factor,n);
+    BR_eng(l) = bornPicardNoStern(bromineRminOver2*rscale,q2,epsIn,epsOut(l),k,Params(l),conv_factor,n);
 end
 BR1 = polyfit(T,BR_eng,1);
 F8 = polyval(BR1,T);
 %% iodineMinus i = 9
 iodineRminOver2 = 2.860; 
 for l = 1:9
-    I_eng(l) = bornPicardNoStern(iodineRminOver2*rscale,q1,epsIn,epsOut(l),k,Params(l),conv_factor,n);
+    I_eng(l) = bornPicardNoStern(iodineRminOver2*rscale,q2,epsIn,epsOut(l),k,Params(l),conv_factor,n);
 end
 I1 = polyfit(T,I_eng,1);
 F9 = polyval(I1,T);
@@ -90,6 +90,7 @@ Our_Delta_S = (-1/.000239).*Slope;
 Intercept = [L1(2) NA1(2) K1(2) RB1(2) CS1(2) FL1(2) CL1(2) BR1(2) I1(2)];
 Our_Delta_H = Intercept./.239;
 Fawcett_Delta_S = [-199 -143 -101 -92 -78 -138 -89 -79 -66];
+
 %% Plots
 plot(T,F1,T,F2,T,F3,T,F4,T,F5,T,F6,T,F7,T,F8,T,F9)
 xlabel('Temp in K')
