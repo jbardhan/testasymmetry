@@ -9,7 +9,7 @@ addpath('../../pointbem')
 
 rscale = 0.92;
 epsIn  =  1;
-t = 0; % Desired Temp in C
+t = 40; % Desired Temp in C
 epsOut = epsilon_t(t+273.15);
 conv_factor = 332.112;
 

@@ -14,7 +14,7 @@ addpath('../../pointbem/')
 
 delS = [-199 -143 -101 -92 -78 -138 -89 -79 -66].*(0.239/10^3)'; % Delta S at 25 C from Fawcett Ch. 3
 delG = [-483 -403 -333 -316 -288 -396 -310 -291 -264].*0.239'; % Delta G at 25 C from Fawcett Ch. 3
-t = 0; % Desired Temp in C
+t = 40; % Desired Temp in C
 del_t = (t-25); 
 
 MD = [ delG(1)-del_t*delS(1)    % Li+
