@@ -1,5 +1,5 @@
 function E_MSA = Level_2_MSA(Params)
-%F           Returns the energy of an ion of charge q and radius R using
+%E_MSA           Returns the energy of an ion of charge q and radius R using
 %            funtion bornPicardNoStern.
 addpath('..')
 addpath('../functions/')
@@ -8,9 +8,9 @@ addpath('../../pointbem')
 
 
 rscale = 0.92;
-t = 0.1:5:99;
 epsIn  =  1;
-epsOut = epsilon_t(30+273.15);
+t = 0; % Desired Temp in C
+epsOut = epsilon_t(t+273.15);
 conv_factor = 332.112;
 
 
@@ -26,31 +26,31 @@ n = 10; % numPicardIterations
 q1 = 1; % plus charge
 q2 = -1; % minus charge
 
-lithiumRminOver2 = 1; %%%%%
+lithiumRminOver2 = 1.025; %%%%%
 % lithiumPlus i = 1
 
-sodiumRminOver2 = 1.41075; % new Roux toppar 1.36375;  % standard charmm
+sodiumRminOver2 = 1.369; % new Roux toppar 1.36375;  % standard charmm
 % sodiumPlus i = 2
 
-potassiumRminOver2 = 1.76375; % new Roux toppar
+potassiumRminOver2 = 1.705; % new Roux toppar
 % potassiumPlus  i = 3
 
-rubidiumRminOver2 = 1.90;
+rubidiumRminOver2 = 1.813;
 % rubidiumPlus  i = 4
 
-cesiumRminOver2 = 2.1;
+cesiumRminOver2 = 1.976;
 % cesiumPlus i = 5
 
-fluorineRminOver2 = 1; %%%%%
+fluorineRminOver2 = 2.303; %%%%%
 % fluorineMinus i = 6
 
-chlorideRminOver2 = 2.27;
+chlorideRminOver2 = 2.513;
 % chlorideMinus  i = 7
 
-bromineRminOver2 = 1; %%%%%
+bromineRminOver2 = 2.608; %%%%%
 % bromineMinus i = 8
 
-iodineRminOver2 = 1; %%%%%
+iodineRminOver2 = 2.860; %%%%%
 % iodineMinus i = 9
 
 
@@ -77,7 +77,7 @@ iodineRminOver2 = 1; %%%%%
  
 % F minus
     
-    E_MSA(6) = bornPicardNoStern(fluorineRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
+    E_MSA(6) = bornPicardNoStern(fluorineRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
  
 % Cl minus
   

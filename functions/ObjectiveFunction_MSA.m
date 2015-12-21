@@ -1,5 +1,6 @@
 function Error_MSA = ObjectiveFunction_MSA(x)
-%ERROR          Returns the deviance of the experimental MD FEP energy results from the
+%ERROR_MSA      Returns the deviance of the experimental MD FEP energy
+%               results from Fawcett Chp. 3 and
 %               calculated FEP free energy.  OBJECTIVEFUNCTION(Params)
 %               takes in i situations and calculates the difference between the MD,
 %               experimental energy of solvation, 
@@ -11,24 +12,25 @@ addpath('..')
 addpath('../born/')
 addpath('../../pointbem/')
 
-delS = [-199 -143 -101 -92 -78 -138 -89 -79 -66]';
-%t = [25 30]; 
-%for i = 1:length(t)-1 (t(i+1) - t(i)) 
+delS = [-199 -143 -101 -92 -78 -138 -89 -79 -66].*(0.239/10^3)'; % Delta S at 25 C from Fawcett Ch. 3
+delG = [-483 -403 -333 -316 -288 -396 -310 -291 -264].*0.239'; % Delta G at 25 C from Fawcett Ch. 3
+t = 0; % Desired Temp in C
+del_t = (t-25); 
 
-MD = [ -483 - 5*delS(1)    % Li+
-       -403 - 5*delS(2)    % Na+
-       -333 - 5*delS(3)    % K+
-       -316 - 5*delS(4)    % Rb+
-       -288 - 5*delS(5)    % Cs+
-       -396 - 5*delS(6)    % F-
-       -310 - 5*delS(7)    % Cl-
-       -291 - 5*delS(8)    % Br-
-       -264 - 5*delS(9)    % I-
-       ]';
-%end  
+MD = [ delG(1)-del_t*delS(1)    % Li+
+       delG(2)-del_t*delS(2)    % Na+
+       delG(3)-del_t*delS(3)    % K+
+       delG(4)-del_t*delS(4)    % Rb+
+       delG(5)-del_t*delS(5)    % Cs+
+       delG(6)-del_t*delS(6)    % F-
+       delG(7)-del_t*delS(7)    % Cl-
+       delG(8)-del_t*delS(8)    % Br-
+       delG(9)-del_t*delS(9)    % I-
+       ]'; % The constant is Delta G at 25 C from Fawcett Ch. 3
+ 
 
 Params = struct('alpha',x(1), 'beta', x(2),'EfieldOffset',x(3));
    
-F = Level_2_MSA(Params); % Calls the function Level_2.m which calculates the energy using bornPicardNoStern.
+F = Level_2_MSA(Params); % Calls the function Level_2_MSA.m which calculates the energy using bornPicardNoStern.
 
 Error_MSA = MD - F;

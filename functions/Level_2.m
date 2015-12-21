@@ -1,5 +1,5 @@
 function E = Level_2(Params)
-%F           Returns the energy of an ion of charge q and radius R using
+%E           Returns the energy of an ion of charge q and radius R using
 %            funtion bornPicardNoStern.
 addpath('..')
 addpath('../functions/')
