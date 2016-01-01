@@ -89,7 +89,9 @@ Slope = [L1(1) NA1(1) K1(1) RB1(1) CS1(1) FL1(1) CL1(1) BR1(1) I1(1)]; % Array o
 Our_Delta_S = (-1/.000239).*Slope; % Delta S in J/mol/K
 Intercept = [L1(2) NA1(2) K1(2) RB1(2) CS1(2) FL1(2) CL1(2) BR1(2) I1(2)]; % Array of intercepts
 Our_Delta_H = Intercept./.239; % Delta H in KJ/mol
-Fawcett_Delta_S = [-199 -143 -101 -92 -78 -138 -89 -79 -66]; % Array of Delta S from Fawcett Chp. 3
+Fawcett_Delta_S_MSA = [-199 -143 -101 -92 -78 -138 -89 -79 -66]; % Array of Delta S from Fawcett Chp. 3 MSA
+Fawcett_Delta_S_Exp = [-164 -133 -96 -87 -81 -115 -53 -37 -14]; % Array of Delta S from Fawcett Chp. 3 Expt
+
 
 %% Plots
 plot(T,F1,T,F2,T,F3,T,F4,T,F5,T,F6,T,F7,T,F8,T,F9) % Plots Delta G vs. T for each ion
@@ -99,9 +101,9 @@ legend('Lithium +','Sodium +','Potassium +','Rubidium +','Cesium +','Fluorine -'
 title('Fitted Delta G vs. Temperature')
 
 figure
-plot(Ion,Our_Delta_S,'o',Ion,Fawcett_Delta_S,'*') % A visual aid for comparing our Delta S values to those of Fawcett
-axis([1 9 -210 -20])
+plot(Ion,Our_Delta_S,'o',Ion,Fawcett_Delta_S_MSA,'*',Ion,Fawcett_Delta_S_Exp,'k.','Linewidth',2.0) % A visual aid for comparing our Delta S values to those of Fawcett
+axis([1 9 -210 -10])
 xlabel('Ion Index')
 ylabel('\Delta S in J/mol/K')
 title('A Comparison of Fawcett \Delta S and Our \Delta S Values')
-legend('Our \Delta S','Fawcett \Delta S','Location','Southeast')
+legend('Our \Delta S','Fawcett MSA \Delta S','Fawcett Expt \Delta S','Location','Southeast')

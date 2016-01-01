@@ -1,17 +1,15 @@
-function E_MSA = Level_2_MSA(Params,t)
+function E_MSA = Level_2_MSA_ref(Params)
 %E_MSA           Returns the energy of an ion of charge q and radius R using
 %            funtion bornPicardNoStern.
 addpath('..')
-addpath('../functions/')
 addpath('../born/')
 addpath('../../pointbem')
 
 
 rscale = 0.92;
 epsIn  =  1;
-for j = 1:length(t)
-epsOut(j) = epsilon_t(t(j)+273.15);
-end
+t = 30; % Desired Temp in C
+epsOut = epsilon_t(t+273.15);
 conv_factor = 332.112;
 
 
@@ -55,44 +53,41 @@ iodineRminOver2 = 2.860; %%%%%
 % iodineMinus i = 9
 
 
-for i = 1:length(t)
+
 % Li plus
     
-    E_MSA(i,1) = bornPicardNoStern(lithiumRminOver2*rscale,q1,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(1) = bornPicardNoStern(lithiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
 
 % Na plus
    
-    E_MSA(i,2) = bornPicardNoStern(sodiumRminOver2*rscale,q1,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(2) = bornPicardNoStern(sodiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
 % K plus
    
-    E_MSA(i,3) = bornPicardNoStern(potassiumRminOver2*rscale,q1,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(3) = bornPicardNoStern(potassiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
   
 % Rb plus
    
-    E_MSA(i,4) = bornPicardNoStern(rubidiumRminOver2*rscale,q1,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(4) = bornPicardNoStern(rubidiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
    
 % Cs plus
    
-    E_MSA(i,5) = bornPicardNoStern(cesiumRminOver2*rscale,q1,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(5) = bornPicardNoStern(cesiumRminOver2*rscale,q1,epsIn,epsOut,k,Params,conv_factor,n);
  
 % F minus
     
-    E_MSA(i,6) = bornPicardNoStern(fluorineRminOver2*rscale,q2,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(6) = bornPicardNoStern(fluorineRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
  
 % Cl minus
   
-    E_MSA(i,7) = bornPicardNoStern(chlorideRminOver2*rscale,q2,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(7) = bornPicardNoStern(chlorideRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
 
 % Br minus
 
-    E_MSA(i,8) = bornPicardNoStern(bromineRminOver2*rscale,q2,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(8) = bornPicardNoStern(bromineRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
  
 % I minus
 
-    E_MSA(i,9) = bornPicardNoStern(iodineRminOver2*rscale,q2,epsIn,epsOut(i),k,Params,conv_factor,n);
+    E_MSA(9) = bornPicardNoStern(iodineRminOver2*rscale,q2,epsIn,epsOut,k,Params,conv_factor,n);
   
 end
-end    
-    
-    
