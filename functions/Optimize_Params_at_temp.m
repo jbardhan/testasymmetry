@@ -1,25 +1,22 @@
-function Parameters = Parameters_of_temp(x)
-
 addpath('..')
 addpath('../born/')
 addpath('../../pointbem/')
 
 x0 = [0.5 -60 -0.5];
-lb = [0 -500 -100];
-ub = [200 0 0];
-
+lb = [0 -Inf -Inf];
+ub = [Inf 0 0];
+t = 0:40;
 options = optimoptions('lsqnonlin');
 options = optimoptions(options,'Display', 'off');
 
-t = 5:6;
+x(length(t),3) = zeros;
 
 
 for i = 1:length(t)
-   
-Parameters = ObjectiveFunction_MSA(x,t(i));
-
+y = @(x)ObjectiveFunction_MSA(x,t(i));
 [x(i,:),resnorm,residual,exitflag,output,lambda,jacobian] = ...
-lsqnonlin(@Parameters_of_temp,x0,lb,ub,options);
+lsqnonlin(y,x0,lb,ub,options);
+display(['Optimizing at ' , num2str(t(i)), ' degrees Celcius'])
+end
 
-end
-end
+save('Parameters','x','t')
