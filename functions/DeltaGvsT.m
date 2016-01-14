@@ -11,10 +11,10 @@ k = 1; % kappa
 epsIn = 1;
 rscale = 0.92;
 conv_factor = 332.112;
-T = t+273.15; %[0 5 10 15 20 25 30 35 40]+273.15; % Temperature in Kelvin
-A = x(:,1)';   %[1.061 1.068 1.075 1.083 1.09 1.098 1.106 1.114 1.123]; % Values for alpha at each temp
-B = x(:,2)';   %-1.*[118.542 120.061 121.606 123.157 124.734 126.394 128.008 129.657 131.343]; % Values for beta at each temp
-G = x(:,3)';   %-1.*[.857 .872 .888 .904 .92 .937 .953 .969 .986]; % Values for gamma at each temp
+T = t+273.15; % Temperature in Kelvin
+A = x(:,1)';  % Values for alpha at each temp
+B = x(:,2)';  % Values for beta at each temp
+G = x(:,3)';  % Values for gamma at each temp
 Ion = [1 2 3 4 5 6 7 8 9]; % Ion index for plotting purposes
 %   [Li Na K Rb Cs F Cl Br I]
 
