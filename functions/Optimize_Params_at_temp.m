@@ -2,10 +2,14 @@ addpath('..')
 addpath('../born/')
 addpath('../../pointbem/')
 
+% Initial parameters and bounds
 x0 = [0.5 -60 -0.5];
 lb = [0 -Inf -Inf];
 ub = [Inf 0 0];
-t = 1:90;
+
+% Range of temperature values in Celcius
+t = 0.1:.1:99;
+
 options = optimoptions('lsqnonlin');
 options = optimoptions(options,'Display', 'off');
 
