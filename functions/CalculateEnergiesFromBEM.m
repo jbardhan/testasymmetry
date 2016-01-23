@@ -11,7 +11,7 @@ referenceE = [];
 numProblems = length(ProblemSet);
 
 for i=1:numProblems
-  curProblem = problemSet[i];
+  curProblem = ProblemSet(i);
   [newCalculatedE, newReferenceE]  = calculateProblem(curProblem, Params);
 
   % append calculated and reference results to total list  
