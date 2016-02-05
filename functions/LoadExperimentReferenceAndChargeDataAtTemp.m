@@ -1,6 +1,6 @@
 delS = [-133 -96 -87 -81 -53].*(0.239/10^3)';
 delG = [-424 -352 -329 -306 -304].*0.239';
-t = 20; 
+t = mytemp-273.15; 
 delt = t-25; % Celcius
 
 
@@ -16,4 +16,5 @@ RbReference = delG_new(3);
 CsReference = delG_new(4);
 ClReference = delG_new(5);
 
-chargeDistribution = [1 -1];
+CationChargePlusOne = 1;
+AnionChargeMinusOne = -1;

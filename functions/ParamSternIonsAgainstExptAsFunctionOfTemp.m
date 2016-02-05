@@ -9,8 +9,9 @@ addpath('../../panelbem');
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 global UsefulConstants ProblemSet
+mytemp = 305; % Kelvin
 epsIn  =  1;
-epsOut = epsilon_t(30); % Celcius;
+epsOut = epsilon_t(mytemp); 
 conv_factor = 332.112;
 staticpotential = 10.7;
 kappa = 0.0;  % for now, this should be zero, meaning non-ionic solutions!
@@ -27,17 +28,17 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
-LoadExperimentReferenceAndChargeDataAt20C
+LoadExperimentReferenceAndChargeDataAtTemp
 
-addProblem('Na',pqrData,'../born/Na_2.srf',chargeDistribution(1), ...
+addProblem('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
 	   NaReference);
-addProblem('K',pqrData,'../born/K_2.srf',chargeDistribution(1), ...
+addProblem('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
 	   KReference);
-addProblem('Rb',pqrData,'../born/Rb_2.srf',chargeDistribution(1), ...
+addProblem('Rb',pqrData,'../born/Rb_2.srf',CationChargePlusOne, ...
 	   RbReference);
-addProblem('Cs',pqrData,'../born/Cs_2.srf',chargeDistribution(1), ...
+addProblem('Cs',pqrData,'../born/Cs_2.srf',CationChargePlusOne, ...
 	   CsReference);
-addProblem('Cl',pqrData,'../born/Cl_2.srf',chargeDistribution(2), ...
+addProblem('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
 	   ClReference);
 
 % now ProblemSet is an "array" of length one. 
@@ -58,7 +59,10 @@ x0 = [0.5 -60 -0.5];
 lb = [0 -Inf -Inf];
 ub = [Inf 0 0];
 
+
 options = optimoptions('lsqnonlin');
 options = optimoptions(options,'Display', 'off');
 y = @(x)ObjectiveFromBEM(x);
-x = lsqnonlin(y,x0,lb,ub,options);
+x3 = lsqnonlin(y,x0,lb,ub,options);
+
+save(['Params_NLBC_',num2str(mytemp),'K'],'x3')

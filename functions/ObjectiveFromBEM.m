@@ -9,7 +9,7 @@ function Error = ObjectiveFromBEM(x)
 
 % "wrap" opt variables into physical simulation variables:
 %  convert x vector to our usual NLBC structure. 
-Params = struct('alpha',x(1), 'beta', x(2),'EfieldOffset',x(3));
+Params = MakeParamsStruct(x);
    
 % physical simulations and obtain reference results
 [calculatedE,referenceE] = CalculateEnergiesFromBEM(Params); 
