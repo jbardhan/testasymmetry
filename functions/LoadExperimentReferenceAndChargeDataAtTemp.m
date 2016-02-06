@@ -1,14 +1,10 @@
-delS = [-133 -96 -87 -81 -53].*(0.239/10^3)';
-delG = [-424 -352 -329 -306 -304].*0.239';
-t = mytemp-273.15; 
-delt = t-25; % Celcius
+delS = [-133; -96; -87; -81; -53].*(0.239/10^3);
+delG = [-424; -352; -329; -306; -304].*0.239;
+referencetemp = 25+KelvinOffset; % Fawcett data is at 25 C
+delt = mytemp - referencetemp; % Kelvin
 
 
-delG_new = [delG(1)-delt*delS(1)
-            delG(2)-delt*delS(2)
-            delG(3)-delt*delS(3)
-            delG(4)-delt*delS(4)
-            delG(5)-delt*delS(5)];
+delG_new = delG-delt*delS;
 
 NaReference = delG_new(1);
 KReference = delG_new(2);

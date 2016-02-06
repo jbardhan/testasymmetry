@@ -10,6 +10,7 @@ addpath('../../panelbem');
 loadConstants
 global UsefulConstants ProblemSet
 mytemp = 305; % Kelvin
+KelvinOffset = 273.15; % TKelvin = TCelcius + KelvinOffset
 epsIn  =  1;
 epsOut = epsilon_t(mytemp); 
 conv_factor = 332.112;
@@ -63,6 +64,10 @@ ub = [Inf 0 0];
 options = optimoptions('lsqnonlin');
 options = optimoptions(options,'Display', 'off');
 y = @(x)ObjectiveFromBEM(x);
-x3 = lsqnonlin(y,x0,lb,ub,options);
+x = lsqnonlin(y,x0,lb,ub,options);
 
-save(['Params_NLBC_',num2str(mytemp),'K'],'x3')
+% Fopen fprintf fclose for energy and params
+Params = MakeParamsStruct(x);
+[calculatedE , referenceE] = CalculateEnergiesFromBEM(Params);
+% 
+% save(['Params_NLBC_',num2str(mytemp),'K'],'x',['Cal)
