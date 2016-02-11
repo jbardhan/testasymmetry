@@ -1,0 +1,41 @@
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 0.002000 -density 2.000000 -if /tmp/xyzrBBPZN3 -of ./surfzYCVjD > /tmp/outEueksn
+output file from MSMS is /tmp/outEueksn
+face 1 marked as bad!
+face 2 marked as bad!
+face 3 marked as bad!
+face 4 marked as bad!
+face 67 marked as bad!
+face 68 marked as bad!
+face 73 marked as bad!
+face 74 marked as bad!
+face 77 marked as bad!
+face 78 marked as bad!
+face 86 marked as bad!
+face 89 marked as bad!
+face 90 marked as bad!
+face 98 marked as bad!
+face 99 marked as bad!
+face 100 marked as bad!
+face 107 marked as bad!
+face 108 marked as bad!
+face 117 marked as bad!
+face 118 marked as bad!
+face 122 marked as bad!
+face 123 marked as bad!
+face 124 marked as bad!
+face 125 marked as bad!
+face 126 marked as bad!
+face 127 marked as bad!
+face 139 marked as bad!
+face 141 marked as bad!
+face 142 marked as bad!
+Removed 146 panels with zero area or invalid genus
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 1.400000 -density 2.000000 -if /tmp/xyzr0fLWup -of ./surfAD6oRE > /tmp/outaHyEc4
+output file from MSMS is /tmp/outaHyEc4
+Removed 0 panels with zero area or invalid genus
+Surface filenames:
+Salt: ./surfzYCVjD
+Dielectric: ./surfAD6oRE
+Dielectric Cavity:
+Salt Cavity:
+SUM: -12.563050
