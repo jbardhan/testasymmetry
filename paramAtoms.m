@@ -15,7 +15,7 @@ Tbase = 298; mytemp=Tbase;
 KelvinOffset = 273.15;
 epsOut = epsilon_t(Tbase);
 conv_factor = 332.112;
-staticpotential = 0.0;%10.7;
+staticpotential = 10.7;
 kappa = 0.0;  % for now, this should be zero, meaning non-ionic solutions!
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
@@ -23,12 +23,11 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 
 % here we define the actual params for the NLBC test
 %asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
-asymParams = struct('alpha',0, 'beta', -31.0627,'EfieldOffset',-1.8996);
-
+asymParams = struct('alpha',0.326658, 'beta', -47.770653,'EfieldOffset',-1.198492);
 chdir('saltresidues/phe/');
 pqrData = loadPdbAndCrg('phe.pdb','phe.crg');
 pqrAll{1} = pqrData;
-srfFile{1} = 'saltresidues/phe/phe_roux_stern_2.srf';
+srfFile{1} = 'saltresidues/phe/phe_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{1} = chargeDistribution;
 referenceData{1} = referenceE;
@@ -39,7 +38,7 @@ chdir('../..');
 chdir('saltresidues/arg/');
 pqrData = loadPdbAndCrg('arg.pdb','jr1.crg');
 pqrAll{2} = pqrData;
-srfFile{2} = 'saltresidues/arg/arg_roux_stern_2.srf';
+srfFile{2} = 'saltresidues/arg/arg_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{2} = chargeDistribution;
 referenceData{2} = referenceE;
@@ -48,9 +47,9 @@ addProblem('arg',pqrAll{2},srfFile{2},chargeDist{2}, ...
 chdir('../..');
 
 chdir('saltresidues/asp/');
-pqrData = loadPdbAndCrg('asp.pdb','jd1.crg');
+pqrData = loadPdbAndCrg('asp.pdb','jd2.crg');
 pqrAll{3} = pqrData;
-srfFile{3} = 'saltresidues/asp/asp_roux_stern_2.srf';
+srfFile{3} = 'saltresidues/asp/asp_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{3} = chargeDistribution;
 referenceData{3} = referenceE;
@@ -79,7 +78,6 @@ length(ProblemSet)
 
 
 [calculatedE,referenceE] = CalculateEnergiesFromBEM(asymParams); 
-
 return
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,4 +90,4 @@ options = optimoptions('lsqnonlin','MaxIter',12);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEM(x);
-[x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
+[x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);

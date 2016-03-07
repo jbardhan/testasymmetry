@@ -91,6 +91,16 @@ box_length = 40.0;
 correction = 0.5 * ksi * conv_factor / box_length;
 E_charging_corrected = E_uncorrected - correction * (qBase.^2 - qzero.^2 );
 
+
+chargeDistribution = chargeDistribution(:,1:length(pqrData.q));
+referenceE = E_charging_corrected;
+
+return;
+
+%%%%% BELOW HERE, THE CALCULATIONS HAVE SYSTEMATIC ERROR THAT WE
+%HAVE NOT FIXED YET.
+
+
 E_allbutone_uncorrected = [
     1  -64.2118
     10  -52.4662

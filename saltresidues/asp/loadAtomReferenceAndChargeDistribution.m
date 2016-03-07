@@ -32,7 +32,6 @@ qBase =[   0.510000
        0.620000   
       -0.760000   
       -0.760000   ];
-
 qzero = 0 * qBase;
 
 E_uncorrected = [-6.59304	 
@@ -56,9 +55,9 @@ E_uncorrected = [-6.59304
    -3.99528
  0.238099 
  0.238929      
- -19.8237      
- -31.8047      
-  -3.61322];      
+ -12.6442     
+ -60.388      
+-59.8957];      
 
 
 phi_static = 10.7;
@@ -67,6 +66,14 @@ conv_factor = 332.112;
 box_length = 40.0;
 correction = 0.5 * ksi * conv_factor / box_length;
 E_charging_corrected = E_uncorrected - correction * (qBase.^2 - qzero.^2 );
+
+chargeDistribution = chargeDistribution(:,1:length(pqrData.q));
+referenceE = E_charging_corrected;
+
+return;
+
+%%%%% BELOW HERE, THE CALCULATIONS HAVE SYSTEMATIC ERROR THAT WE
+%HAVE NOT FIXED YET.
 
 E_allbutone_uncorrected = [
     9    -74.1935 ; % from backward.fepout

@@ -14,6 +14,11 @@ for i=1:numProblems
   curProblem = ProblemSet(i);
   [newCalculatedE, newReferenceE]  = calculateProblem(curProblem, Params);
 
+%  ProblemSet(i).bemPcm = [];
+%  ProblemSet(i).bemYoonStern = [];
+%  ProblemSet(i).asymBemPcm = [];
+%  ProblemSet(i).uninitialized = 1;
+  
   % append calculated and reference results to total list  
   calculatedE = [calculatedE; newCalculatedE];
   referenceE = [referenceE; newReferenceE];
