@@ -31,7 +31,7 @@ asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1);
 
 curdir = pwd;
 for i=1:length(mol_list)
-  dir=sprintf('/Volumes/Bardhan2TB/nlbc-mobley/nlbc_test/%s',mol_list{i});
+  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;

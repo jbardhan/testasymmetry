@@ -1,5 +1,5 @@
 function [calculatedE, referenceE,electrostatic,nonpolar ] = CalculateEnergiesFromBEMSA(Params)
-global UsefulConstants ProblemSet 
+global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 
 % define empty vectors so we can extend them easily
 calculatedE  = [];
@@ -15,13 +15,15 @@ for i=1:numProblems
   curProblem = ProblemSet(i);
   [newCalculatedE, newReferenceE,newElectrostatic,newNonpolar]  = calculateProblemSA(curProblem, Params);
 
-if 0
+if saveMemory
   ProblemSet(i).bemPcm = [];
   ProblemSet(i).bemYoonStern = [];
   ProblemSet(i).asymBemPcm = [];
   ProblemSet(i).uninitialized = 1;
-  
-  fid = fopen('logfile','a');
+end
+
+if writeLogfile
+  fid = fopen(logfileName,'a');
   fprintf(fid,'%s,%f,%f,%f,%f\n',curProblem.name,newReferenceE(1), ...
 	  newCalculatedE(1),newElectrostatic(1),newNonpolar(1));
   fclose(fid);

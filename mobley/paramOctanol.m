@@ -10,49 +10,53 @@ addpath('/Users/jbardhan/repos/testasymmetry/born/');
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-global UsefulConstants ProblemSet
+global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
+saveMemory = 0;
+writeLogfile = 0;
+logfileName = 'junklogfile';
+
 epsIn  =  1;
-Tbase = 300; mytemp=Tbase;
+Tbase = 300; 
+mytemp=Tbase;
 KelvinOffset = 273.15;
 epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 conv_factor = 332.112;
 staticpotential = 2.0; % this only affects charged molecules;
-
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
+
+
+% the staticpotential below should not be used any more, please check
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
-
-% here we define the actual params for the NLBC test
-asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1); 
      
 [mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
 					  '%s %f %f','delimiter',',');
 
-analogs = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
+testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
 	   'n_octane','n_pentane','propane'};
 
 
 
 % all octanol available side chain analogues 
-%analogs = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
+%testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
 % 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
 
 % complete list of side chain analogues. not available for all solvents
-%analogs = {'1_methyl_imidazole','2_methylpropane', ...
+%testset = {'1_methyl_imidazole','2_methylpropane', ...
 %	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
 %	   'ethanol','methane','methanethiol','methanol', ...
 %	   'methyl_ethyl_sulfide','n_butane','n_butylamine', ...
 %	   'p_cresol','propane','propanoic_acid','toluene'};
 curdir=pwd;
-for i=1:length(analogs)
-  dir=sprintf('/Volumes/Bardhan2TB/nlbc-mobley/nlbc_test/%s',analogs{i});
+for i=1:length(testset)
+  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
   srfFile{i} = sprintf('%s/test_2.srf',dir);
   chargeDist{i} = pqrData.q;%chargeDistribution;
-  foo = strcmp(mol_list,analogs{i});
+  foo = strcmp(mol_list,testset{i});
   index = find(foo);
   if length(index) ~= 1
     fprintf('error finding refdata!\n');
@@ -61,7 +65,7 @@ for i=1:length(analogs)
   referenceData{i} = dG_list(index);
   surfArea{i} = surfArea_list(index);
   chdir(curdir);
-  addProblemSA(analogs{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
+  addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
 pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
@@ -88,8 +92,8 @@ length(ProblemSet)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
-lb = [-2 -200 -100 -0.1 -0.1 0];
-ub = [+2 +200 +100 +0.1 +0.1 +4];
+lb = [-2 -200 -100 -20 -0.1 0];
+ub = [+2 +200 +100 +20.1 +0.1 +4];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
