@@ -10,7 +10,10 @@ addpath('/Users/jbardhan/repos/testasymmetry/born/');
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-global UsefulConstants ProblemSet
+global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
+saveMemory = 1;
+writeLogfile = 1;
+logfileName = 'starting58';
 epsIn  =  1;
 Tbase = 300; mytemp=Tbase;
 KelvinOffset = 273.15;
@@ -31,7 +34,7 @@ asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1);
 
 curdir = pwd;
 for i=1:length(mol_list)
-  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
+  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
