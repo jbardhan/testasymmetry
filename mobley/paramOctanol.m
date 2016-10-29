@@ -34,9 +34,11 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 [mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
 					  '%s %f %f','delimiter',',');
 
-testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
-	   'n_octane','n_pentane','propane'};
+%testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
+%	   'n_octane','n_pentane','propane'};
 
+testset  = {'acetic_acid','ethanol','methanol','p_cresol','propanoic_acid',...
+	    'toluene','n_octane','ethylamine','14_dioxane'};
 
 
 % all octanol available side chain analogues 
@@ -74,7 +76,6 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
 
-if 0
 NaReference = -97.3; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
 KReference  = -79.9; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
 ClReference = -66.6; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
@@ -85,8 +86,6 @@ addProblemSA('K',pqrData,'../born/K_2.srf',1, ...
 	   KReference,KSurfArea);
 addProblemSA('Cl',pqrData,'../born/Cl_2.srf',-1, ...
 	   ClReference,ClSurfArea);
-end
-length(ProblemSet)
 
 
 

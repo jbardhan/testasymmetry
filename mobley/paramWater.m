@@ -68,7 +68,17 @@ for i=1:length(testset)
   addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
+LoadExperimentReferenceAndChargeDataAtTemp
 pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
+ NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
+ KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
+ ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
+addProblemSA('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
+	   NaReference,NaSurfArea);
+addProblemSA('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
+	   KReference,KSurfArea);
+addProblemSA('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
+             ClReference,ClSurfArea);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
@@ -76,12 +86,14 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
+x0 = [0.5  -60  -0.5 0 -0.03 1.6];
 lb = [-2 -200 -100 -20   -0.1  0];
 ub = [+2 +200 +100 +20   +0.1 +4];
 
-options = optimoptions('lsqnonlin','MaxIter',4);
+options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
+[err,ref,calc,es,np]=ObjectiveFromBEMSA(x);
+[err0,ref0,calc0,es0,np0]=ObjectiveFromBEMSA(x0);
