@@ -1,10 +1,11 @@
 % Path information
-addpath('/Users/jbardhan/repos/pointbem');
-addpath('/Users/jbardhan/repos/panelbem');
-addpath('/Users/jbardhan/repos/testasymmetry');
-addpath('/Users/jbardhan/repos/testasymmetry/functions');
-addpath('/Users/jbardhan/repos/testasymmetry/mobley');
-addpath('/Users/jbardhan/repos/testasymmetry/born/');
+Home = getenv('HOME');
+addpath(sprintf('%s/repos/pointbem',Home));
+addpath(sprintf('%s/repos/panelbem',Home));
+addpath(sprintf('%s/repos/testasymmetry',Home));
+addpath(sprintf('%s/repos/testasymmetry/functions',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
+addpath(sprintf('%s/repos/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
