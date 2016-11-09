@@ -100,3 +100,5 @@ options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
+[err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
+[err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);

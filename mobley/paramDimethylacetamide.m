@@ -90,8 +90,10 @@ x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
 lb = [-2 -200 -100 -20   -0.1  0];
 ub = [+2 +200 +100 +20   +0.1 +4];
 
-options = optimoptions('lsqnonlin','MaxIter',4);
+options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
+[err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
+[err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
