@@ -73,9 +73,9 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
 
-NaReference = -407; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
-KReference  = -335; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
-ClReference = -278; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
+NaReference = -0.239*407; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
+KReference  = -0.239*335; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
+ClReference = -0.239*278; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
 
 addProblemSA('Na',pqrData,'../born/Na_2.srf',1, ...
 	   NaReference,NaSurfArea);
