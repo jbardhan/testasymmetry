@@ -18,11 +18,12 @@ logfileName = 'junklogfile';
 
 epsIn  =  1;
 Tbase = 300; 
+epsOut = 24.852; % from MNSol
+
 mytemp=Tbase;
 KelvinOffset = 273.15;
-epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 conv_factor = 332.112;
-staticpotential = 2.0; % this only affects charged molecules;
+staticpotential = 0.0; % this only affects charged molecules;
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
 
 
@@ -31,15 +32,11 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-[mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
+[mol_list,dG_list,surfArea_list]=textread('mnsol/ethanol.csv',...
 					  '%s %f %f','delimiter',',');
 
-%testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
-%	   'n_octane','n_pentane','propane'};
 
-testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','octan_1_ol'};
-	    
-
+testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -76,9 +73,9 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
 
-NaReference = -97.3; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
-KReference  = -79.9; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
-ClReference = -66.6; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
+NaReference = -410; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
+KReference  = -335.6; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
+ClReference = -283.8; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
 
 addProblemSA('Na',pqrData,'../born/Na_2.srf',1, ...
 	   NaReference,NaSurfArea);
@@ -87,15 +84,13 @@ addProblemSA('K',pqrData,'../born/K_2.srf',1, ...
 addProblemSA('Cl',pqrData,'../born/Cl_2.srf',-1, ...
 	   ClReference,ClSurfArea);
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
-lb = [-2 -200 -100 -20 -0.1 0];
-ub = [+2 +200 +100 +20.1 +0.1 +4];
+lb = [-2 -200 -100 -20   -0.1  0];
+ub = [+2 +200 +100 +20   +0.1 +4];
 
-options = optimoptions('lsqnonlin','MaxIter',8);
+options = optimoptions('lsqnonlin','MaxIter',4);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);

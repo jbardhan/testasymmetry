@@ -14,7 +14,7 @@ convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 saveMemory = 1;
 writeLogfile = 1;
-logfileName = 'starting58';
+logfileName = 'octanol.out';
 epsIn  =  1;
 Tbase = 300; mytemp=Tbase;
 KelvinOffset = 273.15;
