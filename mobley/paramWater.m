@@ -36,8 +36,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 					  '%s %f %f','delimiter',',');
 
 
-testset  = {'acetic_acid','ethanol','methanol','p_cresol','propanoic_acid',...
-	    'toluene','n_octane','14_dioxane'};
+testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','acetic_acid','methanol'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
