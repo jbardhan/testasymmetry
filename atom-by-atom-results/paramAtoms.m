@@ -23,7 +23,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 'staticpotential',staticpotential);
 
 % here we define the actual params for the NLBC test
-%asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
+asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
 %asymParams = struct('alpha',0.326658, 'beta', -47.770653, ...
 %		    'EfieldOffset',-1.198492);
@@ -35,7 +35,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 chdir('saltresidues93/phe/');
 pqrData = loadPdbAndCrg('phe.pdb','phe.crg');
 pqrAll{1} = pqrData;
-srfFile{1} = 'saltresidues93/phe/phe_scaledcharmm_stern_4.srf';
+srfFile{1} = 'saltresidues93/phe/phe_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{1} = chargeDistribution;
 referenceData{1} = referenceE;
@@ -46,7 +46,7 @@ chdir('../..');
 chdir('saltresidues93/arg/');
 pqrData = loadPdbAndCrg('arg.pdb','jr1.crg');
 pqrAll{2} = pqrData;
-srfFile{2} = 'saltresidues93/arg/arg_scaledcharmm_stern_4.srf';
+srfFile{2} = 'saltresidues93/arg/arg_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{2} = chargeDistribution;
 referenceData{2} = referenceE;
@@ -57,7 +57,7 @@ chdir('../..');
 chdir('saltresidues93/asp/');
 pqrData = loadPdbAndCrg('asp.pdb','jd2.crg');
 pqrAll{3} = pqrData;
-srfFile{3} = 'saltresidues93/asp/asp_scaledcharmm_stern_4.srf';
+srfFile{3} = 'saltresidues93/asp/asp_scaledcharmm_stern_2.srf';
 loadAtomReferenceAndChargeDistribution
 chargeDist{3} = chargeDistribution;
 referenceData{3} = referenceE;
@@ -71,15 +71,15 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 % handle generating others.  Not complicated, but it's not self-explanatory.
 LoadExperimentReferenceAndChargeDataAtTemp
 
-addProblem('Na',pqrData,'born/Na_4.srf',CationChargePlusOne, ...
+addProblem('Na',pqrData,'born/Na_2.srf',CationChargePlusOne, ...
 	   NaReference);
-addProblem('K',pqrData,'born/K_4.srf',CationChargePlusOne, ...
+addProblem('K',pqrData,'born/K_2.srf',CationChargePlusOne, ...
 	   KReference);
-addProblem('Rb',pqrData,'born/Rb_4.srf',CationChargePlusOne, ...
+addProblem('Rb',pqrData,'born/Rb_2.srf',CationChargePlusOne, ...
 	   RbReference);
-addProblem('Cs',pqrData,'born/Cs_4.srf',CationChargePlusOne, ...
+addProblem('Cs',pqrData,'born/Cs_2.srf',CationChargePlusOne, ...
 	   CsReference);
-addProblem('Cl',pqrData,'born/Cl_4.srf',AnionChargeMinusOne, ...
+addProblem('Cl',pqrData,'born/Cl_2.srf',AnionChargeMinusOne, ...
 	   ClReference);
 
 length(ProblemSet)

@@ -9,26 +9,31 @@ addpath('/Users/jbardhan/repos/testasymmetry/born/');
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
-convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet
 epsIn  =  1;
-Tbase = 293; mytemp=Tbase;
+Tbase = 298; mytemp=Tbase;
 KelvinOffset = 273.15;
-epsOut = 4.81;  % http://macro.lsu.edu/howto/solvents/Dielectric%20Constant%20.htm
+epsOut = epsilon_t(Tbase);
 conv_factor = 332.112;
-staticpotential = 2.0; % this only affects charged molecules;
-
-kappa = 0.0;  % should be zero, meaning non-ionic solutions!
+staticpotential = 10.7;
+kappa = 0.0;  % for now, this should be zero, meaning non-ionic solutions!
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
 
 % here we define the actual params for the NLBC test
-asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1); 
-     
+asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 
-analogs = {'3_methyl_1h_indole','toluene','methanol','ethanamide', ...
-	   'n_butylamine','acetic_acid','propanoic_acid'};
+analogs = {'ethanamide','methyl_ethyl_sulfide', 'acetic_acid', ...
+	   'propanoic_acid', '3_methyl_1h_indole','p_cresol'};
+
+% reminder: ethanamide -> Asn
+%           methyl_ethyl_sulfide -> Met
+%           acetic_acid -> Asp
+%           propanoic_acid -> Glu
+%           3_methyl_1h_indole -> Trp
+%           p_cresol -> Tyr
+
 
 %analogs = {'1_methyl_imidazole','2_methylpropane', ...
 %	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
@@ -37,14 +42,16 @@ analogs = {'3_methyl_1h_indole','toluene','methanol','ethanamide', ...
 %	   'p_cresol','propane','propanoic_acid','toluene'};
 
 for i=1:length(analogs)
-  chdir(analogs{i});
+  curdir = pwd;
+  sidechaindir = sprintf('../%s',analogs{i});
+  chdir(sidechaindir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
-  srfFile{i} = sprintf('%s/test_2.srf',analogs{i});
-  loadVilla02chloroform
+  srfFile{i} = sprintf('%s/test_2.srf',sidechaindir);
+  loadTestReferenceAndChargeDistribution
   chargeDist{i} = chargeDistribution;
   referenceData{i} = referenceE;
-  chdir('..');
+  chdir(curdir);
   addProblem(analogs{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i});
 end
 
@@ -52,30 +59,30 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
-LoadIonChloroformReferenceAndChargeDataAtTemp
+LoadExperimentReferenceAndChargeDataAtTemp
 
-addProblem('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
-	   NaReference);
-addProblem('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
-	   KReference);
-addProblem('Cs',pqrData,'../born/Cs_2.srf',CationChargePlusOne, ...
-	   CsReference);
-%addProblem('F',pqrData,'../born/K_2.srf',AnionChargeMinusOne, ...
-%	   FReference);
-addProblem('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
-	   ClReference);
+%addProblem('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
+%	   NaReference);
+%addProblem('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
+%	   KReference);
+%addProblem('Rb',pqrData,'../born/Rb_2.srf',CationChargePlusOne, ...
+%	   RbReference);
+%addProblem('Cs',pqrData,'../born/Cs_2.srf',CationChargePlusOne, ...
+%	   CsReference);
+%addProblem('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
+%	   ClReference);
 
-length(ProblemSet)
+%length(ProblemSet)
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.9786  -40.2471  -0.5590];
-lb = [-4 -200 -100];
-ub = [+4 +200 +100];
+x0 = [0.5 -60 -0.5];
+lb = [0 -Inf -Inf];
+ub = [Inf 0 0];
 
-options = optimoptions('lsqnonlin','MaxIter',6);
+options = optimoptions('lsqnonlin','MaxIter',12);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEM(x);

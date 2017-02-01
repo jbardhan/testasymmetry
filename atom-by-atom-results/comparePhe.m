@@ -5,7 +5,7 @@ loadConstants
 epsIn  =  1;
 epsOut = 80;
 conv_factor = 332.112;
-asymParams = struct('alpha',0.25, 'beta', -60.0,'EfieldOffset',-0.5);
+asymParams = struct('alpha',0.320464, 'beta', -46.951476,'EfieldOffset',-1.182070);
 
 res = {'phe'};
 oneletter = {'f'};

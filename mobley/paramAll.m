@@ -27,6 +27,13 @@ asymParams = struct('alpha',0.5, 'beta', -60.0,'EfieldOffset',-0.5);
 analogs = {'ethanamide','methyl_ethyl_sulfide', 'acetic_acid', ...
 	   'propanoic_acid', '3_methyl_1h_indole','p_cresol'};
 
+% reminder: ethanamide -> Asn
+%           methyl_ethyl_sulfide -> Met
+%           acetic_acid -> Asp
+%           propanoic_acid -> Glu
+%           3_methyl_1h_indole -> Trp
+%           p_cresol -> Tyr
+
 
 %analogs = {'1_methyl_imidazole','2_methylpropane', ...
 %	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
