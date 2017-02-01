@@ -13,15 +13,18 @@ loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'cyclohexane.out';
-epsOut = 2.0165;
-x = [0.6296  -66.3536   -1.4328    3.6963   -0.0192    1.7557];
+logfileName = 'acetonitrile.out';
+epsOut = 35.6881;
 
-epsIn  =  1;
-Tbase = 300; mytemp=Tbase;
+x = [0.3680  -75.5129   -1.3212   -4.5069   -0.0096    2.0416];
+
+[mol_list,dG_list,surfArea_list]=textread('mnsol/acetonitrile.csv',...
+					  '%s %f %f','delimiter',',');
 
 saveMemory = 1;
 writeLogfile = 1;
+epsIn  =  1;
+Tbase = 300; mytemp=Tbase;
 
 KelvinOffset = 273.15;
 conv_factor = 332.112;
@@ -33,10 +36,8 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 'staticpotential',staticpotential);
 
 % here we define the actual params for the NLBC test
-asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1); 
+
      
-[mol_list,dG_list,surfArea_list]=textread('mnsol/cyclohexane.csv',...
-					  '%s %f %f','delimiter',',');
 
 curdir = pwd;
 for i=1:length(mol_list)

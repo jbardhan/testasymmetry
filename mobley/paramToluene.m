@@ -1,10 +1,11 @@
 % Path information
-addpath('/Users/jbardhan/repos/pointbem');
-addpath('/Users/jbardhan/repos/panelbem');
-addpath('/Users/jbardhan/repos/testasymmetry');
-addpath('/Users/jbardhan/repos/testasymmetry/functions');
-addpath('/Users/jbardhan/repos/testasymmetry/mobley');
-addpath('/Users/jbardhan/repos/testasymmetry/born/');
+Home = getenv('HOME');
+addpath(sprintf('%s/repos/pointbem',Home));
+addpath(sprintf('%s/repos/panelbem',Home));
+addpath(sprintf('%s/repos/testasymmetry',Home));
+addpath(sprintf('%s/repos/testasymmetry/functions',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
+addpath(sprintf('%s/repos/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -35,8 +36,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 					  '%s %f %f','delimiter',',');
 
 
-testset  = {'acetic_acid','ethanol','methanol','p_cresol','propanoic_acid',...
-	    'toluene','n_octane','ethylamine','14_dioxane'};
+testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','acetic_acid'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...

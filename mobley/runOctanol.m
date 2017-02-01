@@ -1,10 +1,11 @@
 % Path information
-addpath('/Users/jbardhan/repos/pointbem');
-addpath('/Users/jbardhan/repos/panelbem');
-addpath('/Users/jbardhan/repos/testasymmetry');
-addpath('/Users/jbardhan/repos/testasymmetry/functions');
-addpath('/Users/jbardhan/repos/testasymmetry/mobley');
-addpath('/Users/jbardhan/repos/testasymmetry/born/');
+Home = getenv('HOME');
+addpath(sprintf('%s/repos/pointbem',Home));
+addpath(sprintf('%s/repos/panelbem',Home));
+addpath(sprintf('%s/repos/testasymmetry',Home));
+addpath(sprintf('%s/repos/testasymmetry/functions',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
+addpath(sprintf('%s/repos/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -13,7 +14,7 @@ convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 saveMemory = 1;
 writeLogfile = 1;
-logfileName = 'starting58';
+logfileName = 'octanol.out';
 epsIn  =  1;
 Tbase = 300; mytemp=Tbase;
 KelvinOffset = 273.15;
@@ -46,5 +47,9 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-x = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
+xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
+xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
+
+x = xWithIons8Iter;
+
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);

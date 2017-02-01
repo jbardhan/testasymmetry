@@ -1,6 +1,9 @@
-addpath('/Users/jbardhan/repos/pointbem');
-addpath('/Users/jbardhan/repos/panelbem');
-addpath('/Users/jbardhan/repos/testasymmetry');
+% Path information
+Home = getenv('HOME');
+addpath(sprintf('%s/repos/pointbem',Home));
+addpath(sprintf('%s/repos/panelbem',Home));
+addpath(sprintf('%s/repos/testasymmetry',Home));
+
 loadConstants
 
 epsIn  =  1;
