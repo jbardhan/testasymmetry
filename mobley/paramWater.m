@@ -35,8 +35,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 [mol_list,dG_list,surfArea_list]=textread('mnsol/water.csv',...
 					  '%s %f %f','delimiter',',');
 
-
-testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','acetic_acid','methanol'};
+testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -68,17 +67,6 @@ for i=1:length(testset)
   addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-LoadExperimentReferenceAndChargeDataAtTemp
-pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
- NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
- KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
- ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
-addProblemSA('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
-	   NaReference,NaSurfArea);
-addProblemSA('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
-	   KReference,KSurfArea);
-addProblemSA('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
-             ClReference,ClSurfArea);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
@@ -86,9 +74,9 @@ addProblemSA('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5  -60  -0.5 0 -0.03 1.6];
-lb = [-2 -200 -100 -20   -0.1  0];
-ub = [+2 +200 +100 +20   +0.1 +4];
+x0 = [0.5 -60 -0.5   0     0 -0.03 1.6];
+lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
+ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
@@ -97,3 +85,5 @@ y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
 [err,ref,calc,es,np]=ObjectiveFromBEMSA(x);
 [err0,ref0,calc0,es0,np0]=ObjectiveFromBEMSA(x0);
+
+save('OptWat','x','ref','calc','es','np','x0','calc0','es0','np0');

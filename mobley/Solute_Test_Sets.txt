@@ -1,0 +1,39 @@
+butanone
+propanone
+14_dioxane
+phenol
+ethyl_acetate
+methyl_acetate
+n_propyl_acetate
+aniline
+hexan_1_ol
+propan_1_ol
+pentan_1_ol
+butan_1_ol
+methyl_pentanoate
+methyl_propanoate
+o_cresol
+
+
+
+
+'1_methyl_imidazole','2_methylpropane', ...
+%	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
+%	   'ethanol','methane','methanethiol','methanol', ...
+%	   'methyl_ethyl_sulfide','n_butane','n_butylamine', ...
+%	   'p_cresol','propane','propanoic_acid','toluene'
+
+Good 
+%%%%%%%%%%%%%%%%%%
+acetic_acid
+ethanol
+methanol
+p_cresol
+propanoic_acid
+toluene
+ethylamine
+n_octane
+pyridine
+nitromethane
+heptan_1_ol
+n_butyl_acetate
