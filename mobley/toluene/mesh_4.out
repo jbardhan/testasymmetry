@@ -1,0 +1,119 @@
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 0.002000 -density 4.000000 -if /tmp/xyzrrmV9dH -of ./surfpUvcac > /tmp/outu1yoLF
+output file from MSMS is /tmp/outu1yoLF
+face 31 marked as bad!
+face 32 marked as bad!
+face 37 marked as bad!
+face 85 marked as bad!
+face 86 marked as bad!
+face 91 marked as bad!
+face 92 marked as bad!
+face 102 marked as bad!
+face 118 marked as bad!
+face 119 marked as bad!
+face 120 marked as bad!
+face 133 marked as bad!
+face 163 marked as bad!
+face 164 marked as bad!
+face 167 marked as bad!
+face 168 marked as bad!
+face 171 marked as bad!
+face 172 marked as bad!
+face 185 marked as bad!
+face 186 marked as bad!
+face 194 marked as bad!
+face 195 marked as bad!
+face 199 marked as bad!
+face 200 marked as bad!
+face 213 marked as bad!
+face 232 marked as bad!
+face 276 marked as bad!
+face 277 marked as bad!
+face 305 marked as bad!
+face 310 marked as bad!
+face 321 marked as bad!
+face 322 marked as bad!
+face 325 marked as bad!
+face 328 marked as bad!
+face 337 marked as bad!
+face 338 marked as bad!
+face 339 marked as bad!
+face 340 marked as bad!
+face 341 marked as bad!
+face 342 marked as bad!
+face 373 marked as bad!
+face 374 marked as bad!
+face 375 marked as bad!
+face 376 marked as bad!
+face 379 marked as bad!
+face 380 marked as bad!
+face 381 marked as bad!
+face 382 marked as bad!
+face 391 marked as bad!
+face 392 marked as bad!
+face 401 marked as bad!
+face 405 marked as bad!
+face 406 marked as bad!
+face 420 marked as bad!
+face 427 marked as bad!
+face 428 marked as bad!
+face 439 marked as bad!
+face 440 marked as bad!
+face 445 marked as bad!
+face 454 marked as bad!
+face 455 marked as bad!
+face 456 marked as bad!
+face 457 marked as bad!
+face 458 marked as bad!
+face 503 marked as bad!
+face 504 marked as bad!
+face 507 marked as bad!
+face 513 marked as bad!
+face 538 marked as bad!
+face 539 marked as bad!
+face 540 marked as bad!
+face 541 marked as bad!
+face 542 marked as bad!
+face 548 marked as bad!
+face 549 marked as bad!
+face 550 marked as bad!
+face 555 marked as bad!
+face 556 marked as bad!
+face 561 marked as bad!
+face 562 marked as bad!
+face 567 marked as bad!
+face 568 marked as bad!
+face 579 marked as bad!
+face 580 marked as bad!
+face 1142 marked as bad!
+face 1592 marked as bad!
+face 2025 marked as bad!
+Removed 615 panels with zero area or invalid genus
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 1.400000 -density 4.000000 -if /tmp/xyzrVTwkWH -of ./surf06L7YD > /tmp/outbaHhIY
+output file from MSMS is /tmp/outbaHhIY
+face 89 marked as bad!
+face 124 marked as bad!
+face 127 marked as bad!
+face 129 marked as bad!
+face 130 marked as bad!
+face 203 marked as bad!
+face 204 marked as bad!
+face 206 marked as bad!
+face 207 marked as bad!
+face 208 marked as bad!
+face 209 marked as bad!
+face 250 marked as bad!
+face 251 marked as bad!
+face 252 marked as bad!
+face 573 marked as bad!
+face 681 marked as bad!
+face 688 marked as bad!
+face 690 marked as bad!
+face 753 marked as bad!
+face 767 marked as bad!
+Removed 20 panels with zero area or invalid genus
+Surface filenames:
+Salt: ./surfpUvcac
+Dielectric: ./surf06L7YD
+Dielectric Cavity:
+Salt Cavity:
+SUM: -12.559893

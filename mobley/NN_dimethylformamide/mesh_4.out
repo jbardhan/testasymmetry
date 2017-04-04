@@ -1,0 +1,83 @@
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 0.002000 -density 4.000000 -if /tmp/xyzrqjoCfL -of ./surfKgxR4P > /tmp/outYQjRKQ
+output file from MSMS is /tmp/outYQjRKQ
+face 8 marked as bad!
+face 9 marked as bad!
+face 17 marked as bad!
+face 18 marked as bad!
+face 19 marked as bad!
+face 20 marked as bad!
+face 23 marked as bad!
+face 24 marked as bad!
+face 33 marked as bad!
+face 47 marked as bad!
+face 82 marked as bad!
+face 85 marked as bad!
+face 86 marked as bad!
+face 101 marked as bad!
+face 102 marked as bad!
+face 111 marked as bad!
+face 119 marked as bad!
+face 120 marked as bad!
+face 121 marked as bad!
+face 122 marked as bad!
+face 125 marked as bad!
+face 126 marked as bad!
+face 142 marked as bad!
+face 174 marked as bad!
+face 192 marked as bad!
+face 193 marked as bad!
+face 200 marked as bad!
+face 201 marked as bad!
+face 202 marked as bad!
+face 205 marked as bad!
+face 206 marked as bad!
+face 209 marked as bad!
+face 210 marked as bad!
+face 217 marked as bad!
+face 219 marked as bad!
+face 220 marked as bad!
+face 221 marked as bad!
+face 222 marked as bad!
+face 227 marked as bad!
+face 228 marked as bad!
+face 229 marked as bad!
+face 230 marked as bad!
+face 268 marked as bad!
+face 275 marked as bad!
+face 297 marked as bad!
+face 298 marked as bad!
+face 301 marked as bad!
+face 302 marked as bad!
+face 306 marked as bad!
+face 311 marked as bad!
+face 312 marked as bad!
+face 317 marked as bad!
+face 318 marked as bad!
+face 361 marked as bad!
+face 362 marked as bad!
+face 372 marked as bad!
+face 381 marked as bad!
+face 382 marked as bad!
+face 383 marked as bad!
+face 384 marked as bad!
+face 391 marked as bad!
+face 393 marked as bad!
+face 394 marked as bad!
+face 395 marked as bad!
+face 396 marked as bad!
+face 397 marked as bad!
+face 398 marked as bad!
+face 411 marked as bad!
+face 439 marked as bad!
+face 440 marked as bad!
+face 441 marked as bad!
+Removed 442 panels with zero area or invalid genus
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 1.400000 -density 4.000000 -if /tmp/xyzrQObhY4 -of ./surfnYE96q > /tmp/outhSNPhp
+output file from MSMS is /tmp/outhSNPhp
+Removed 0 panels with zero area or invalid genus
+Surface filenames:
+Salt: ./surfKgxR4P
+Dielectric: ./surfnYE96q
+Dielectric Cavity:
+Salt Cavity:
+SUM: -12.560311

@@ -1,0 +1,76 @@
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 0.002000 -density 1.000000 -if /tmp/xyzrmcMwdQ -of ./surfvUoJyF > /tmp/outSfzyHs
+output file from MSMS is /tmp/outSfzyHs
+face 12 marked as bad!
+face 17 marked as bad!
+face 33 marked as bad!
+face 34 marked as bad!
+face 35 marked as bad!
+face 36 marked as bad!
+face 51 marked as bad!
+face 52 marked as bad!
+face 90 marked as bad!
+face 95 marked as bad!
+face 96 marked as bad!
+face 97 marked as bad!
+face 98 marked as bad!
+face 105 marked as bad!
+face 109 marked as bad!
+face 110 marked as bad!
+face 111 marked as bad!
+face 112 marked as bad!
+face 138 marked as bad!
+face 139 marked as bad!
+face 140 marked as bad!
+face 145 marked as bad!
+face 146 marked as bad!
+face 152 marked as bad!
+face 162 marked as bad!
+face 163 marked as bad!
+face 172 marked as bad!
+face 173 marked as bad!
+face 182 marked as bad!
+face 183 marked as bad!
+face 184 marked as bad!
+face 194 marked as bad!
+face 197 marked as bad!
+face 201 marked as bad!
+face 223 marked as bad!
+face 224 marked as bad!
+face 227 marked as bad!
+face 238 marked as bad!
+face 239 marked as bad!
+face 240 marked as bad!
+face 243 marked as bad!
+face 244 marked as bad!
+face 245 marked as bad!
+face 247 marked as bad!
+face 248 marked as bad!
+face 249 marked as bad!
+face 250 marked as bad!
+face 267 marked as bad!
+face 268 marked as bad!
+face 290 marked as bad!
+face 593 marked as bad!
+face 901 marked as bad!
+Removed 300 panels with zero area or invalid genus
+command = /Users/jbardhan/bin/msms -no_header -all_components -probe_radius 1.400000 -density 1.000000 -if /tmp/xyzrAWvgaE -of ./surf4h1Bd7 > /tmp/outeIHBhp
+output file from MSMS is /tmp/outeIHBhp
+face 40 marked as bad!
+face 70 marked as bad!
+face 71 marked as bad!
+face 100 marked as bad!
+face 110 marked as bad!
+face 111 marked as bad!
+face 208 marked as bad!
+face 242 marked as bad!
+face 263 marked as bad!
+face 268 marked as bad!
+face 283 marked as bad!
+face 292 marked as bad!
+Removed 12 panels with zero area or invalid genus
+Surface filenames:
+Salt: ./surfvUoJyF
+Dielectric: ./surf4h1Bd7
+Dielectric Cavity:
+Salt Cavity:
+SUM: -12.561162
