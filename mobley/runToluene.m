@@ -11,13 +11,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'toluene.out';
 epsOut = 2.3741;
 
-x = [  0.7192  -74.9811   -2.5433    5.4515   -0.0222    1.8797];
-
+ParamTolueneInfo = load('OptToluene');
+x = ParamTolueneInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/toluene.csv',...
 					  '%s %f %f','delimiter',',');
 
@@ -37,8 +36,6 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 
 % here we define the actual params for the NLBC test
 
-     
-
 curdir = pwd;
 for i=1:length(mol_list)
   dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
@@ -54,3 +51,5 @@ for i=1:length(mol_list)
 end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+
+save('RunToluene','errfinal','calcE','refE','es','np');

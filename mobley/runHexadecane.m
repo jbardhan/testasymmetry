@@ -11,13 +11,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'hexadecane.out';
 epsOut = 2.0402;
 
-x = [  0.6312  -66.5738   -2.5378    2.8536   -0.0161    1.7199];
-
+ParamHexadecaneInfo = load('OptHexadecane');
+x = ParamHexadecaneInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/hexadecane.csv',...
 					  '%s %f %f','delimiter',',');
 
@@ -40,7 +39,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
      
 
 curdir = pwd;
-for i=59:length(mol_list)
+for i=1:length(mol_list)
   dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
@@ -54,3 +53,5 @@ for i=59:length(mol_list)
 end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+
+save('RunHexadecane','errfinal','calcE','refE','es','np');

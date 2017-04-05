@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'octanol.out';
-epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
+logfileName = 'carbontet.out';
+epsOut = 2.228; % from MNSol
 
-ParamOctInfo = load('OptOctanol');
-x = ParamOctInfo.x;
-[mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
+ParamCarbontetInfo = load('OptCarbontet');
+x = ParamCarbontetInfo.x;
+[mol_list,dG_list,surfArea_list]=textread('mnsol/carbontet.csv',...
 					  '%s %f %f','delimiter',',');
 
 saveMemory = 1;
@@ -34,7 +34,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
 
-% here we define the actual params for the NLBC test     
+% here we define the actual params for the NLBC test
 
 curdir = pwd;
 for i=1:length(mol_list)
@@ -50,12 +50,7 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-% xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
-% xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
-% 
-% x = xWithIons8Iter;
-
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunOctanol','errfinal','calcE','refE','es','np');
+save('RunCarbontet','errfinal','calcE','refE','es','np');

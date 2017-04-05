@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'octanol.out';
-epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
+logfileName = 'chloroform.out';
+epsOut = 2.0402; % from MNSol
 
-ParamOctInfo = load('OptOctanol');
-x = ParamOctInfo.x;
-[mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
+ParamChloroformInfo = load('OptChloroform');
+x = ParamChloroformInfo.x;
+[mol_list,dG_list,surfArea_list]=textread('mnsol/chloroform_Spencer.csv',...
 					  '%s %f %f','delimiter',',');
 
 saveMemory = 1;
@@ -50,12 +50,7 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-% xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
-% xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
-% 
-% x = xWithIons8Iter;
-
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunOctanol','errfinal','calcE','refE','es','np');
+save('RunChloroform','errfinal','calcE','refE','es','np');

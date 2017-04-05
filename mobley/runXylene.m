@@ -11,17 +11,19 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'xylene.out';
 epsOut = 2.3879; % Zhao+Abraham J. Org. Chem 2005
-x = [0.6773 -71.2787 -2.0742 4.4332 -0.0209 1.8286];
 
-epsIn  =  1;
-Tbase = 300; mytemp=Tbase;
+ParamTolueneInfo = load('OptToluene');
+x = ParamTolueneInfo.x;
+[mol_list,dG_list,surfArea_list]=textread('mnsol/xylene.csv',...
+					  '%s %f %f','delimiter',',');
 
 saveMemory = 1;
 writeLogfile = 1;
+epsIn  =  1;
+Tbase = 300; mytemp=Tbase;
 
 KelvinOffset = 273.15;
 conv_factor = 332.112;
@@ -30,16 +32,11 @@ staticpotential = 0.0; % this only affects charged molecules;
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
-			 'staticpotential',staticpotential);
+			 'staticpotential',staticpotential); 
 
-% here we define the actual params for the NLBC test
-asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1); 
-     
-[mol_list,dG_list,surfArea_list]=textread('mnsol/xylene.csv',...
-					  '%s %f %f','delimiter',',');
 
 curdir = pwd;
-for i=20:length(mol_list)
+for i=1:length(mol_list)
   dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
@@ -53,3 +50,5 @@ for i=20:length(mol_list)
 end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+
+save('RunXylene','errfinal','calcE','refE','es','np');

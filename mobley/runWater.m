@@ -11,17 +11,9 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
-
-% xNoIonsInParam = [  1.8570  -75.6855   -2.9884    8.7302    0.0113    0.4098];
-% xIonsInParam   = [  0.5479 -97.8176 -1.0219 -9.7033 0.0049 2.4240];
-% xIonsAndMDStat = [    0.4004  -44.3595   -1.1232   -0.7356    0.0139    2.5034];
-% xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
-% 
-% x = xIonsAnd8Iter;
 
 ParamWatInfo = load('OptWat');
 x = ParamWatInfo.x;
@@ -44,8 +36,6 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 
 % here we define the actual params for the NLBC test
 
-     
-
 curdir = pwd;
 for i=1:length(mol_list)
   dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
@@ -60,4 +50,13 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
+% xNoIonsInParam = [  1.8570  -75.6855   -2.9884    8.7302    0.0113    0.4098];
+% xIonsInParam   = [  0.5479 -97.8176 -1.0219 -9.7033 0.0049 2.4240];
+% xIonsAndMDStat = [    0.4004  -44.3595   -1.1232   -0.7356    0.0139    2.5034];
+% xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
+% 
+% x = xIonsAnd8Iter;
+
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+
+save('RunWat','errfinal','calcE','refE','es','np');
