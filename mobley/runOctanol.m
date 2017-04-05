@@ -47,9 +47,12 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
-xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
+% xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
+% xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
+% 
+% x = xWithIons8Iter;
 
-x = xWithIons8Iter;
+ParamOctInfo = load('OptOctanol');
+x = ParamOctInfo.x;
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
