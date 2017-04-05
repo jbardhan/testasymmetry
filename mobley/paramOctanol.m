@@ -37,7 +37,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 %testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
 %	   'n_octane','n_pentane','propane'};
 
-testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','octan_1_ol'};
+testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 	    
 
 
@@ -71,29 +71,12 @@ for i=1:length(testset)
   addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
-
-% The following script is specialized to this example.  We'll
-% handle generating others.  Not complicated, but it's not self-explanatory.
-
-NaReference = -97.3; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
-KReference  = -79.9; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
-ClReference = -66.6; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
-
-addProblemSA('Na',pqrData,'../born/Na_2.srf',1, ...
-	   NaReference,NaSurfArea);
-addProblemSA('K',pqrData,'../born/K_2.srf',1, ...
-	   KReference,KSurfArea);
-addProblemSA('Cl',pqrData,'../born/Cl_2.srf',-1, ...
-	   ClReference,ClSurfArea);
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
-lb = [-2 -200 -100 -20 -0.1 0];
-ub = [+2 +200 +100 +20.1 +0.1 +4];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
+lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
+ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
@@ -102,3 +85,5 @@ y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
+
+save('OptOctanol','x','ref','calc','es','np','x0','calc0','es0','np0');
