@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-[mol_list,dG_list,surfArea_list]=textread('mnsol/chloroform.csv',...
+[mol_list,dG_list,surfArea_list]=textread('mnsol/chloroform_Spencer.csv',...
 					  '%s %f %f','delimiter',',');
 
 
@@ -70,7 +70,7 @@ ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
 options = optimoptions('lsqnonlin','MaxIter',6);
 options = optimoptions(options,'Display', 'iter');
 
-y = @(x)ObjectiveFromBEM(x);
+y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
