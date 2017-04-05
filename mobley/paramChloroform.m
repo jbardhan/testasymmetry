@@ -11,73 +11,66 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-global UsefulConstants ProblemSet
-epsIn  =  1;
-Tbase = 293; mytemp=Tbase;
-KelvinOffset = 273.15;
-epsOut = 4.81;  % http://macro.lsu.edu/howto/solvents/Dielectric%20Constant%20.htm
-conv_factor = 332.112;
-staticpotential = 2.0; % this only affects charged molecules;
+global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
+saveMemory = 0;
+writeLogfile = 0;
+logfileName = 'junklogfile';
 
+epsIn  =  1;
+Tbase = 300; 
+epsOut = 2.0402; % from MNSol
+
+mytemp=Tbase;
+KelvinOffset = 273.15;
+conv_factor = 332.112;
+staticpotential = 0.0; % this only affects charged molecules;
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
+
+
+% the staticpotential below should not be used any more, please check
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
-
-% here we define the actual params for the NLBC test
-asymParams = struct('alpha',0.5, 'beta', -100,'EfieldOffset',1); 
      
+[mol_list,dG_list,surfArea_list]=textread('mnsol/chloroform.csv',...
+					  '%s %f %f','delimiter',',');
 
-analogs = {'3_methyl_1h_indole','toluene','methanol','ethanamide', ...
-	   'n_butylamine','acetic_acid','propanoic_acid'};
 
-%analogs = {'1_methyl_imidazole','2_methylpropane', ...
-%	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
-%	   'ethanol','methane','methanethiol','methanol', ...
-%	   'methyl_ethyl_sulfide','n_butane','n_butylamine', ...
-%	   'p_cresol','propane','propanoic_acid','toluene'};
+testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 
-for i=1:length(analogs)
-  chdir(analogs{i});
+
+curdir=pwd;
+for i=1:length(testset)
+  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
+  chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
-  srfFile{i} = sprintf('%s/test_2.srf',analogs{i});
-  loadVilla02chloroform
-  chargeDist{i} = chargeDistribution;
-  referenceData{i} = referenceE;
-  chdir('..');
-  addProblem(analogs{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i});
+  srfFile{i} = sprintf('%s/test_2.srf',dir);
+  chargeDist{i} = pqrData.q;%chargeDistribution;
+  foo = strcmp(mol_list,testset{i});
+  index = find(foo);
+  if length(index) ~= 1
+    fprintf('error finding refdata!\n');
+    keyboard
+  end
+  referenceData{i} = dG_list(index);
+  surfArea{i} = surfArea_list(index);
+  chdir(curdir);
+  addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
-
-pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
-
-% The following script is specialized to this example.  We'll
-% handle generating others.  Not complicated, but it's not self-explanatory.
-LoadIonChloroformReferenceAndChargeDataAtTemp
-
-addProblem('Na',pqrData,'../born/Na_2.srf',CationChargePlusOne, ...
-	   NaReference);
-addProblem('K',pqrData,'../born/K_2.srf',CationChargePlusOne, ...
-	   KReference);
-addProblem('Cs',pqrData,'../born/Cs_2.srf',CationChargePlusOne, ...
-	   CsReference);
-%addProblem('F',pqrData,'../born/K_2.srf',AnionChargeMinusOne, ...
-%	   FReference);
-addProblem('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
-	   ClReference);
-
-length(ProblemSet)
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.9786  -40.2471  -0.5590];
-lb = [-4 -200 -100];
-ub = [+4 +200 +100];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
+lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
+ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
 
 options = optimoptions('lsqnonlin','MaxIter',6);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEM(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
+[err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
+[err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
