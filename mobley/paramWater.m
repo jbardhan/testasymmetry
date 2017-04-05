@@ -32,11 +32,11 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-[mol_list,dG_list,surfArea_list]=textread('mnsol/water.csv',...
+[mol_list,dG_list,surfArea_list]=textread('mnsol/water_ions.csv',...
 					  '%s %f %f','delimiter',',');
 
 
-testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','acetic_acid','methanol'};
+testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane','acetic_acid','methanol','K','Cl','Na'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -86,9 +86,9 @@ addProblemSA('Cl',pqrData,'../born/Cl_2.srf',AnionChargeMinusOne, ...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5  -60  -0.5 0 -0.03 1.6];
-lb = [-2 -200 -100 -20   -0.1  0];
-ub = [+2 +200 +100 +20   +0.1 +4];
+x0 = [0.5  -60  -0.5  -0.5*tanh(- -0.5)  0.0   0.00 0.0];
+lb = [-2 -200 -100    -2                 -20   -0.1 -2];
+ub = [+2 +200 +100    +2                 +20   +0.1 +2];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
