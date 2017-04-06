@@ -52,4 +52,3 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunXylene','errfinal','calcE','refE','es','np');
-quit()

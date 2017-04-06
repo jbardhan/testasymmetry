@@ -60,4 +60,3 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunWater','errfinal','calcE','refE','es','np');
-quit()

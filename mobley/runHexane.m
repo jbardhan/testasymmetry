@@ -54,4 +54,3 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunHexane','errfinal','calcE','refE','es','np');
-quit()

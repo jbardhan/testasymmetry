@@ -55,4 +55,3 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunHexadecane','errfinal','calcE','refE','es','np');
-quit()

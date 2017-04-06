@@ -54,4 +54,3 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunCyclohexane','errfinal','calcE','refE','es','np');
-quit()
