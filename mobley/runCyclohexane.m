@@ -15,8 +15,8 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'cyclohexane.out';
 epsOut = 2.0165;
 
-ParamChloroformInfo = load('OptChloroform');
-x = ParamChloroformInfo.x;
+ParamCyclohexaneInfo = load('Optyclohexane');
+x = ParamCyclohexaneInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/cyclohexane.csv',...
 					  '%s %f %f','delimiter',',');
 
@@ -54,3 +54,4 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunCyclohexane','errfinal','calcE','refE','es','np');
+quit()

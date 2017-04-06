@@ -15,7 +15,7 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
 
-ParamWatInfo = load('OptWat');
+ParamWatInfo = load('OptWater');
 x = ParamWatInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/water.csv',...
 					  '%s %f %f','delimiter',',');
@@ -59,4 +59,5 @@ end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunWat','errfinal','calcE','refE','es','np');
+save('RunWater','errfinal','calcE','refE','es','np');
+quit()

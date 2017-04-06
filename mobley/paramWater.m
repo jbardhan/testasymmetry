@@ -86,4 +86,6 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptWat','x','ref','calc','es','np','x0','calc0','es0','np0');
+save('OptWater','x','ref','calc','es','np','x0','calc0','es0','np0');
+
+quit()

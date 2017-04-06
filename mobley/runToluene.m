@@ -53,3 +53,4 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunToluene','errfinal','calcE','refE','es','np');
+quit()

@@ -15,8 +15,8 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'xylene.out';
 epsOut = 2.3879; % Zhao+Abraham J. Org. Chem 2005
 
-ParamTolueneInfo = load('OptToluene');
-x = ParamTolueneInfo.x;
+ParamXyleneInfo = load('OptXylene');
+x = ParamXyleneInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/xylene.csv',...
 					  '%s %f %f','delimiter',',');
 
@@ -52,3 +52,4 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunXylene','errfinal','calcE','refE','es','np');
+quit()

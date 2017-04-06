@@ -54,3 +54,4 @@ end
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
 save('RunCarbontet','errfinal','calcE','refE','es','np');
+quit()
