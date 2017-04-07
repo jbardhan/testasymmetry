@@ -2,7 +2,7 @@ import matlab.engine
 import os
 
 Home = os.environ['HOME']
-os.chdir(Home+'/Repos/testasymmetry/mobley')
+os.chdir(Home+'/repos/testasymmetry/mobley')
 
 Run_Type = 'run'
 

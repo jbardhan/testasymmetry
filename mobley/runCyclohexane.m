@@ -15,7 +15,7 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'cyclohexane.out';
 epsOut = 2.0165;
 
-ParamCyclohexaneInfo = load('Optyclohexane');
+ParamCyclohexaneInfo = load('OptCyclohexane');
 x = ParamCyclohexaneInfo.x;
 [mol_list,dG_list,surfArea_list]=textread('mnsol/cyclohexane.csv',...
 					  '%s %f %f','delimiter',',');
