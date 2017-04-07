@@ -2,7 +2,7 @@ import matlab.engine
 import os
 
 Home = os.environ['HOME']
-os.chdir(Home+'/repos/testasymmetry/mobley')
+os.chdir(Home+'/Repos/testasymmetry/mobley')
 
 Run_Type = 'param'
 
@@ -13,7 +13,7 @@ elif Run_Type == 'run':
 	Solvent_List = ['runWater', 'runOctanol', 'runHexadecane', 'runChloroform',
  		'runCyclohexane','runCarbontet', 'runHexane', 'runToluene', 'runXylene']
 
-Solvent_List = Solvent_List[0]
+Solvent_List = Solvent_List[0:2]
 
 if len(Solvent_List) <= 9:
 	for solvent in Solvent_List:
