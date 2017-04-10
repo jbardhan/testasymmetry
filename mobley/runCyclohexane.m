@@ -28,7 +28,7 @@ Data = textscan(fid,'%s %f','delimiter',',');
 fclose(fid);
 all_solutes = Data{1};
 all_surfAreas = Data{2};
-[index,m] = find(ismember(mol_list,all_solutes));
+[index,m] = find(ismember(all_solutes,mol_list));
 surfArea_list = all_surfAreas(index);
 saveMemory = 1;
 writeLogfile = 1;
