@@ -30,12 +30,21 @@ kappa = 0.0;  % should be zero, meaning non-ionic solutions!
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
-     
-[mol_list,dG_list,surfArea_list]=textread('mnsol/octanol.csv',...
-					  '%s %f %f','delimiter',',');
+ 
+fid = fopen('mnsol/octanol.csv','r'); 
+Data = textscan(fid,'%s %f %f','delimiter',',');
+fclose(fid);
+mol_list = Data{1};
+dG_list = Data{2};
 
-%testset = {'2_methylpropane','ethane','methane','n_butane','n_heptane','n_hexane',...
-%	   'n_octane','n_pentane','propane'};
+fid = fopen('mnsol/mobley_sa.csv','r');
+Data = textscan(fid,'%s %f','delimiter',',');
+fclose(fid);
+all_solutes = Data{1};
+all_surfAreas = Data{2};
+[index,m] = find(ismember(mol_list,all_solutes));
+surfArea_list = all_surfAreas(index);
+
 
 testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 	    
