@@ -17,8 +17,19 @@ epsOut = 2.228; % from MNSol
 
 ParamCarbontetInfo = load('OptCarbontet');
 x = ParamCarbontetInfo.x;
-[mol_list,dG_list,surfArea_list]=textread('mnsol/carbontet.csv',...
-					  '%s %f %f','delimiter',',');
+fid = fopen('mnsol/carbontet.csv','r'); 
+Data = textscan(fid,'%s %f %f','delimiter',',');
+fclose(fid);
+mol_list = Data{1};
+dG_list = Data{2};
+
+fid = fopen('mnsol/mobley_sa.csv','r');
+Data = textscan(fid,'%s %f','delimiter',',');
+fclose(fid);
+all_solutes = Data{1};
+all_surfAreas = Data{2};
+[index,m] = find(ismember(mol_list,all_solutes));
+surfArea_list = all_surfAreas(index);
 
 saveMemory = 1;
 writeLogfile = 1;
