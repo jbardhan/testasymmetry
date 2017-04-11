@@ -17,7 +17,7 @@ epsOut = 2.0402; % from MNSol
 
 ParamChloroformInfo = load('OptChloroform');
 x = ParamChloroformInfo.x;
-fid = fopen('mnsol/chloroform_Spencer.csv','r'); 
+fid = fopen('mnsol/chloroform.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

@@ -1,5 +1,16 @@
 butan_1_ol,-5.28,158.978
+heptan_1_ol,-7.53,231.66
+hexan_1_ol,-6.67,207.282
+pentan_1_ol,-5.9,182.924
+propan_1_ol,-4.41,134.556
+12_ethanediol,-5.98,120.061
+14_dichlorobenzene,-6.32,179.616
+14_dioxane,-6.21,146.316
+butanone,-5.43,148.104
+2_methylpyrazine,-6.99,154.478
+2_methylpyridine,-6.98,160.826
 222_trifluoroethanol,-3.03,128.755
+26_dimethylpyridine,-7.74,185.283
 3_methylpyridine,-7.35,160.369
 4_methylpyridine,-7.5,160.244
 acetaldehyde,-3.65,100.417
@@ -8,7 +19,6 @@ acetic_acid,-4.74,111.87
 propanone,-4.42,124.665
 acetonitrile,-4.44,96.412
 acetophenone,-7.81,188.909
-ammonia,-2.41,62.232
 aniline,-7.34,159.079
 anisole,-6.24,176.496
 benzaldehyde,-7.09,168.078
@@ -72,4 +82,3 @@ toluene,-5.48,166.45
 triethyl_phosphate,-10.9,272.981
 trimethylamine,-3.9,135.848
 trimethyl_phosphate,-9.74,195.858
-water,-2.05,55.683
