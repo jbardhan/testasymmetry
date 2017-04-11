@@ -17,7 +17,7 @@ epsOut = 78.36;
 
 ParamWatInfo = load('OptWater');
 x = ParamWatInfo.x;
-fid = fopen('mnsol/water.csv','r'); 
+fid = fopen('mnsol/water_ions.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
