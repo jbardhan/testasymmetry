@@ -20,10 +20,11 @@ for i = 1:length(solvents)
         title(['Experiment vs. Calculated Solvation Free Energies for ',...
                 solvents{i}])
     end
-    max_err(i) = struct('Solvent', solvents{i},'Fist_Max',...
-        sorted_errors(end), 'Second_Max',sorted_errors(end-1));
+    [~,m1] = ismember(sorted_errors(end),abs(temp.errfinal));
+    [~,m2] = ismember(sorted_errors(end-1),abs(temp.errfinal));
+    max_err(i) = struct('Solvent', solvents{i},'First_Max',...
+        m1, 'Second_Max',m2);
     clear temp 
 end
 
-save('largestErrors','max_err');
-
+Outliers = readErr(max_err);
