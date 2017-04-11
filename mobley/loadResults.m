@@ -28,3 +28,4 @@ for i = 1:length(solvents)
 end
 
 Outliers = readErr(max_err);
+save('Solvent Outliers','Outliers');

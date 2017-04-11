@@ -46,7 +46,9 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol',...
+    'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine',...
+    'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 	    
 
 
