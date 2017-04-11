@@ -43,7 +43,7 @@ Data = textscan(fid,'%s %f','delimiter',',');
 fclose(fid);
 all_solutes = Data{1};
 all_surfAreas = Data{2};
-[index,m] = find(ismember(all_solutes,mol_list));
+[m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
 
