@@ -1,5 +1,5 @@
 close all; clear all
-ploton = 1;
+ploton = 0;
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'};       
 addpath('export_fig/')
