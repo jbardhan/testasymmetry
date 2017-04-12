@@ -1,7 +1,8 @@
 close all; clear all
-ploton = 0;
+ploton = 1;
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
-            'Carbontet', 'Hexane', 'Toluene', 'Xylene'};
+            'Carbontet', 'Hexane', 'Toluene', 'Xylene'};       
+addpath('export_fig/')
         
 for i = 1:length(solvents)
     temp = load(['Run',solvents{i}]);
@@ -19,6 +20,9 @@ for i = 1:length(solvents)
         ylabel('Experimental Solvation Free Energies')
         title(['Experiment vs. Calculated Solvation Free Energies for ',...
                 solvents{i}])
+      filename = sprintf('Output/DeltaG-%s.PDF',solvents{i});
+      export_fig(filename,'-painters','-transparent');
+
     end
     [~,m1] = ismember(sorted_errors(end),abs(temp.errfinal));
     [~,m2] = ismember(sorted_errors(end-1),abs(temp.errfinal));
