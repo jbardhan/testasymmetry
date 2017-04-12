@@ -13,7 +13,6 @@ born/sternConvergenceBorn.png
 born/withstatic-renormalized.eps
 born/withstatic-renormalized.png
 *.aux
-mobley/loadResults.m
 mobley/Solvent Outliers.mat
 mobley/Output/DeltaG-Carbontet.pdf
 mobley/Output/DeltaG-Chloroform.pdf
