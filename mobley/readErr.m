@@ -4,7 +4,7 @@ solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'};
 
 for i = 1:length(solvents)
-    if solvents{i} == 'Water'
+    if string(solvents{i}) == 'Water'
         fid = fopen(['mnsol/water_ions.csv'],'r'); 
         Data = textscan(fid,'%s %f %f','delimiter',',');
         fclose(fid);
