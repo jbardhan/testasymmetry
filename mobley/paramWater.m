@@ -16,6 +16,9 @@ addpath(sprintf('%s/Research/testasymmetry/born',Home));
 tempdiv=5;
 TEMP=linspace(0,100,tempdiv);
 
+tempdiv=1;
+TEMP=24.85;
+
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 
@@ -119,13 +122,13 @@ for kk=1:tempdiv
     lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
     ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
 
-    options = optimoptions('lsqnonlin','MaxIter',8);
+    options = optimoptions('lsqnonlin','MaxIter',50);
     options = optimoptions(options,'Display', 'iter');
 
     y = @(x)ObjectiveFromBEMSA(x);
-    [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
-    [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
-    [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
+    [x(kk,:),resnorm(kk,:),residual(kk,:),exitflag(kk,:),output(kk,:)] = lsqnonlin(y,x0,lb,ub,options);
+    [err(kk,:),calc(kk,:),ref(kk,:),es(kk,:),np(kk,:)]=ObjectiveFromBEMSA(x(kk,:));
+    [err0(kk,:),calc0(kk,:),ref0(kk,:),es0(kk,:),np0(kk,:)]=ObjectiveFromBEMSA(x0);
 
     save('OptWater','x','ref','calc','es','np','x0','calc0','es0','np0');
 
