@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('/Users/jbardhan/mobley_paluch_emim_tf2n.csv','r'); 
+fid = fopen('reference-data/mobley_paluch_emim_tf2n.csv','r'); 
 Data = textscan(fid,'%s %f %f %f %f %f %f %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
