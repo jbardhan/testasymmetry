@@ -5,21 +5,46 @@ clc
 
 % Path information
 Home = getenv('HOME');
-addpath(sprintf('%s/Research/pointbem',Home));
-addpath(sprintf('%s/Research/panelbem',Home));
-addpath(sprintf('%s/Research/testasymmetry',Home));
-addpath(sprintf('%s/Research/testasymmetry/functions',Home));
-addpath(sprintf('%s/Research/testasymmetry/mobley',Home));
-addpath(sprintf('%s/Research/testasymmetry/born',Home));
-
-ionflag=0;
 
 
-tempdiv=5;
-TEMP=linspace(5,45,tempdiv);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%                                                                                              %%%%%%%%%
+%%%%%%                                Set these values before running the code                      %%%%%%%%%
+%%%%%%                                                                                              %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% tempdiv=1;
-% TEMP=24.85;
+repo_path=sprintf('%s/Research',Home);
+dropbox_path=sprintf('%s/Dropbox',Home);
+
+
+ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+                    % if ionflag=1, ions data are included in the testset
+paramboundflag=0;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
+                    % if paramboundflag=1 there is abound
+                    
+
+temp_min=5;     % lower bound of the temperature interval 
+temp_max=45;    % upper bound in the temperature interval
+tempdiv=5;      % number of divisions in the temperature interval                     
+                    
+                    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    
+                    
+addpath(sprintf('%s/pointbem',repo_path));
+addpath(sprintf('%s/panelbem',repo_path));
+addpath(sprintf('%s/testasymmetry',repo_path));
+addpath(sprintf('%s/testasymmetry/functions',repo_path));
+addpath(sprintf('%s/testasymmetry/mobley',repo_path));
+addpath(sprintf('%s/testasymmetry/born',repo_path));                    
+ 
+
+
+TEMP=linspace(5,45,tempdiv);        % create the temperature vector
+
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -79,18 +104,24 @@ for kk=1:tempdiv
     t_ref=24.85;
     
     if ionflag==1
-        dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3,-529,-424,-352,-329,-306,-429,-304,-278,-243]'./ 4.184;%Hess
-        H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./ 4.184;
-        dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;
-        dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./ 4.184;
-        dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298];
+        dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
+        H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
+        dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
+        
+        dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        
+        dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298];   % in kcal/mol
+        dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298];   % in kcal/mol/K  
+        
+        
         dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);
         
     elseif ionflag==0
-        dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./ 4.184;%Hess
-        H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./ 4.184;
-        dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;
-        dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);
+        dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie;%Hess .  in kcal/mol
+        H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  % Hess in kcal/mol
+        dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298)/298;  % in kcal/mol/K
+        dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);  % in kcal/mol
     end
     
     % all octanol available side chain analogues 
@@ -107,7 +138,7 @@ for kk=1:tempdiv
     
     curdir=pwd;
     for i=1:length(testset)
-      dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
+      dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
       chdir(dir);
       pqrData = loadPqr('test.pqr');
       pqrAll{i} = pqrData;
@@ -134,11 +165,21 @@ for kk=1:tempdiv
     % alpha beta gamma mu phi_stat np_a np_b
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 -0.03 1.6];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-        ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+        if paramboundflag==1
+            lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
+            ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+        elseif paramboundflag==0
+            lb = [-inf -inf -inf -inf  -inf  -inf  -inf];
+            ub = [ inf  inf  inf  inf   inf   inf   inf];
+        end
     elseif ionflag==1
-        lb = [-2 -200 -100 -20  -20  -0.1  -2];
-        ub = [+2 +200 +100 +20  +20  +0.1  +2];
+        if paramboundflag==1
+            lb = [-2 -200 -100 -20  -20  -0.1  -2];
+            ub = [+2 +200 +100 +20  +20  +0.1  +2];
+        elseif paramboundflag==0
+            lb = [-inf -inf -inf -inf  -inf  -inf  -inf];
+            ub = [ inf  inf  inf  inf   inf   inf   inf];
+        end
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
@@ -161,7 +202,15 @@ for kk=1:tempdiv
     tempvec(kk,:)=temp;
 end
 if ionflag==0
-    save('OptWater_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    if paramboundflag==1
+        save('OptWater_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    else
+        save('OptWater_wo_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    end
 elseif ionflag==1
-    save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    if paramboundflag==1
+        save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    else
+        save('OptWater_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+    end
 end
