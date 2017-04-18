@@ -1,5 +1,6 @@
 clear all
-%close all
+close all
+clc
 
 Home = getenv('HOME');
 
@@ -57,7 +58,7 @@ if ionflag==1
         ParamWatInfo = load('OptWater_w_ion_wo_bound');
     elseif paramboundflag==1
         %ParamWatInfo = load('OptWater_w_ion');
-        ParamWatInfo = load('OptWater_w_ion');
+        ParamWatInfo = load('OptWater_w_ion_wo_florine');
     end
 elseif ionflag==0
     if paramboundflag==0
@@ -93,8 +94,12 @@ if ionflag==1
     H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess in kcal/mol
     dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298*1000;  %  in cal/mol/K
 
-    dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett (Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-    dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie*1000;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+   % dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett (Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+   % dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie*1000;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+    
+    dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett (Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+    dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie*1000;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+
 
     dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298]';
     dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298]';
@@ -108,12 +113,12 @@ elseif ionflag==0
 end
 
 dG_list_ref_at_298
-dgvec
+calcvec(3,:)
 
 dS_list_ref_at_298
 dsvec
 
-dgerr=abs(dG_list_ref_at_298-dgvec)
+dgerr=abs(dG_list_ref_at_298-calcvec(3,:))
 dserr=abs(dS_list_ref_at_298-dsvec)
 
 
@@ -121,7 +126,7 @@ dserr=abs(dS_list_ref_at_298-dsvec)
 figure()
 scatter(dG_list_ref_at_298,dS_list_ref_at_298,100*ones(1,length(testset)),'x','linewidth',2);
 hold on
-scatter(dgvec,dsvec,100*ones(1,length(testset)),'o','linewidth',2);
+scatter(calcvec(3,:),dsvec,100*ones(1,length(testset)),'o','linewidth',2);
 hold on
 %line([-100 100],[0 0])
 ax=gca;
