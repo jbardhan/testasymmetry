@@ -1,5 +1,5 @@
 clear all
-close all
+%close all
 
 Home = getenv('HOME');
 
@@ -14,7 +14,7 @@ Home = getenv('HOME');
 
 repo_path=sprintf('%s/Research',Home);
 
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+ionflag=0;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
@@ -106,9 +106,12 @@ end
 
 dG_list_ref_at_298
 dgvec
+
 dS_list_ref_at_298
 dsvec
 
+dgerr=abs(dG_list_ref_at_298-dgvec)
+dserr=abs(dS_list_ref_at_298-dsvec)
 
 
 
@@ -136,6 +139,50 @@ elseif ionflag==0
         title('\DeltaS VS. \DeltaG without ions but with bounded parameters  in optimization')
     elseif paramboundflag==0
         title('\DeltaS VS. \DeltaG without ions and without bounded parameters in optimization')
+    end
+end
+
+figure()
+scatter(1:length(testset),dgerr,100*ones(1,length(testset)),'x','linewidth',2);
+ax=gca;
+ax.LineWidth=1;
+ax.Box='on';
+set(gca,'fontsize',30);
+xlabel('solute');
+ylabel('Error in \DeltaG (kcal/mol)');
+if ionflag==1
+    if paramboundflag==1
+        title('Absolute error in \DeltaG  for each solute with ions and with bounded parameters in optimization')
+    elseif paramboundflag==0
+        title('Absolute error in \DeltaG  for each solute with ions and with out bounded parameters in optimization')
+    end
+elseif ionflag==0
+    if paramboundflag==1
+        title('Absolute error in \DeltaG  for each solute with out ions and with bounded parameters in optimization')
+    elseif paramboundflag==0
+        title('Absolute error in \DeltaG  for each solute with out ions and with out bounded parameters in optimization')
+    end
+end
+
+figure()
+scatter(1:length(testset),dserr,100*ones(1,length(testset)),'s','linewidth',2);
+ax=gca;
+ax.LineWidth=1;
+ax.Box='on';
+set(gca,'fontsize',30);
+xlabel('solute');
+ylabel('Error in \DeltaS (cal/mol K)');
+if ionflag==1
+    if paramboundflag==1
+        title('Absolute error in \DeltaS for each solute with ions and with bounded parameters in optimization')
+    elseif paramboundflag==0
+        title('Absolute error in \DeltaS for each solute with ions and with out bounded parameters in optimization')
+    end
+elseif ionflag==0
+    if paramboundflag==1
+        title('Absolute error in \DeltaS for each solute with out ions and with bounded parameters in optimization')
+    elseif paramboundflag==0
+        title('Absolute error in \DeltaS for each solute with out ions and with out bounded parameters in optimization')
     end
 end
         
