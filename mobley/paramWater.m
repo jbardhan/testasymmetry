@@ -21,7 +21,7 @@ dropbox_path=sprintf('%s/Dropbox',Home);
 
 ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
-paramboundflag=0;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
+paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
 
@@ -88,7 +88,9 @@ for kk=1:tempdiv
 %     [m, index] = ismember(mol_list,all_solutes);
 %     surfArea_list = all_surfAreas(index);
     if ionflag==1
-        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
+    %    testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
+        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
+
     elseif ionflag==0
         testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
     end
@@ -108,8 +110,12 @@ for kk=1:tempdiv
         H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
         dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
         
-        dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+      %  dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+      %  dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+       
+        dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+
         
         dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298];   % in kcal/mol
         dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298];   % in kcal/mol/K  
@@ -209,7 +215,9 @@ if ionflag==0
     end
 elseif ionflag==1
     if paramboundflag==1
-        save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        %save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptWater_w_ion_wo_florine','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+
     else
         save('OptWater_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     end

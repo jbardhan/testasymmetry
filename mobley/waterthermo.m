@@ -14,7 +14,7 @@ Home = getenv('HOME');
 
 repo_path=sprintf('%s/Research',Home);
 
-ionflag=0;          % if ionflag=0, ions data are not included in the testset 
+ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
@@ -39,7 +39,9 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
 TEMP=linspace(5,45,tempdiv);        % create the temperature vector                   
 
 if ionflag==1
-    testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
+  %  testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
+    testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'}; % test set with out florine
+
 elseif ionflag==0
     testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
 end
@@ -54,6 +56,7 @@ if ionflag==1
     if paramboundflag==0
         ParamWatInfo = load('OptWater_w_ion_wo_bound');
     elseif paramboundflag==1
+        %ParamWatInfo = load('OptWater_w_ion');
         ParamWatInfo = load('OptWater_w_ion');
     end
 elseif ionflag==0
