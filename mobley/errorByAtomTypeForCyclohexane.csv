@@ -1,80 +1,80 @@
-,Solute Name,Atom Type
-0.322586,1_nitropropane,"['c3', 'c3', 'c3', 'no', 'o', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
-0.084392,hexan_1_ol,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
-3.83848,benzamide,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'n', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'hn', 'hn']"
-0.102867,fluorobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'f', 'ha', 'ha', 'ha', 'ha', 'ha']"
-1.320292,acetophenone,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'c3', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc']"
-0.715711,propan_1_ol,"['c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']"
-1.266428,acetic_acid,"['c', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'ho']"
-2.228737,naphthalene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha']"
-0.333049,methyl_hexanoate,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.473658,n_octane,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-1.518095,14_dichlorobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'cl', 'cl', 'ha', 'ha', 'ha', 'ha']"
-0.47601,n_propanethiol,"['c3', 'c3', 'c3', 'sh', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'hs']"
-0.640862,n_pentane,"['c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-1.546523,N_methylaniline,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nh', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1', 'hn']"
-0.727668,ethyl_phenyl_ether,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'h1', 'h1']"
-0.532627,trimethylamine,"['c3', 'c3', 'c3', 'n3', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']"
-1.079384,diethyl_ether,"['c3', 'c3', 'c3', 'c3', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1']"
-1.102917,pentan_1_ol,"['c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']"
-0.517036,trimethyl_phosphate,"['c3', 'c3', 'c3', 'o', 'os', 'os', 'os', 'p5', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']"
-0.183722,33_dimethylbutan_2_one,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.750902,toluene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc']"
-0.699678,pyrrole,"['cc', 'cc', 'cd', 'cd', 'na', 'ha', 'ha', 'h4', 'h4', 'hn']"
-0.935891,o_xylene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.915953,2_methylpyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'ha', 'h4', 'hc', 'hc', 'hc']"
-0.447677,methyl_acetate,"['c', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1']"
-2.19235,4_hydroxybenzaldehyde,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'o', 'oh', 'ha', 'ha', 'ha', 'ha', 'h4', 'ho']"
-1.159236,4_methylpyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'h4', 'h4', 'hc', 'hc', 'hc']"
-1.072349,3_methylpyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'h4', 'h4', 'hc', 'hc', 'hc']"
-0.204571,propanoic_acid,"['c', 'c3', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'ho']"
-0.692871,benzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha']"
-0.778308,ethyl_acetate,"['c', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
-0.678606,diethylamine,"['c3', 'c3', 'c3', 'c3', 'n3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1', 'hn']"
-0.276854,ethanol,"['c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']"
-1.331413,o_cresol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']"
-0.424621,m_cresol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']"
-0.744219,n_butyl_acetate,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
-0.037548,heptan_1_ol,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.568113,methanol,"['c3', 'oh', 'h1', 'h1', 'h1', 'ho']"
-0.659263,n_propyl_acetate,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
-0.119312,pentan_3_one,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.498403,nitromethane,"['c3', 'no', 'o', 'o', 'h1', 'h1', 'h1']"
-0.75092,propane,"['c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-2.330155,nitrobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'no', 'o', 'o', 'ha', 'ha', 'ha', 'ha', 'ha']"
-1.158462,chlorobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'cl', 'ha', 'ha', 'ha', 'ha', 'ha']"
-1.43218,aniline,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'nh', 'ha', 'ha', 'ha', 'ha', 'ha', 'hn', 'hn']"
-0.601378,butan_1_ol,"['c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']"
-0.246754,butanone,"['c', 'c3', 'c3', 'c3', 'o', 'h4', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.416357,methyl_pentanoate,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.251631,pentan_2_one,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-1.015408,2_methylpropan_2_ol,"['c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'ho']"
-0.31758,NN_dimethylformamide,"['c', 'c3', 'c3', 'n', 'o', 'h5', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']"
-2.401668,4_bromophenol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'oh', 'br', 'ha', 'ha', 'ha', 'ha', 'ho']"
-1.366914,benzaldehyde,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'h4']"
-1.240316,bromobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'br', 'ha', 'ha', 'ha', 'ha', 'ha']"
-0.936002,anisole,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1']"
-1.438822,phenol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'oh', 'ha', 'ha', 'ha', 'ha', 'ha', 'ho']"
-0.436641,cyclohexane,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.416754,methyl_propanoate,"['c', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc']"
-0.282566,heptan_2_one,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.71064,ethylamine,"['c3', 'c3', 'n3', 'hc', 'hc', 'hc', 'h1', 'h1', 'hn', 'hn']"
-0.610745,111_trichloroethane,"['c3', 'c3', 'cl', 'cl', 'cl', 'hc', 'hc', 'hc']"
-0.726615,m_xylene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.616586,tetrahydropyran,"['c3', 'c3', 'c3', 'c3', 'c3', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1']"
-1.814903,222_trifluoroethanol,"['c3', 'c3', 'oh', 'f', 'f', 'f', 'h1', 'h1', 'ho']"
-1.658424,methyl_benzoate,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'c3', 'o', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1']"
-1.032114,trichloroethene,"['c2', 'c2', 'cl', 'cl', 'cl', 'h4']"
-0.61456,14_dioxane,"['c3', 'c3', 'c3', 'c3', 'os', 'os', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']"
-2.031445,iodobenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'i', 'ha', 'ha', 'ha', 'ha', 'ha']"
-2.484875,quinoline,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'nb', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'h4']"
-0.172196,triethyl_phosphate,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'os', 'os', 'p5', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.631424,n_butane,"['c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.49502,acetonitrile,"['c1', 'c3', 'n1', 'hc', 'hc', 'hc']"
-1.115139,p_cresol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']"
-0.892564,pyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'nb', 'ha', 'ha', 'ha', 'h4', 'h4']"
-0.474132,propanone,"['c', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-1.220281,benzonitrile,"['cg', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'n1', 'ha', 'ha', 'ha', 'ha', 'ha']"
-0.655294,26_dimethylpyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'nb', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.208076,ethylbenzene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc']"
-0.320954,hexan_2_one,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
+,Error,Atom Type,,,,,,,,acetic_acid,"['c', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'ho']"
+benzene,-0.692871,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,ethanol,"['c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']"
+trimethyl_phosphate,-0.517036,"['c3', 'c3', 'c3', 'o', 'os', 'os', 'os', 'p5', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']",,,,,,,,methanol,"['c3', 'oh', 'h1', 'h1', 'h1', 'ho']"
+methyl_hexanoate,0.333049,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,p_cresol,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']"
+ethanol,0.276854,"['c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']",,,,,,,,propanoic_acid,"['c', 'c3', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'ho']"
+ethylbenzene,-0.208076,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,toluene,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc']"
+4_methylpyridine,-1.159236,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'h4', 'h4', 'hc', 'hc', 'hc']",,,,,,,,ethylamine,"['c3', 'c3', 'n3', 'hc', 'hc', 'hc', 'h1', 'h1', 'hn', 'hn']"
+propan_1_ol,0.715711,"['c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']",,,,,,,,n_octane,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
+diethyl_ether,1.079384,"['c3', 'c3', 'c3', 'c3', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1']",,,,,,,,pyridine,"['ca', 'ca', 'ca', 'ca', 'ca', 'nb', 'ha', 'ha', 'ha', 'h4', 'h4']"
+bromobenzene,-1.240316,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'br', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,nitromethane,"['c3', 'no', 'o', 'o', 'h1', 'h1', 'h1']"
+chlorobenzene,-1.158462,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'cl', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,heptan_1_ol,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']"
+butanone,0.246754,"['c', 'c3', 'c3', 'c3', 'o', 'h4', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,n_butyl_acetate,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']"
+n_butyl_acetate,0.744219,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,benzamide,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'n', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'hn', 'hn']"
+n_octane,0.473658,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,222_trifluoroethanol,"['c3', 'c3', 'oh', 'f', 'f', 'f', 'h1', 'h1', 'ho']"
+p_cresol,-1.115139,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+hexan_1_ol,0.084392,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,,
+33_dimethylbutan_2_one,0.183722,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+3_methylpyridine,-1.072349,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'h4', 'h4', 'hc', 'hc', 'hc']",,,,,,,,,
+butan_1_ol,0.601378,"['c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']",,,,,,,,,
+hexan_2_one,0.320954,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+1_nitropropane,-0.322586,"['c3', 'c3', 'c3', 'no', 'o', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,,
+2_methylpyridine,-0.915953,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nb', 'ha', 'ha', 'ha', 'h4', 'hc', 'hc', 'hc']",,,,,,,,,
+pentan_3_one,0.119312,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+N_methylaniline,-1.546523,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'nh', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1', 'hn']",,,,,,,,,
+triethyl_phosphate,-0.172196,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'os', 'os', 'p5', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+naphthalene,-2.228737,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+ethylamine,0.71064,"['c3', 'c3', 'n3', 'hc', 'hc', 'hc', 'h1', 'h1', 'hn', 'hn']",,,,,,,,,
+methanol,0.568113,"['c3', 'oh', 'h1', 'h1', 'h1', 'ho']",,,,,,,,,
+o_cresol,-1.331413,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+ethyl_phenyl_ether,-0.727668,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,,
+phenol,-1.438822,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'oh', 'ha', 'ha', 'ha', 'ha', 'ha', 'ho']",,,,,,,,,
+222_trifluoroethanol,1.814903,"['c3', 'c3', 'oh', 'f', 'f', 'f', 'h1', 'h1', 'ho']",,,,,,,,,
+methyl_benzoate,-1.658424,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'c3', 'o', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1']",,,,,,,,,
+methyl_pentanoate,0.416357,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+toluene,-0.750902,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc']",,,,,,,,,
+acetonitrile,0.49502,"['c1', 'c3', 'n1', 'hc', 'hc', 'hc']",,,,,,,,,
+methyl_propanoate,0.416754,"['c', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'hc', 'hc']",,,,,,,,,
+cyclohexane,-0.436641,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+benzonitrile,-1.220281,"['cg', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'n1', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+nitrobenzene,-2.330155,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'no', 'o', 'o', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+m_xylene,-0.726615,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+propane,0.75092,"['c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+m_cresol,-0.424621,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'oh', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+methyl_acetate,0.447677,"['c', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1']",,,,,,,,,
+o_xylene,-0.935891,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+trichloroethene,-1.032114,"['c2', 'c2', 'cl', 'cl', 'cl', 'h4']",,,,,,,,,
+fluorobenzene,0.102867,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'f', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+26_dimethylpyridine,-0.655294,"['ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'c3', 'nb', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+111_trichloroethane,-0.610745,"['c3', 'c3', 'cl', 'cl', 'cl', 'hc', 'hc', 'hc']",,,,,,,,,
+acetic_acid,1.266428,"['c', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+pentan_1_ol,1.102917,"['c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'ho']",,,,,,,,,
+pyridine,-0.892564,"['ca', 'ca', 'ca', 'ca', 'ca', 'nb', 'ha', 'ha', 'ha', 'h4', 'h4']",,,,,,,,,
+NN_dimethylformamide,-0.31758,"['c', 'c3', 'c3', 'n', 'o', 'h5', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']",,,,,,,,,
+2_methylpropan_2_ol,1.015408,"['c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+propanoic_acid,-0.204571,"['c', 'c3', 'c3', 'o', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'ho']",,,,,,,,,
+14_dichlorobenzene,-1.518095,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'cl', 'cl', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+14_dioxane,-0.61456,"['c3', 'c3', 'c3', 'c3', 'os', 'os', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']",,,,,,,,,
+propanone,0.474132,"['c', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+heptan_1_ol,0.037548,"['c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'oh', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+iodobenzene,-2.031445,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'i', 'ha', 'ha', 'ha', 'ha', 'ha']",,,,,,,,,
+tetrahydropyran,-0.616586,"['c3', 'c3', 'c3', 'c3', 'c3', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1']",,,,,,,,,
+diethylamine,0.678606,"['c3', 'c3', 'c3', 'c3', 'n3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'h1', 'h1', 'hn']",,,,,,,,,
+anisole,-0.936002,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c3', 'os', 'ha', 'ha', 'ha', 'ha', 'ha', 'h1', 'h1', 'h1']",,,,,,,,,
+ethyl_acetate,0.778308,"['c', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,,
+nitromethane,-0.498403,"['c3', 'no', 'o', 'o', 'h1', 'h1', 'h1']",,,,,,,,,
+4_hydroxybenzaldehyde,-2.19235,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'o', 'oh', 'ha', 'ha', 'ha', 'ha', 'h4', 'ho']",,,,,,,,,
+n_butane,0.631424,"['c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+n_propanethiol,0.47601,"['c3', 'c3', 'c3', 'sh', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1', 'hs']",,,,,,,,,
+n_propyl_acetate,0.659263,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'os', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'h1', 'h1']",,,,,,,,,
+benzaldehyde,-1.366914,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'h4']",,,,,,,,,
+trimethylamine,0.532627,"['c3', 'c3', 'c3', 'n3', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1', 'h1']",,,,,,,,,
+acetophenone,-1.320292,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'c3', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'hc', 'hc', 'hc']",,,,,,,,,
+pyrrole,-0.699678,"['cc', 'cc', 'cd', 'cd', 'na', 'ha', 'ha', 'h4', 'h4', 'hn']",,,,,,,,,
+4_bromophenol,-2.401668,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'oh', 'br', 'ha', 'ha', 'ha', 'ha', 'ho']",,,,,,,,,
+n_pentane,0.640862,"['c3', 'c3', 'c3', 'c3', 'c3', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+benzamide,-3.83848,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'c', 'n', 'o', 'ha', 'ha', 'ha', 'ha', 'ha', 'hn', 'hn']",,,,,,,,,
+pentan_2_one,0.251631,"['c', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+quinoline,-2.484875,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'nb', 'ha', 'ha', 'ha', 'ha', 'ha', 'ha', 'h4']",,,,,,,,,
+heptan_2_one,0.282566,"['c', 'c3', 'c3', 'c3', 'c3', 'c3', 'c3', 'o', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc', 'hc']",,,,,,,,,
+aniline,-1.43218,"['ca', 'ca', 'ca', 'ca', 'ca', 'ca', 'nh', 'ha', 'ha', 'ha', 'ha', 'ha', 'hn', 'hn']",,,,,,,,,

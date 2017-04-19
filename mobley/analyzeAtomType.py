@@ -40,12 +40,12 @@ for solvent in solventList:
         
     errDict = {} # Creates a dictionary with keys = abs(error) and vals = [solute_name, atom_types]
     index = 0
-    for error in errors:
-        data = [solutes[index],atomTypes[index]]
-        errDict[abs(float(error))] = data
+    for solute in solutes:
+        data = [errors[index],atomTypes[index]]
+        errDict[solute] = data
         index += 1
         
-    colNames = ['Solute Name', 'Atom Type']
+    colNames = ['Error', 'Atom Type']
     dFrame = pd.DataFrame.from_dict(errDict,orient='index')
     dFrame.columns = colNames
     dFrame.to_csv(os.path.join(csvPath,('errorByAtomTypeFor'+solvent+'.csv')),header=True) # Stores the dictionary as a csv file    
