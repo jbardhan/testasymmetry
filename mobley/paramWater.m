@@ -32,7 +32,11 @@ tempdiv=5;      % number of divisions in the temperature interval
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-                    
+
+%%%% Note: we calculate everything at 298 K which is equal to 24.85C, We
+%%%% will calculate \Delta G of ions which is available at 25C at 24.85 C
+%%%% to use them in our objective function. But in the postprocessing
+%%%% script (whaterthermo.m) we will compare 
                     
 addpath(sprintf('%s/pointbem',repo_path));
 addpath(sprintf('%s/panelbem',repo_path));
@@ -103,7 +107,8 @@ for kk=1:tempdiv
     all_surfAreas = Data{2};
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
-    t_ref=24.85;
+    t_ref_aca=24.85; %reference tempereture for amino acid analogouses
+    t_ref_ion=25;  %reference tempereture for ions
     
     if ionflag==1
         dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
@@ -113,21 +118,25 @@ for kk=1:tempdiv
       %  dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
       %  dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
        
-        dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        
+        dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca);
+        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion);
+        
+        dG_list=[dG_list_aca;dG_list_ion];
+        
 
-        
-        dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298];   % in kcal/mol
-        dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298];   % in kcal/mol/K  
-        
-        
-        dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);
+%         
+%         dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298];   % in kcal/mol
+%         dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298];   % in kcal/mol/K    
+%         dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);
         
     elseif ionflag==0
         dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie;%Hess .  in kcal/mol
         H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  % Hess in kcal/mol
         dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298)/298;  % in kcal/mol/K
-        dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref);  % in kcal/mol
+        dG_list=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca);  % in kcal/mol
     end
     
     % all octanol available side chain analogues 
