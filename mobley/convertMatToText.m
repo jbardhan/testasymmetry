@@ -1,6 +1,6 @@
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
-solvents = {'Water'};
+
 for i = 1:length(solvents)
    data = load(['Run',solvents{i}]);
    fid = fopen([solvents{i},'-Data.txt'],'w');

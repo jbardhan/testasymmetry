@@ -37,6 +37,7 @@ Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
 dG_list = Data{2};
+old_surf = Data{3};
 
 fid = fopen('mnsol/mobley_sa.csv','r');
 Data = textscan(fid,'%s %f','delimiter',',');
