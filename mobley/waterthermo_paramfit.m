@@ -25,9 +25,9 @@ calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's usin
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
-temp_min=5;     % lower bound of the temperature interval 
-temp_max=45;    % upper bound in the temperature interval
-tempdiv=5;      % number of divisions in the temperature interval                     
+temp_min=278;     % lower bound of the temperature interval 
+temp_max=318;    % upper bound in the temperature interval
+tempdiv=9;      % number of divisions in the temperature interval                     
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +49,9 @@ if calcflag==1
 
 
     %%% define the new tempereture vector 
-    new_temp=linspace(temp_min,temp_max,9);
+    new_temp=linspace(temp_min,temp_max,tempdiv);
+    KelvinOffset = 273.15;
+    new_temp=new_temp-KelvinOffset;
 
     %%% Finding the values of parameters from the quadratic fit at the new
     %%% temperatures

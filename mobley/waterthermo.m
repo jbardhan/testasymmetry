@@ -20,9 +20,9 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-temp_min=5;     % lower bound of the temperature interval 
-temp_max=45;    % upper bound in the temperature interval
-tempdiv=5;      % number of divisions in the temperature interval                     
+temp_min=278;     % lower bound of the temperature interval 
+temp_max=318;    % upper bound in the temperature interval
+tempdiv=5;      % number of divisions in the temperature interval                      
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,7 +37,7 @@ addpath(sprintf('%s/testasymmetry/mobley',repo_path));
 addpath(sprintf('%s/testasymmetry/born',repo_path));
 
 
-TEMP=linspace(5,45,tempdiv);        % create the temperature vector                   
+
 
 if ionflag==1
   %  testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
@@ -52,6 +52,9 @@ dGfunc=struct();  % structure that has the information of the solutes and the li
 
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
+
+TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
+TEMP=TEMP-KelvinOffset;
 
 if ionflag==1
     if paramboundflag==0

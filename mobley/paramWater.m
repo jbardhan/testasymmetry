@@ -25,8 +25,8 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                     % if paramboundflag=1 there is abound
                     
 
-temp_min=5;     % lower bound of the temperature interval 
-temp_max=45;    % upper bound in the temperature interval
+temp_min=278;     % lower bound of the temperature interval 
+temp_max=318;    % upper bound in the temperature interval
 tempdiv=5;      % number of divisions in the temperature interval                     
                     
                     
@@ -47,7 +47,7 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
  
 
 
-TEMP=linspace(5,45,tempdiv);        % create the temperature vector
+TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
 
 
 % a bunch of useful variables and constants. also defining the global
@@ -61,16 +61,19 @@ for kk=1:tempdiv
     saveMemory = 0;
     writeLogfile = 0;
     logfileName = 'junklogfile';
-    temp=TEMP(kk);
+
     epsIn  =  1;
     Tbase = 300; 
     %epsOut = 78.36; % from MNSol
-    epsOut = (-1.410e-6)*TEMP(kk)^3+(9.398e-4)*TEMP(kk)^2-0.40008*TEMP(kk)+87.740;
+    
     mytemp=Tbase;
     KelvinOffset = 273.15;
     conv_factor = 332.112;
     staticpotential = 0.0; % this only affects charged molecules;
     kappa = 0.0;  % should be zero, meaning non-ionic solutions!
+    TEMP=TEMP-KelvinOffset;
+    temp=TEMP(kk);
+    epsOut = (-1.410e-6)*temp^3+(9.398e-4)*temp^2-0.40008*temp+87.740;
 
 
     % the staticpotential below should not be used any more, please check
