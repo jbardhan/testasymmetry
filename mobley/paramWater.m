@@ -1,11 +1,11 @@
 % Path information
 Home = getenv('HOME');
-addpath(sprintf('%s/repos/pointbem',Home));
-addpath(sprintf('%s/repos/panelbem',Home));
-addpath(sprintf('%s/repos/testasymmetry',Home));
-addpath(sprintf('%s/repos/testasymmetry/functions',Home));
-addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
-addpath(sprintf('%s/repos/testasymmetry/born',Home));
+addpath(sprintf('%s/Research/pointbem',Home));
+addpath(sprintf('%s/Research/panelbem',Home));
+addpath(sprintf('%s/Research/testasymmetry',Home));
+addpath(sprintf('%s/Research/testasymmetry/functions',Home));
+addpath(sprintf('%s/Research/testasymmetry/mobley',Home));
+addpath(sprintf('%s/Research/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/water.csv','r'); 
+fid = fopen('mnsol/water_ions.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -46,7 +46,8 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+%testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', '14_dioxane','Na','K','Cl'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -97,5 +98,5 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptWater','x','ref','calc','es','np','x0','calc0','es0','np0');
+save('OptWater_jctc_dataset','x','ref','calc','es','np','x0','calc0','es0','np0');
 
