@@ -12,6 +12,7 @@ nonpolar = [];
 numProblems = length(ProblemSet);
 
 for i=1:numProblems
+    i
   curProblem = ProblemSet(i);
   [newCalculatedE, newReferenceE,newElectrostatic,newNonpolar]  = calculateProblemSA(curProblem, Params);
 

@@ -21,6 +21,8 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
+dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
+                    
 calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
@@ -89,20 +91,32 @@ if calcflag==1
                      'staticpotential',staticpotential);
 
         
+        if strcmp(dataset,'mnsol')
                  
-        fid = fopen('mnsol/water.csv','r'); 
-        Data = textscan(fid,'%s %f %f','delimiter',',');
-        fclose(fid);
-        mol_list = Data{1};
-        dG_list = Data{2};
+                 
+            fid = fopen('mnsol/water.csv','r'); 
+            Data = textscan(fid,'%s %f %f','delimiter',',');
+            fclose(fid);
+            mol_list = Data{1};
+            dG_list = Data{2};
 
-        fid = fopen('mnsol/mobley_sa.csv','r');
-        Data = textscan(fid,'%s %f','delimiter',',');
-        fclose(fid);
-        all_solutes = Data{1};
-        all_surfAreas = Data{2};
-        [m, index] = ismember(mol_list,all_solutes);
-        surfArea_list = all_surfAreas(index);
+            fid = fopen('mnsol/mobley_sa.csv','r');
+            Data = textscan(fid,'%s %f','delimiter',',');
+            fclose(fid);
+            all_solutes = Data{1};
+            all_surfAreas = Data{2};
+            [m, index] = ismember(mol_list,all_solutes);
+            surfArea_list = all_surfAreas(index);
+            
+        elseif strcmp(dataset,'mobley')
+            fid = fopen('mnsol/mobley_sa_wo_ammonia.csv','r');
+            Data = textscan(fid,'%s %f','delimiter',',');
+            fclose(fid);
+            mol_list = Data{1};
+            surfArea_list = Data{2};
+            dG_list=zeros(length(mol_list),1);
+            
+        end
         
 
                  
@@ -122,13 +136,21 @@ if calcflag==1
 
         [errfinal(j,:),calcE(j,:),refE(j,:),es(j,:),np(j, :)]=ObjectiveFromBEMSA(x(j,:));
     end
-
-    save('RunWater_mobleyset_184','errfinal','calcE','refE','es','np','new_temp','x','mol_list');
-    
+      
+    if strcmp(dataset,'mnsol')
+        save('RunWater_MNnsol_mobleysurf_184_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list');
+    elseif strcmp(dataset,'mobley')
+        save('RunWater_mobley_513_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list');
+    end
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-RunWater_mobleyset_184=load('RunWater_mobleyset_184.mat');
+if strcmp(dataset,'mnsol')
+    RunWater=load('RunWater_MNnsol_mobleysurf_184_ini_run.mat');
+elseif strcmp(dataset,'mobley')
+    RunWater=load('RunWater_mobley_513_ini_run');
+end
 
 dGfunc=struct();  % structure that has the information of the solutes and the linear function that fits the calculated values of dG at different temperatures
 
@@ -136,12 +158,17 @@ dGfunc=struct();  % structure that has the information of the solutes and the li
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 
-x = RunWater_mobleyset_184.x;   % parameters at different temperetures
-calcE = RunWater_mobleyset_184.calcE; %calculated values for \Delta G at different temperatures
-refE = RunWater_mobleyset_184.refE; %calculated values for \Delta G at different temperatures
-%refS = RunWater_mobleyset_184.dS_list; %calculated values for \Delta G at different temperatures
-TEMP=RunWater_mobleyset_184.new_temp;        % create the temperature vector 
-mol_list=RunWater_mobleyset_184.mol_list;
+
+errfinal=RunWater.errfinal;
+calcE = RunWater.calcE; %calculated values for \Delta G at different temperatures
+refE = RunWater.refE; %calculated values for \Delta G at different temperatures
+%refS = RunWater_mobleyset_184.dS_list; %calculated values for \Delta G at
+%different temperatures
+es=RunWater.es;
+np=RunWater.np;
+x = RunWater.x;   % parameters at different temperetures
+TEMP=RunWater.new_temp;        % create the temperature vector 
+mol_list=RunWater.mol_list;
 
 for i=1:length(mol_list)
     dGfunc(i).name=mol_list(i);
@@ -171,9 +198,16 @@ figure()
 plot(refE(2,:),calcE(2,:),'o')
 hold on
 line([min(refE(2,:)), max(refE(2,:))],[min(refE(2,:)) ,max(refE(2,:))])
-rms(calcE(2,:)-refE(2,:))
+dg_rms_298=rms(calcE(2,:)-refE(2,:));
 
+figure()
 mol_list_num=[1:length(mol_list)];
 scatter(mol_list_num,dsvec,'rx')
+
+if strcmp(dataset,'mnsol')
+    save('RunWater_MNSol_MobleySurf_184_allthermo','errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298');
+elseif strcmp(dataset,'mobley')
+    save('RunWater_mobley_MobleySurf_513_allthermo','errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298');
+end
 
     
