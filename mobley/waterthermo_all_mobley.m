@@ -21,12 +21,12 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
-temp_min=288;     % lower bound of the temperature interval 
-temp_max=308;    % upper bound in the temperature interval
+temp_min=14.85;     % lower bound of the temperature interval 
+temp_max=34.85;    % upper bound in the temperature interval
 tempdiv=3;      % number of divisions in the temperature interval                     
                     
                     
@@ -54,7 +54,7 @@ if calcflag==1
 
     %%% Finding the values of parameters from the quadratic fit at the new
     %%% temperatures
-    ParamWatInfo=load('OptWater_w_ion_wo_florine');
+    ParamWatInfo=load('OptWater_thermo');
     x = ParamWatInfo.xvec;
     x=x(2:4,:);
     
@@ -78,7 +78,7 @@ if calcflag==1
         staticpotential = 0.0; % this only affects charged molecules;
         kappa = 0.0;  % should be zero, meaning non-ionic solutions!
         
-        new_temp=new_temp-KelvinOffset;
+        
         temp=new_temp(j);
         epsOut = (-1.410e-6)*temp^3+(9.398e-4)*temp^2-0.40008*temp+87.740;
 

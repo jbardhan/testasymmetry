@@ -25,8 +25,8 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                     % if paramboundflag=1 there is abound
                     
 
-temp_min=278;     % lower bound of the temperature interval 
-temp_max=318;    % upper bound in the temperature interval
+temp_min=4.85;     % lower bound of the temperature interval 
+temp_max=44.85;    % upper bound in the temperature interval
 tempdiv=5;      % number of divisions in the temperature interval                     
                     
                     
@@ -71,7 +71,6 @@ for kk=1:tempdiv
     conv_factor = 332.112;
     staticpotential = 0.0; % this only affects charged molecules;
     kappa = 0.0;  % should be zero, meaning non-ionic solutions!
-    TEMP=TEMP-KelvinOffset;
     temp=TEMP(kk);
     epsOut = (-1.410e-6)*temp^3+(9.398e-4)*temp^2-0.40008*temp+87.740;
 
@@ -230,7 +229,7 @@ if ionflag==0
 elseif ionflag==1
     if paramboundflag==1
         %save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-        save('OptWater_w_ion_wo_florine','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
 
     else
         save('OptWater_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
