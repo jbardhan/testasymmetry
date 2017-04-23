@@ -20,8 +20,8 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-temp_min=278;     % lower bound of the temperature interval 
-temp_max=318;    % upper bound in the temperature interval
+temp_min=4.85;     % lower bound of the temperature interval 
+temp_max=44.85;    % upper bound in the temperature interval
 tempdiv=5;      % number of divisions in the temperature interval                      
                     
                     
@@ -54,14 +54,13 @@ loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 
 TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
-TEMP=TEMP-KelvinOffset;
 
 if ionflag==1
     if paramboundflag==0
         ParamWatInfo = load('OptWater_w_ion_wo_bound');
     elseif paramboundflag==1
         %ParamWatInfo = load('OptWater_w_ion');
-        ParamWatInfo = load('OptWater_w_ion_wo_florine');
+        ParamWatInfo = load('Optwater_thermo');
     end
 elseif ionflag==0
     if paramboundflag==0
@@ -86,48 +85,45 @@ for i=1:length(testset)
     p=[dGfunc(i).func.p1,dGfunc(i).func.p2];
 %     p=[thermofunc(i).func.p1,thermofunc(i).func.p2,thermofunc(i).func.p3,thermofunc(i).func.p4,thermofunc(i).func.p5];
     pder=polyder(p);  % derivative of the linear function dG
-    dsvec(i)=-polyval(pder,24.85)*1000;    % Evaluationg entropy, dS at 298K = 24.85C in cal/mol/K
+    if i<13
+        dsvec(i)=-polyval(pder,24.85)*1000;    % Evaluationg entropy, dS at 298K = 24.85C in cal/mol/K
+    else
+        dsvec(i)=-polyval(pder,25)*1000;    % Evaluationg entropy, dS at 298K = 24.85C in cal/mol/K
+    end
 %     figure(i);
 %     plot(dGfunc(i).func,TEMP',calcvec(:,i),'o')   
 end
 
 
-if ionflag==1
-    dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
-    H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess in kcal/mol
-    dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298*1000;  %  in cal/mol/K
+dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
+H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
+dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
 
-   % dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-429;-304;-278;-243]./joulesPerCalorie;         %Fawcett (Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-   % dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.115;-0.053;-0.037;-0.014]./joulesPerCalorie*1000;   %Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
     
-    dG_list_ref_ion_at_298=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett (Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-    dS_list_ref_ion_at_298=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie*1000;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+    if ionflag==1
+      
+        dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
+        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(24.85-25);
+        
+        dG_list_ref=[dG_list_ref_at_298;dG_list_ion];
+        dS_list_ref=[dS_list_ref_at_298;dS_list_ref_ion_at_298_15]*1000;
+        
+    end
 
-
-    dG_list_ref_at_298=[dG_list_ref_at_298;dG_list_ref_ion_at_298]';
-    dS_list_ref_at_298=[dS_list_ref_at_298;dS_list_ref_ion_at_298]';
-
-
-elseif ionflag==0
-    dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]./joulesPerCalorie;%Hess in kcal/mol
-    H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]./joulesPerCalorie;%Hess  in kcal/mol
-    dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298)/298*1000;  % in cal/mol/K
-
-end
-
-dG_list_ref_at_298
+dG_list_ref'
 calcvec(3,:)
 
-dS_list_ref_at_298
+dS_list_ref'
 dsvec
 
-dgerr=abs(dG_list_ref_at_298-calcvec(3,:))
-dserr=abs(dS_list_ref_at_298-dsvec)
+dgerr=abs(dG_list_ref'-calcvec(3,:))
+dserr=abs(dS_list_ref'-dsvec)
 
 
 
 figure()
-scatter(dG_list_ref_at_298,dS_list_ref_at_298,100*ones(1,length(testset)),'x','linewidth',2);
+scatter(dG_list_ref,dS_list_ref,100*ones(1,length(testset)),'x','linewidth',2);
 hold on
 scatter(calcvec(3,:),dsvec,100*ones(1,length(testset)),'o','linewidth',2);
 hold on

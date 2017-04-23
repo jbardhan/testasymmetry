@@ -21,7 +21,7 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
+dataset='mnsol';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
 calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
@@ -100,22 +100,21 @@ if calcflag==1
             mol_list = Data{1};
             dG_list = Data{2};
 
-            fid = fopen('mnsol/mobley_sa.csv','r');
-            Data = textscan(fid,'%s %f','delimiter',',');
+            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+            Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
             fclose(fid);
             all_solutes = Data{1};
-            all_surfAreas = Data{2};
+            all_surfAreas = Data{3};
             [m, index] = ismember(mol_list,all_solutes);
             surfArea_list = all_surfAreas(index);
             
         elseif strcmp(dataset,'mobley')
-            fid = fopen('mnsol/mobley_sa_wo_ammonia.csv','r');
-            Data = textscan(fid,'%s %f','delimiter',',');
+            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+            Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
             fclose(fid);
             mol_list = Data{1};
-            surfArea_list = Data{2};
-            dG_list=zeros(length(mol_list),1);
-            
+            dG_list = Data{2};
+            surfArea_list = Data{3};            
         end
         
 
