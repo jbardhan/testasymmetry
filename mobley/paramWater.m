@@ -1,4 +1,5 @@
 % Path information
+clear all; clear global
 Home = getenv('HOME');
 addpath(sprintf('%s/Research/pointbem',Home));
 addpath(sprintf('%s/Research/panelbem',Home));
@@ -48,8 +49,8 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 %testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', '14_dioxane','Na','K','Cl'};
-
+testSetDat = load('testSet');
+testset = testSetDat.test_set;
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
 % 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
