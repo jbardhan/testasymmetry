@@ -86,7 +86,8 @@ if ploton
         ylabel('Number of Occurances') 
     end
     filename = sprintf('Output/HistogramOfErrors.PDF');
-    export_fig(filename,'-painters','-transparent');
+    print(gcf, '-dpdf', 'Output/HistogramOfErrors.pdf'); 
+%     export_fig(filename,'-painters','-transparent');
 end
 
 % Create a structure conataining the errors associated with each solute
