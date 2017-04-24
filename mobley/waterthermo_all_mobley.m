@@ -21,7 +21,7 @@ ionflag=1;          % if ionflag=0, ions data are not included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-dataset='mnsol';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
+dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
 calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
