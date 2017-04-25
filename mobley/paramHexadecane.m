@@ -62,7 +62,7 @@ testset = testSetDat.test_set;
 %	   'p_cresol','propane','propanoic_acid','toluene'};
 curdir=pwd;
 for i=1:length(testset)
-  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
+  dir=sprintf('%s/Dropbox/lab/Projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
@@ -100,5 +100,6 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptHexadecane','x','ref','calc','es','np','x0','calc0','es0','np0');
+fname = sprintf(['OptHexadecane',datestr(now)]);
+save(fname,'x','ref','calc','es','np','x0','calc0','es0','np0','testset');
 

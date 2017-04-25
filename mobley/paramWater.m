@@ -1,12 +1,12 @@
 % Path information
 clear all; clear global
 Home = getenv('HOME');
-addpath(sprintf('%s/Research/pointbem',Home));
-addpath(sprintf('%s/Research/panelbem',Home));
-addpath(sprintf('%s/Research/testasymmetry',Home));
-addpath(sprintf('%s/Research/testasymmetry/functions',Home));
-addpath(sprintf('%s/Research/testasymmetry/mobley',Home));
-addpath(sprintf('%s/Research/testasymmetry/born',Home));
+addpath(sprintf('%s/repos/pointbem',Home));
+addpath(sprintf('%s/repos/panelbem',Home));
+addpath(sprintf('%s/repos/testasymmetry',Home));
+addpath(sprintf('%s/repos/testasymmetry/functions',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
+addpath(sprintf('%s/repos/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -63,7 +63,7 @@ testset = testSetDat.test_set;
 %	   'p_cresol','propane','propanoic_acid','toluene'};
 curdir=pwd;
 for i=1:length(testset)
-  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
+  dir=sprintf('%s/Dropbox/lab/Projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
@@ -100,5 +100,6 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptWater_jctc_dataset','x','ref','calc','es','np','x0','calc0','es0','np0');
+fname = sprintf(['OptWater',datestr(now)]);
+save(fname,'x','ref','calc','es','np','x0','calc0','es0','np0','testset');
 

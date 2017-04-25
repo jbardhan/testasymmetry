@@ -13,7 +13,7 @@ elif Run_Type == 'run':
 	Solvent_List = ['runWater', 'runOctanol', 'runHexadecane', 'runChloroform',
  		'runCyclohexane','runCarbontet', 'runHexane', 'runToluene', 'runXylene']
 
-Solvent_List = Solvent_List[1]
+Solvent_List = Solvent_List
 
 if len(Solvent_List) <= 9:
 	eng = matlab.engine.start_matlab()
