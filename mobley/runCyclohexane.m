@@ -1,4 +1,6 @@
 % Path information
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -15,8 +17,6 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'cyclohexane.out';
 epsOut = 2.0165;
 
-ParamCyclohexaneInfo = load('OptCyclohexane');
-x = ParamCyclohexaneInfo.x;
 fid = fopen('mnsol/cyclohexane.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -61,6 +61,13 @@ for i=1:length(mol_list)
 end
 
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Cyclohexane');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-save('RunCyclohexane','errfinal','calcE','refE','es','np');
+save('RunCyclohexane','errfinal','calcE','refE','es','np','testSets');

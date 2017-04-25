@@ -1,4 +1,6 @@
 % Path information
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -15,8 +17,6 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'octanol.out';
 epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 
-ParamOctInfo = load('OptOctanol');
-x = ParamOctInfo.x;
 fid = fopen('mnsol/octanol.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -67,6 +67,13 @@ end
 % x = xWithIons8Iter;
 
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Octanol');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-save('RunOctanol','errfinal','calcE','refE','es','np');
+save('RunOctanol','errfinal','calcE','refE','es','np','testSets');

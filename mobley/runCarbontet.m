@@ -1,4 +1,6 @@
 % Path information
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -14,9 +16,8 @@ convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'carbontet.out';
 epsOut = 2.228; % from MNSol
-foo = dir(pwd)
-ParamCarbontetInfo = load('OptCarbontet');
-x = ParamCarbontetInfo.x;
+foo = dir(pwd);
+
 fid = fopen('mnsol/carbontet.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -61,7 +62,13 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Carbontet');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-
-save('RunCarbontet','errfinal','calcE','refE','es','np');
+save('RunCarbontet','errfinal','calcE','refE','es','np','testSets');

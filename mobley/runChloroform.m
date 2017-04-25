@@ -1,4 +1,6 @@
 % Path information
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -15,8 +17,6 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'chloroform.out';
 epsOut = 2.0402; % from MNSol
 
-ParamChloroformInfo = load('OptChloroform');
-x = ParamChloroformInfo.x;
 fid = fopen('mnsol/chloroform.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -60,7 +60,13 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Chloroform');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-
-save('RunChloroform','errfinal','calcE','refE','es','np');
+save('RunChloroform','errfinal','calcE','refE','es','np','testSets');

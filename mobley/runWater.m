@@ -1,5 +1,6 @@
 % Path information
-tic;
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -16,8 +17,6 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
 
-ParamWatInfo = load('OptWater');
-x = ParamWatInfo.x;
 fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -69,7 +68,13 @@ end
 % 
 % x = xIonsAnd8Iter;
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Water');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-% save('RunWater','errfinal','calcE','refE','es','np');
-toc
+save('RunWater','errfinal','calcE','refE','es','np','testSets');

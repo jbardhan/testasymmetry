@@ -1,4 +1,6 @@
 % Path information
+clear all; clear global
+DataStructure = load('OptFiles.mat');
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
@@ -15,8 +17,6 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'hexane.out';
 epsOut = 1.8819; % from MNSol
 
-ParamHexaneInfo = load('OptHexane');
-x = ParamHexaneInfo.x;
 fid = fopen('mnsol/hexane.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
@@ -62,6 +62,13 @@ for i=1:length(mol_list)
 end
 
 
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+[n,m] = ismember({DataStructure.LoadData.Solvent},'Hexane');
+ParamFiles = DataStructure.LoadData(n);
+for i = 1:length(ParamFiles)
+    ParamInfo = load(ParamFiles(i).loadFile);
+    testSets(:,i) = ParamInfo.testset;
+    x = ParamInfo.x;
+    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+end
 
-save('RunHexane','errfinal','calcE','refE','es','np');
+save('RunHexane','errfinal','calcE','refE','es','np','testSets');
