@@ -14,7 +14,7 @@ convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'carbontet.out';
 epsOut = 2.228; % from MNSol
-
+foo = dir(pwd)
 ParamCarbontetInfo = load('OptCarbontet');
 x = ParamCarbontetInfo.x;
 fid = fopen('mnsol/carbontet.csv','r'); 
@@ -49,7 +49,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 
 curdir = pwd;
 for i=1:length(mol_list)
-  dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
+  dir=sprintf('%s/Dropbox/lab/Projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),mol_list{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;

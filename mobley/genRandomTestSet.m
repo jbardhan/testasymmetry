@@ -6,5 +6,5 @@ common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
             'o_cresol','propanone','pyridine'};
 
 num_solutes = 12;
-test_set = datasample(common_solutes,num_solutes);
+test_set = randsample(common_solutes,num_solutes);
 save('testSet','test_set');

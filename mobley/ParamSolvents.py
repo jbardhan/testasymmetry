@@ -14,14 +14,13 @@ elif Run_Type == 'run':
  		'runCyclohexane','runCarbontet', 'runHexane', 'runToluene', 'runXylene']
 
 Solvent_List = Solvent_List
-
-if len(Solvent_List) <= 9:
-	eng = matlab.engine.start_matlab()
+numRuns = 10
+eng = matlab.engine.start_matlab()
+for i in range(numRuns):
 	eng.eval('genRandomTestSet',nargout=0)
-	for solvent in Solvent_List:
-		eng.eval(solvent,nargout=0)
-else:
-	eng = matlab.engine.start_matlab()
-	eng.eval('genRandomTestSet',nargout=0)
-	eng.eval(Solvent_List,nargout=0)
+	if len(Solvent_List) <= 9:
+		for solvent in Solvent_List:
+			eng.eval(solvent,nargout=0)
+	else:
+		eng.eval(Solvent_List,nargout=0)
 
