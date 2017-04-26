@@ -16,7 +16,7 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 repo_path=sprintf('%s/Research',Home);
-dropbox_path=sprintf('%s/Dropbox-NEU/Dropbox',Home);
+dropbox_path=sprintf('%s/Dropbox',Home);
 
 
 ionflag=1;          % if ionflag=0, ions data are not included in the testset 

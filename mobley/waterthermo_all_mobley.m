@@ -14,11 +14,11 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 repo_path=sprintf('%s/Research',Home);
-dropbox_path=sprintf('%s/Dropbox-NEU/Dropbox',Home);
+dropbox_path=sprintf('%s/Dropbox',Home);
                    
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
-calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
@@ -169,6 +169,7 @@ es=RunWater.es;
 np=RunWater.np;
 x = RunWater.x;   % parameters at different temperetures
 TEMP=RunWater.new_temp;        % create the temperature vector '
+TEMP_K=TEMP+273.15;
 [m,index]=ismember(24.85,TEMP);
 mol_list=RunWater.mol_list;
 if strcmp(dataset,'mobley')
@@ -176,21 +177,28 @@ if strcmp(dataset,'mobley')
 end
 
 for i=1:length(mol_list)
-    dGfunc(i).name=mol_list(i);
-    dGfunc(i).func=fit(TEMP',calcE(:,i),'poly1'); % the linear function that fits to the calculated dG  at differet temperatures
+    f = @(R) (R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)))-calcE(:,i);
+    R0=[refE(index,i),refS(i)/1000,refCP(i)/1000];
+    options=optimoptions('lsqnonlin','StepTolerance',1e-12);
+    options=optimoptions(options,'OptimalityTolerance',1e-12);
+    options=optimoptions(options,'FunctionTolerance',1e-12);
+    [R,resnorm,residual,exitflag,output]=lsqnonlin(f,R0,[],[],options);
+%     figure()
+%     plot(TEMP_K,calcE(:,i),'ko',TEMP_K,R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)),'b-')
+    dGfunc(i).name=testset(i); 
+    dGfunc(i).dg=R(1);
+    dGfunc(i).ds=R(2);
+    dGfunc(i).cp=R(3); 
+    dsvec(i)=dGfunc(i).ds*1000;
+    cpvec(i)=dGfunc(i).cp*1000;
 end
 
-for i=1:length(mol_list)
-    p=[dGfunc(i).func.p1,dGfunc(i).func.p2];
-    pder=polyder(p);  % derivative of the linear function dG
-    dsvec(i)=-polyval(pder,24.85)*1000;    % Evaluationg entropy, dS at 298K = 24.85C in cal/mol/K
-%     figure(i);
-%     plot(dGfunc(i).func,TEMP',calcvec(:,i),'o')   
-end
+
  dg_rms_298_MD=0;
  dg_rms_298=rms(calcE-refE);
+ 
  if strcmp(dataset,'mobley')
-     dg_rms_298=rms(calcE(index,1:502)-refE(index,1:502));
+    dg_rms_298=rms(calcE(index,1:502)-refE(index,1:502));
     dg_rms_298_MD=rms(calc_mobley(1:502)'-refE(index,1:502));
  end
 
@@ -201,7 +209,7 @@ elseif strcmp(dataset,'mobley')
     output_name='RunWater_mobley_thermo';
 end
     
-save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298','dg_rms_298_MD','index','calc_mobley');
+save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298','dg_rms_298_MD','index','calc_mobley');
 
 
 

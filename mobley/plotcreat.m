@@ -5,18 +5,21 @@ close all
 %Water
 %%
 trainingplot_flag=1;
-mnsolplot_flag=1;
-mobleyplot_flag=1;
+mnsolplot_flag=0;
+mobleyplot_flag=0;
 %%
 run_water_training=load('RunWater_training_thermo.mat');
 
 index_training=run_water_training.index;  % index of 298K =24.85C in the temp vector
 dg_ref_training=run_water_training.refE(index_training,:);   % expaerimental Delta_G of the training set in kcal/mol
 ds_ref_training=run_water_training.refS;  % expaerimentalDelta S of the training set in cal/mol/K
+cp_ref_training=run_water_training.refCP;  % expaerimentalDelta S of the training set in cal/mol/K
 dg_calc_training=run_water_training.calcE(index_training,:); % calculated Delta_G of the training set in kcal/mol
 ds_calc_training=run_water_training.calcS; % calculated S of the training set in cal/mol/K
+cp_calc_training=run_water_training.calcCP; % calculated S of the training set in cal/mol/K
 dg_rms_298_training=run_water_training.dg_rms_298;
 ds_rms_298_training=run_water_training.ds_rms_298;
+cp_rms_298_training=run_water_training.cp_rms_298;
 
 
 %%
@@ -54,7 +57,7 @@ if trainingplot_flag==1
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
-    leg=legend(['SLIC \DeltaGs (kcal/mol);  Training set; RMS = ',num2str(dg_rms_298_training)],'location','southeast');
+    leg=legend(['SLIC \DeltaG (kcal/mol);  Training set; RMS = ',num2str(dg_rms_298_training)],'location','southeast');
     leg.Location='southeast';
     leg.FontSize=20;
     hold off
@@ -67,7 +70,21 @@ if trainingplot_flag==1
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
-    leg=legend(['SLIC \DeltaS (kcal/mol^\circK); training set; RMS = ',num2str(ds_rms_298_training)]);
+    leg=legend(['SLIC \DeltaS (cal/mol^\circK); training set; RMS = ',num2str(ds_rms_298_training)]);
+    leg.Location='southeast';
+    leg.FontSize=20;
+    hold off
+    
+    
+    figure()
+    p=plot(cp_ref_training,cp_calc_training,'o');
+    plotsettings(p,'b') % b is the color of markers
+    xlabel('Experimental CP (cal/mol K)');
+    ylabel('Computed CP (cal/mol K)'); 
+    diagline=refline(1,0);
+    set(diagline,'LineWidth',2);
+    set(diagline,'Color','k');
+    leg=legend(['SLIC CP (cal/mol^\circK); training set; RMS = ',num2str(cp_rms_298_training)]);
     leg.Location='southeast';
     leg.FontSize=20;
     hold off
