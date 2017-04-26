@@ -14,16 +14,11 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 repo_path=sprintf('%s/Research',Home);
-dropbox_path=sprintf('%s/Dropbox',Home);
-
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
-                    % if ionflag=1, ions data are included in the testset
-paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
-                    % if paramboundflag=1 there is abound
-                    
+dropbox_path=sprintf('%s/Dropbox-NEU/Dropbox',Home);
+                   
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
-calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
@@ -114,7 +109,8 @@ if calcflag==1
             fclose(fid);
             mol_list = Data{1};
             dG_list = Data{2};
-            surfArea_list = Data{3};            
+            surfArea_list = Data{3};
+            calc_mobley= Data{8};
         end
         
 
@@ -139,7 +135,7 @@ if calcflag==1
     if strcmp(dataset,'mnsol')
         save('RunWater_MNnsol_mobleysurf_184_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list');
     elseif strcmp(dataset,'mobley')
-        save('RunWater_mobley_513_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list');
+        save('RunWater_mobley_513_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list','calc_mobley');
     end
 end
 
@@ -156,18 +152,28 @@ dGfunc=struct();  % structure that has the information of the solutes and the li
 
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
+calc_mobley=0;
 
 errfinal=RunWater.errfinal;
 calcE = RunWater.calcE; %calculated values for \Delta G at different temperatures
 refE = RunWater.refE; %calculated values for \Delta G at different temperatures
 %refS = RunWater_mobleyset_184.dS_list; %calculated values for \Delta G at
 %different temperatures
+if strcmp(dataset,'mobley')
+    calcE = RunWater.calcE(:,1:502); %calculated values for \Delta G at different temperatures
+    refE = RunWater.refE(:,1:502); %calculated values for \Delta G at different temperatures
+    calc_mobley=RunWater.calc_mobley(1:502);
+end
+    
 es=RunWater.es;
 np=RunWater.np;
 x = RunWater.x;   % parameters at different temperetures
-TEMP=RunWater.new_temp;        % create the temperature vector 
+TEMP=RunWater.new_temp;        % create the temperature vector '
+[m,index]=ismember(24.85,TEMP);
 mol_list=RunWater.mol_list;
+if strcmp(dataset,'mobley')
+    mol_list=RunWater.mol_list(1:502);
+end
 
 for i=1:length(mol_list)
     dGfunc(i).name=mol_list(i);
@@ -181,32 +187,22 @@ for i=1:length(mol_list)
 %     figure(i);
 %     plot(dGfunc(i).func,TEMP',calcvec(:,i),'o')   
 end
+ dg_rms_298_MD=0;
+ dg_rms_298=rms(calcE-refE);
+ if strcmp(dataset,'mobley')
+     dg_rms_298=rms(calcE(index,1:502)-refE(index,1:502));
+    dg_rms_298_MD=rms(calc_mobley(1:502)'-refE(index,1:502));
+ end
 
-
-% Reference_dG =refE
-% Calculated_dG=calcE
-% 
-% dG_err=abs(Reference_dG-Calculated_dG)
-% 
-% Reference_dS =refS'*1000
-% Calculated_ds=dsvec
-% 
-% dS_err=abs(Reference_dS-Calculated_ds)
-
-figure()
-plot(refE(2,:),calcE(2,:),'o')
-hold on
-line([min(refE(2,:)), max(refE(2,:))],[min(refE(2,:)) ,max(refE(2,:))])
-dg_rms_298=rms(calcE(2,:)-refE(2,:));
-
-figure()
-mol_list_num=[1:length(mol_list)];
-scatter(mol_list_num,dsvec,'rx')
 
 if strcmp(dataset,'mnsol')
-    save('RunWater_MNSol_MobleySurf_184_allthermo','errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298');
+    output_name='RunWater_mnsol_mobleySurf_thermo';
 elseif strcmp(dataset,'mobley')
-    save('RunWater_mobley_MobleySurf_513_allthermo','errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298');
+    output_name='RunWater_mobley_thermo';
 end
+    
+save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','dg_rms_298','dg_rms_298_MD','index','calc_mobley');
+
+
 
     
