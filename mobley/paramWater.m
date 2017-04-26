@@ -101,8 +101,9 @@ for kk=1:tempdiv
     
     dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
     H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
+    CP_list_ref_at_298=1e-3*[142,25,213,310,290,86,285,44,122,336,174,246]'./joulesPerCalorie;
     dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
-    dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca);
+    dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
     
     aca_num=length(dG_list_ref_at_298);
     ion_num=0;
@@ -111,10 +112,13 @@ for kk=1:tempdiv
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion);
+        CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
+        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
+    
         
         dG_list=[dG_list_aca;dG_list_ion];
         dS_list=[dS_list_ref_at_298;dS_list_ref_ion_at_298_15];
+        CP_list=[CP_list_ref_at_298;CP_list_ref_ion_at_298_15];
         
         ion_num=length(dG_list_ref_ion_at_298_15);
         
@@ -122,6 +126,7 @@ for kk=1:tempdiv
         
         dG_list=dG_list_aca;
         dS_list=dS_list_ref_at_298;
+        CP_list=CP_list_ref_at_298;
         
     end
     
@@ -175,7 +180,7 @@ for kk=1:tempdiv
     tempvec(kk,:)=temp;
 end
 if ionflag==0
-    save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 elseif ionflag==1
-    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 end
