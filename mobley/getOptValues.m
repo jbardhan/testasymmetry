@@ -2,7 +2,7 @@ clear all; clear global
 Home = getenv('HOME');
 global LoadData
 addpath(sprintf('%s/repos/testasymmetry',Home));
-chdir(sprintf('%s/repos/testasymmetry/mobley',Home));
+% chdir(sprintf('%s/repos/testasymmetry/mobley',Home));
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
 solvents = strcat('Opt',solvents);        
@@ -19,6 +19,5 @@ for i = 1:length(filesInDir)
         end
     end
 end
-addLoadData('Water','OptWater_25-Apr-2017 12:50:20.mat');
 save('OptFiles','LoadData');
 clear global; clear all
