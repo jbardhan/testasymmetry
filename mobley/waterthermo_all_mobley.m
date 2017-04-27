@@ -18,7 +18,7 @@ dropbox_path=sprintf('%s/Dropbox',Home);
                    
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
-calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
@@ -178,14 +178,14 @@ end
 
 for i=1:length(mol_list)
     f = @(R) (R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)))-calcE(:,i);
-    R0=[refE(index,i),refS(i)/1000,refCP(i)/1000];
+    R0=[refE(index,i),-0.001,0.05];
     options=optimoptions('lsqnonlin','StepTolerance',1e-12);
     options=optimoptions(options,'OptimalityTolerance',1e-12);
     options=optimoptions(options,'FunctionTolerance',1e-12);
     [R,resnorm,residual,exitflag,output]=lsqnonlin(f,R0,[],[],options);
 %     figure()
 %     plot(TEMP_K,calcE(:,i),'ko',TEMP_K,R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)),'b-')
-    dGfunc(i).name=testset(i); 
+    dGfunc(i).name=mol_list(i); 
     dGfunc(i).dg=R(1);
     dGfunc(i).ds=R(2);
     dGfunc(i).cp=R(3); 
