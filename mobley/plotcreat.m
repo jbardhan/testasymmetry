@@ -23,19 +23,24 @@ dg_rms_298_training=run_water_training.dg_rms_298;
 ds_rms_298_training=run_water_training.ds_rms_298;
 cp_rms_298_training=run_water_training.cp_rms_298;
 
-dg_err_training=abs(dg_ref_training-dg_calc_training);
-ds_err_training=abs(ds_ref_training-ds_calc_training);
-cp_err_training=abs(cp_ref_training-cp_calc_training);
+if outlier_flag==1
 
-dg_err_training=sort(dg_err_training);
-ds_err_training=sort(ds_err_training);
-cp_err_training=sort(cp_err_training);
+    dg_err_training=abs(dg_ref_training-dg_calc_training);
+    ds_err_training=abs(ds_ref_training-ds_calc_training);
+    cp_err_training=abs(cp_ref_training-cp_calc_training);
 
-dg_err_training_outlier=dg_err_training(end-1:end);
-ds_err_training_outlier=ds_err_training(end-1:end);
-cp_err_training_outlier=cp_err_training(end-1:end);
+    dg_err_training=sort(dg_err_training);
+    ds_err_training=sort(ds_err_training);
+    cp_err_training=sort(cp_err_training);
 
+    dg_err_training_outlier=dg_err_training(end-1:end);
+    ds_err_training_outlier=ds_err_training(end-1:end);
+    cp_err_training_outlier=cp_err_training(end-1:end);
 
+    dgcorrcoef=corrcoef(dg_ref_training,dg_calc_training);
+    dscorrcoef=corrcoef(ds_ref_training,ds_calc_training);
+    cpcorrcoef=corrcoef(cp_ref_training,cp_calc_training);
+    
 
 
 
