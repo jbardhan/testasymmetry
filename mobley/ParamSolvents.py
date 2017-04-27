@@ -30,8 +30,8 @@ elif Run_Type == 'run':
 	eng = matlab.engine.start_matlab()
 	eng.eval('getOptValues',nargout=0)
 	if len(Solvent_List) <= 9:
-			for solvent in Solvent_List:
-				eng.eval(solvent,nargout=0)
+		for solvent in Solvent_List:
+			eng.eval(solvent,nargout=0)
 	else:
 		eng.eval(Solvent_List,nargout=0)
 
