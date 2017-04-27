@@ -5,11 +5,11 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 0;
+ploton = 1;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
-solvents = solvents(1);
+solvents = solvents(1:2);
         
 common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
             '14_dioxane','phenol','acetic_acid','methanol','propanoic_acid',...
@@ -23,6 +23,7 @@ common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
 % plot is set to 1.  Futhermore, it creates structures that contain all of
 % the results for calculated solvation free energies as a function of each 
 % solvent and again as a function of solute
+k = 1;
 for i = 1:length(solvents)
            
     fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
@@ -36,9 +37,9 @@ for i = 1:length(solvents)
     for j = 1:length(temp.calcE(1,:))
         testset = temp.testSets(:,j);
         [~,m] = ismember(testset,mol_list);
-        solute_errors(i,:) = temp.errfinal(n,j);
+        solute_errors(j,:,i) = temp.errfinal(n,j);
         sorted_errors = sort(abs(temp.errfinal(:,j)));
-        results(i,j) = struct('Solvent', solvents{i},'Num_Solutes',round(length(mol_list),3),'CalcE',temp.calcE(:,j),...
+        results(k) = struct('Solvent', solvents{i},'Num_Solutes',round(length(mol_list),3),'CalcE',temp.calcE(:,j),...
                             'errfinal',temp.errfinal(:,j),'es',temp.es(:,j),'np',...
                             temp.np(:,j),'refE',temp.refE(:,j),'RMS',rms(temp.calcE(:,j)-temp.refE(:,j)),...
                             'Mean_Abs_error',mean(abs(temp.errfinal(:,j))),'RMS_Training',...
@@ -47,6 +48,7 @@ for i = 1:length(solvents)
                             rms(temp.errfinal(n,j)),'Mean_Abs_error_Cons',...
                             mean(abs(temp.errfinal(n,j))),'Test_Set',...
                             {testset});
+        
         if ploton
             figure
             plot(temp.refE(:,j),temp.calcE(:,j),'bx','markers',12)
@@ -62,17 +64,17 @@ for i = 1:length(solvents)
             legend('Calculated','Training Set','Experiment','Location','southeast')
           filename = sprintf('Output/DeltaG-%s%s.PDF',solvents{i},string(j));
           export_fig(filename,'-painters','-transparent');
-
         end
-        [~,m1] = ismember(sorted_errors(end),abs(temp.errfinal));
-        [~,m2] = ismember(sorted_errors(end-1),abs(temp.errfinal));
-        max_err(i) = struct('Solvent', solvents{i},'First_Max',...
+        [~,m1] = ismember(sorted_errors(end),abs(temp.errfinal(:,j)));
+        [~,m2] = ismember(sorted_errors(end-1),abs(temp.errfinal(:,j)));
+        max_err(k) = struct('Solvent', solvents{i},'First_Max',...
             m1, 'Second_Max',m2);
+        k = k + 1;
     end
 end
 
 
-solute_errors = transpose(solute_errors);
+solute_errors = permute(solute_errors,[2 1 3]);
 
 % Plot a histogram of errors
 if ploton
