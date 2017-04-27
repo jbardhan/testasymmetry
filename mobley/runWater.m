@@ -74,7 +74,7 @@ for i = 1:length(ParamFiles)
     ParamInfo = load(ParamFiles(i).loadFile);
     testSets(:,i) = ParamInfo.testset;
     x = ParamInfo.x;
-    [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
+%     [errfinal(:,i),calcE(:,i),refE(:,i),es(:,i),np(:,i)]=ObjectiveFromBEMSA(x);
 end
 
 save('RunWater','errfinal','calcE','refE','es','np','testSets');

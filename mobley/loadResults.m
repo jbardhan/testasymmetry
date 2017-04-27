@@ -5,7 +5,7 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 1;
+ploton = 0;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
@@ -96,8 +96,21 @@ for i = 1:length(common_solutes)
         'Mean_Abs_error',mean(abs(solute_errors(i,:))));
 end
 
-writeDat('SolventErrors.tex',results);
-writeDat('SoluteErrors.tex',solute_struct);
+for i = 1:length(solvents)
+    for j = i:length(solvents)
+        rmsErr = calcRMSTrans(solvents{i},solvents{j});
+        rmsdGTransErrorArray(i,j) = rmsErr;
+    end
+    
+    for j = i+1:length(solvents)
+        [~,meanAbsError] = calcRMSTrans(solvents{i},solvents{j});
+        rmsdGTransErrorArray(j,i) = meanAbsError;
+    end
+end
+
+writeDat('SolventErrors.tex',results,solvents);
+writeDat('SoluteErrors.tex',solute_struct,solvents);
+writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
