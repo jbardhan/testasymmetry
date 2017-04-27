@@ -7,6 +7,8 @@ close all
 trainingplot_flag=1;
 mnsolplot_flag=0;
 mobleyplot_flag=0;
+
+outlier_flag=0;
 %%
 run_water_training=load('RunWater_training_thermo.mat');
 
@@ -20,6 +22,23 @@ cp_calc_training=run_water_training.calcCP; % calculated S of the training set i
 dg_rms_298_training=run_water_training.dg_rms_298;
 ds_rms_298_training=run_water_training.ds_rms_298;
 cp_rms_298_training=run_water_training.cp_rms_298;
+
+dg_err_training=abs(dg_ref_training-dg_calc_training);
+ds_err_training=abs(ds_ref_training-ds_calc_training);
+cp_err_training=abs(cp_ref_training-cp_calc_training);
+
+dg_err_training=sort(dg_err_training);
+ds_err_training=sort(ds_err_training);
+cp_err_training=sort(cp_err_training);
+
+dg_err_training_outlier=dg_err_training(end-1:end);
+ds_err_training_outlier=ds_err_training(end-1:end);
+cp_err_training_outlier=cp_err_training(end-1:end);
+
+
+
+
+
 
 
 %%
