@@ -103,33 +103,66 @@ for kk=1:tempdiv
     H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
     CP_list_ref_at_298=1e-3*[142,25,213,310,290,86,285,44,122,336,174,246]'./joulesPerCalorie;
     dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
-    dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
     
     aca_num=length(dG_list_ref_at_298);
     ion_num=0;
+    
+    ds_rand_coef_aca = -1 + (1+1)*rand(aca_num,1);
+    cp_rand_coef_aca =  -1 + (1+1)*rand(aca_num,1);
+    
+    dS_list_ref_at_298_rand=dS_list_ref_at_298.*ds_rand_coef_aca;
+    CP_list_ref_at_298_rand=CP_list_ref_at_298.*cp_rand_coef_aca;
+    
+    dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
+
+    
+    dG_list_aca_rand=dG_list_ref_at_298-dS_list_ref_at_298_rand*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298_rand*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
+    
+
     
     if ionflag==1
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
-        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
-    
-        
-        dG_list=[dG_list_aca;dG_list_ion];
-        dS_list=[dS_list_ref_at_298;dS_list_ref_ion_at_298_15];
-        CP_list=[CP_list_ref_at_298;CP_list_ref_ion_at_298_15];
         
         ion_num=length(dG_list_ref_ion_at_298_15);
         
+        ds_rand_coef_ion = -1 + (1+1)*rand(ion_num,1);
+        cp_rand_coef_ion =  -1 + (1+1)*rand(ion_num,1);
+        
+        dS_list_ref_ion_at_298_15_rand=dS_list_ref_ion_at_298_15.*ds_rand_coef_ion;
+        CP_list_ref_ion_at_298_15_rand=CP_list_ref_ion_at_298_15.*cp_rand_coef_ion;
+        
+        dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
+
+        
+        dG_list_ion_rand=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15_rand*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15_rand*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
+    
+        dG_list=[dG_list_aca_rand;dG_list_ion_rand];
+        dS_list=[dS_list_ref_at_298_rand;dS_list_ref_ion_at_298_15_rand];
+        CP_list=[CP_list_ref_at_298_rand;CP_list_ref_ion_at_298_15_rand];
+        
+        
+        dG_list_ref=[dG_list_aca;dG_list_ion];
+        dS_list_ref=[dS_list_ref_at_298;dS_list_ref_ion_at_298_15];
+        CP_list_ref=[CP_list_ref_at_298;CP_list_ref_ion_at_298_15];
+        
+
+        
     elseif ionflag==0
         
-        dG_list=dG_list_aca;
-        dS_list=dS_list_ref_at_298;
-        CP_list=CP_list_ref_at_298;
+        dG_list=dG_list_aca_rand;
+        dS_list=dS_list_ref_at_298_rand;
+        CP_list=CP_list_ref_at_298_rand;
+        
+        dG_list_ref=dG_list_aca;
+        dS_list_ref=dS_list_ref_at_298;
+        CP_list_ref=CP_list_ref_at_298;
         
     end
     
+
     curdir=pwd;
     for i=1:length(testset)
       dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
@@ -174,13 +207,15 @@ for kk=1:tempdiv
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-    xvec(kk,:)=x;refvec(kk,:)=ref;calcvec(kk,:)=calc;
+    xvec(kk,:)=x;
+    refvec(kk,:)=ref;
+    calcvec(kk,:)=calc;
     esvec(kk,:)=es;npvec(kk,:)=np;x0vec(kk,:)=x0;
     calc0vec(kk,:)=calc0;es0vec(kk,:)=es0;np0vec(kk,:)=np0;
     tempvec(kk,:)=temp;
 end
 if ionflag==0
-    save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo_wo_ion','xvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','dG_list_ref','dS_list_ref','CP_list_ref','dS_list','CP_list');
 elseif ionflag==1
-    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo','xvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','dG_list_ref','dS_list_ref','CP_list_ref','dS_list','CP_list');
 end
