@@ -5,11 +5,11 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 1;
+ploton = 0;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
-solvents = solvents(1:2);
+solvents = solvents;
         
 common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
             '14_dioxane','phenol','acetic_acid','methanol','propanoic_acid',...
@@ -77,19 +77,24 @@ end
 solute_errors = permute(solute_errors,[2 1 3]);
 
 % Plot a histogram of errors
-if ploton
-    figure 
+if ploton 
     nbins = 25;
-    for i = 1:length(results)
-        subplot(3,3,i);
-        histogram(results(i).errfinal,nbins)
-        title(['Errors for ',results(i).Solvent])
-        xlabel('Error')
-        ylabel('Number of Occurances') 
-    end
-    filename = sprintf('Output/HistogramOfErrors.PDF');
-    print(gcf, '-dpdf', 'Output/HistogramOfErrors.pdf'); 
+    for i = 1:length(solvents)
+        figure
+        m = ismember({results.Solvent},solvents{i});
+        [~,n] = ismember(solvents{i},{results.Solvent});
+        for j = 0:length(m(m~=0))-1
+            subplot(3,4,j+1);
+            histogram(results(n(1)+j).errfinal,nbins)
+            title(['Errors for ',results(n(1)+j).Solvent])
+            xlabel('Error')
+            ylabel('Number of Occurances') 
+        end
+        filename = sprintf('Output/HistogramOfErrors%s.PDF',solvents{i});
+        print(gcf, '-dpdf', filename); 
 %     export_fig(filename,'-painters','-transparent');
+    end
+    
 end
 
 % Create a structure conataining the errors associated with each solute
@@ -97,6 +102,7 @@ for i = 1:length(common_solutes)
     solute_struct(i) = struct('Solute_Name',common_solutes(i),'RMS',rms(solute_errors(i,:)),...
         'Mean_Abs_error',mean(abs(solute_errors(i,:))));
 end
+
 
 for i = 1:length(solvents)
     for j = i:length(solvents)
@@ -111,7 +117,7 @@ for i = 1:length(solvents)
 end
 
 writeDat('SolventErrors.tex',results,solvents);
-writeDat('SoluteErrors.tex',solute_struct,solvents);
+
 writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
 
 Outliers = readErr(max_err);
