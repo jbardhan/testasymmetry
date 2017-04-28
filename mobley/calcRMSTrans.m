@@ -55,8 +55,8 @@ if fromLen > toLen
        fprintf('Error in loading data! \n');
        keyboard
    end
-   dGTransCalc = fromdGCalc((n2(n2~=0))) - todGCalc((n1(n1~=0)));
-   dGTransRef = fromdGRef((n2(n2~=0))) - todGRef((n1(n1~=0)));
+   dGTransCalc = fromdGCalc((n2(n2~=0)),:) - todGCalc((n1(n1~=0)),:);
+   dGTransRef = fromdGRef((n2(n2~=0)),:) - todGRef((n1(n1~=0)),:);
 elseif toLen > fromLen
    [m1,n1] = ismember(mol_listTo,mol_listFrom);
    [m2,n2] = ismember(mol_listFrom,mol_listTo);
@@ -64,8 +64,8 @@ elseif toLen > fromLen
        fprintf('Error in loading data! \n');
        keyboard
    end
-   dGTransCalc = fromdGCalc((n1(n1~=0))) - todGCalc((n2(n2~=0)));
-   dGTransRef = fromdGRef((n1(n1~=0))) - todGRef((n2(n2~=0)));
+   dGTransCalc = fromdGCalc((n1(n1~=0)),:) - todGCalc((n2(n2~=0)),:);
+   dGTransRef = fromdGRef((n1(n1~=0)),:) - todGRef((n2(n2~=0)),:);
 elseif toLen == fromLen
    dGTransCalc = fromdGCalc - todGCalc;
    dGTransRef = fromdGRef - todGRef;

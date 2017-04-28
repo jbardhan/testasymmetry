@@ -98,26 +98,34 @@ if ploton
 end
 
 % Create a structure conataining the errors associated with each solute
+k = 1;
 for i = 1:length(common_solutes)
-    solute_struct(i) = struct('Solute_Name',common_solutes(i),'RMS',rms(solute_errors(i,:)),...
-        'Mean_Abs_error',mean(abs(solute_errors(i,:))));
+    for j = 1:length(solvents)
+        solute_struct(k) = struct('Solvnet',solvents{j},'Solute_Name',common_solutes(i),'RMS',rms(solute_errors(i,:,j)),...
+            'Mean_Abs_error',mean(abs(solute_errors(i,:,j))));
+        k = k + 1;
+    end
 end
 
 
 for i = 1:length(solvents)
     for j = i:length(solvents)
         rmsErr = calcRMSTrans(solvents{i},solvents{j});
-        rmsdGTransErrorArray(i,j) = rmsErr;
+        for k = 1:length(rmsErr)
+            rmsdGTransErrorArray(i,j,k) = rmsErr(k);
+        end
     end
     
     for j = i+1:length(solvents)
         [~,meanAbsError] = calcRMSTrans(solvents{i},solvents{j});
-        rmsdGTransErrorArray(j,i) = meanAbsError;
+        for k = 1:length(meanAbsError)
+            rmsdGTransErrorArray(j,i,k) = meanAbsError(k);
+        end
     end
 end
 
 writeDat('SolventErrors.tex',results,solvents);
-
+writeDat('SolutetErrors.tex',solute_struct,solvents);
 writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
 
 Outliers = readErr(max_err);
