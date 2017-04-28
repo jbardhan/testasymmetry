@@ -24,10 +24,10 @@ TEMP= ParamWatInfo.tempvec;
 
 x = ParamWatInfo.xvec;
 calcE = ParamWatInfo.calcvec;
-refE = ParamWatInfo.refvec;
+refE = ParamWatInfo.dG_list_ref';
 testset = ParamWatInfo.testset;
-refS = ParamWatInfo.dS_list'*1000;
-refCP= ParamWatInfo.CP_list'*1000;
+refS = ParamWatInfo.dS_list_ref'*1000;
+refCP= ParamWatInfo.CP_list_ref'*1000;
 
 ionflag = ParamWatInfo.ionflag;
 aca_num = ParamWatInfo.aca_num;
@@ -45,7 +45,7 @@ dGfunc=struct();  % structure that has the information of the solutes and the li
 
 for i=1:length(testset)
     f = @(R) (R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)))-calcE(:,i);
-    R0=[refE(index,i),refS(i)/1000,refCP(i)/1000];
+    R0=[refE(i),refS(i)/1000,refCP(i)/1000];
     options=optimoptions('lsqnonlin','StepTolerance',1e-12);
     options=optimoptions(options,'OptimalityTolerance',1e-12);
     options=optimoptions(options,'FunctionTolerance',1e-12);
@@ -62,7 +62,7 @@ end
 
 
 
-dg_rms_298=rms(refE(index,:)-calcE(index,:));
+dg_rms_298=rms(refE-calcE(index,:));
 ds_rms_298=rms(refS-calcS);
 cp_rms_298=rms(refCP-calcCP);
 
