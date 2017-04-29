@@ -47,19 +47,20 @@ convertKJtoKcal = 1/joulesPerCalorie;
 
 TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
 
-dG_list_ref_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
-H_list_ref_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
-CP_list_ref_at_298=1e-3*[142,25,213,310,290,86,285,44,122,336,174,246]'./joulesPerCalorie;
-dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
+dG_list_ref_aca_at_298=[8.1,-40.5,-5.2,9,9.5,-6.2,-3.2,-21.2,-20.4,-24.6,-25.6,8.3]'./joulesPerCalorie; %Hess in kcal/mol
+aca_num=length(dG_list_ref_aca_at_298);
+H_list_ref_aca_at_298=[-8.3,-67.0,-23.9,-17.1,-17.1,-34.6,-25.3,-43.0,-45,-58.8,-57.4,-13.7]'./joulesPerCalorie;  %Hess . in kcal/mol
+CP_list_ref_aca_at_298=1e-3*[142,25,213,310,290,86,285,44,122,336,174,246]'./joulesPerCalorie;
+dS_list_ref_aca_at_298=(H_list_ref_aca_at_298-dG_list_ref_aca_at_298(1:aca_num))/298;  % in kcal/mol/K
 
-aca_num=length(dG_list_ref_at_298);
+
 ion_num=0;
 
 ds_rand_coef_aca = -1 + (1+1)*rand(aca_num,1);
 cp_rand_coef_aca =  -1 + (1+1)*rand(aca_num,1);
 
-dS_list_ref_aca_at_298_rand=dS_list_ref_at_298.*ds_rand_coef_aca;
-CP_list_ref_aca_at_298_rand=CP_list_ref_at_298.*cp_rand_coef_aca;
+dS_list_ref_aca_at_298_rand=dS_list_ref_aca_at_298.*ds_rand_coef_aca;
+CP_list_ref_aca_at_298_rand=CP_list_ref_aca_at_298.*cp_rand_coef_aca;
 
 if ionflag==1
       
@@ -76,14 +77,16 @@ if ionflag==1
     CP_list_ref_ion_at_298_15_rand=CP_list_ref_ion_at_298_15.*cp_rand_coef_ion;
     
     dS_list_ref=[dS_list_ref_aca_at_298;dS_list_ref_ion_at_298_15];
-    CP_list_ref=[CP_list_ref_at_aca_298;CP_list_ref_ion_at_298_15];
-    dS_list=[dS_list_ref_aca_at_298_rand;dS_list_ref_ion_at_298_15_rand];
-    CP_list=[CP_list_ref_at_aca_298_rand;CP_list_ref_ion_at_298_15_rand];
+    CP_list_ref=[CP_list_ref_aca_at_298;CP_list_ref_ion_at_298_15];
+    dS_list_rand=[dS_list_ref_aca_at_298_rand;dS_list_ref_ion_at_298_15_rand];
+    CP_list_rand=[CP_list_ref_aca_at_298_rand;CP_list_ref_ion_at_298_15_rand];
     
 elseif ionflag==0
     
-     dS_list_ref=dS_list_ref_at_298;
-     CP_list_ref=CP_list_ref_at_298;
+     dS_list_ref=dS_list_ref_aca_at_298;
+     CP_list_ref=CP_list_ref_at_aca_298;
+     dS_list_rand=dS_list_ref_aca_at_298_rand;
+     CP_list_rand=CP_list_ref_aca_at_298_rand;
      
 end
     
@@ -140,8 +143,8 @@ for kk=1:tempdiv
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     t_ref_ion=25;  %reference tempereture for ions
     
-    dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
-    dG_list_aca_rand=dG_list_ref_at_298-dS_list_ref_at_298_rand*(TEMP(kk)-t_ref_aca)+CP_list_ref_at_298_rand*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
+    dG_list_aca=dG_list_ref_aca_at_298-dS_list_ref_aca_at_298*(TEMP(kk)-t_ref_aca)+CP_list_ref_aca_at_298*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
+    dG_list_aca_rand=dG_list_ref_aca_at_298-dS_list_ref_aca_at_298_rand*(TEMP(kk)-t_ref_aca)+CP_list_ref_aca_at_298_rand*((TEMP(kk)-t_ref_aca)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_aca+KelvinOffset))));
     
 
     
