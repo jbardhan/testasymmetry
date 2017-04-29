@@ -24,10 +24,14 @@ TEMP= ParamWatInfo.tempvec;
 
 x = ParamWatInfo.xvec;
 calcE = ParamWatInfo.calcvec;
-refE = ParamWatInfo.dG_list_ref';
+refE = ParamWatInfo.dG_list_ref;
+randE = ParamWatInfo.dG_list_rand;
 testset = ParamWatInfo.testset;
 refS = ParamWatInfo.dS_list_ref'*1000;
+randS= ParamWatInfo.dS_list_rand'*1000;
+
 refCP= ParamWatInfo.CP_list_ref'*1000;
+randCP= ParamWatInfo.CP_list_rand'*1000;
 
 ionflag = ParamWatInfo.ionflag;
 aca_num = ParamWatInfo.aca_num;
@@ -62,7 +66,7 @@ end
 
 
 
-dg_rms_298=rms(refE-calcE(index,:));
+dg_rms_298=rms(refE(index,:)-calcE(index,:));
 ds_rms_298=rms(refS-calcS);
 cp_rms_298=rms(refCP-calcCP);
 

@@ -13,7 +13,7 @@ outlier_flag=0;
 run_water_training=load('RunWater_training_thermo.mat');
 
 index_training=run_water_training.index;  % index of 298K =24.85C in the temp vector
-dg_ref_training=run_water_training.refE;   % expaerimental Delta_G of the training set in kcal/mol
+dg_ref_training=run_water_training.refE(index_training,:);   % expaerimental Delta_G of the training set in kcal/mol
 ds_ref_training=run_water_training.refS;  % expaerimentalDelta S of the training set in cal/mol/K
 cp_ref_training=run_water_training.refCP;  % expaerimentalDelta S of the training set in cal/mol/K
 dg_calc_training=run_water_training.calcE(index_training,:); % calculated Delta_G of the training set in kcal/mol
