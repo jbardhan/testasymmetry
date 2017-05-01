@@ -1,6 +1,6 @@
 clear all
-clc
-close all
+% clc
+% close all
 
 %Water
 %%
@@ -41,7 +41,7 @@ if outlier_flag==1
     dscorrcoef=corrcoef(ds_ref_training,ds_calc_training);
     cpcorrcoef=corrcoef(cp_ref_training,cp_calc_training);
     
-
+end
 
 
 
