@@ -48,7 +48,7 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 %testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', '14_dioxane','Na','K','Cl'};
+testset  = {'14_dioxane','butanone','n_octane','ethanol','nitromethane','toluene','Li','Na','K','Rb','Cs','Cl','Br','I'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -88,8 +88,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
-lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+lb = [-2 -200 -100 -20  -20  -0.1  -2];
+ub = [+2 +200 +100 +20  +20  +0.1  +2];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');

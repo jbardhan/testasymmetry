@@ -11,15 +11,25 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'dimethylformamide.out';
-epsOut = 37.219;
+logfileName = 'dimethylformamide_ions.out';
+epsOut = 48.826; % Mnsol
 
-x = [    -.6497  115.7397   13.1155    -11.1061   -0.0948    1.2154];
+ParamOctInfo = load('OptDimethylformamide');
+x = ParamOctInfo.x;
+fid = fopen('mnsol/dimethylformamide_ions.csv','r'); 
+Data = textscan(fid,'%s %f %f','delimiter',',');
+fclose(fid);
+mol_list = Data{1};
+dG_list = Data{2};
 
-[mol_list,dG_list,surfArea_list]=textread('mnsol/dimethylacetamide.csv',...
-					  '%s %f %f','delimiter',',');
+fid = fopen('mnsol/mobley_sa.csv','r');
+Data = textscan(fid,'%s %f','delimiter',',');
+fclose(fid);
+all_solutes = Data{1};
+all_surfAreas = Data{2};
+[m, index] = ismember(mol_list,all_solutes);
+surfArea_list = all_surfAreas(index);
 
 saveMemory = 1;
 writeLogfile = 1;
@@ -35,9 +45,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
 
-% here we define the actual params for the NLBC test
-
-     
+% here we define the actual params for the NLBC test     
 
 curdir = pwd;
 for i=1:length(mol_list)
@@ -53,4 +61,12 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
+% xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
+% xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
+% 
+% x = xWithIons8Iter;
+
+
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+
+save('RunOctanol','errfinal','calcE','refE','es','np');

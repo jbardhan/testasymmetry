@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'water.out';
-epsOut = 78.36;
+logfileName = 'water_ions.out';
+epsOut = 78.36; %from MNsol
 
 ParamWatInfo = load('OptWater');
 x = ParamWatInfo.x;
-fid = fopen('mnsol/water.csv','r'); 
+fid = fopen('mnsol/water_ions.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

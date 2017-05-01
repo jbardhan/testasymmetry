@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'acetonitrile_ions.out';
-epsOut = 35.6881; % from MNSol
+logfileName = 'nitrobenzene_ions.out';
+epsOut = 34.8091; % from MNSol
 
-ParamOctInfo = load('OptAcetonitrile');
+ParamOctInfo = load('OptNitrobenzene');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/acetonitrile_ions.csv','r'); 
+fid = fopen('mnsol/nitrobenzene_ions.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
