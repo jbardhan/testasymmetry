@@ -6,7 +6,7 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ploton = 1;
+ploton = 0;
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
         
@@ -71,6 +71,8 @@ for i = 1:length(solvents)
     mol_list = Data{1};
     [~,m] = ismember(testset,mol_list);
     [~,n] = ismember(common_solutes,mol_list);
+    allCases = 1:length(mol_list);
+    allCases(m) = 0;
     
     temp = load(['Run',solvents{i}]);
     solute_errors(i,:) = temp.errfinal(n);
@@ -85,18 +87,17 @@ for i = 1:length(solvents)
                         mean(abs(temp.errfinal(n))));
     if ploton
         figure
-        plot(temp.refE,temp.calcE,'bx','markers',12)
+        plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',12)
         set(gca,'FontSize',15)
         hold on
-        plot(temp.refE(m),temp.calcE(m),'rx','markers',12)
-        plot([min(temp.refE) max(temp.refE)] , [min(temp.calcE) max(temp.calcE)],...
-                'k-')
-        xlabel('Experimental Solvation Free Energies')
-        ylabel('Calculated Solvation Free Energies')
-        title(['Calculated vs. Experiment Solvation Free Energies for ',...
-                solvents{i}])
-        legend('Calculated','Training Set','Experiment','Location','southeast')
-      filename = sprintf('Output/DeltaG-%s.PDF',solvents{i});
+        plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
+        plot([min(temp.refE)-2 max(temp.refE)+2] , [min(temp.calcE)-2 max(temp.calcE)+2],...
+                    'k-','LineWidth',2)
+        axis([min(temp.refE)-2 max(temp.refE)+2 min(temp.calcE)-2 max(temp.calcE)+2]);
+        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
+        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
+        legend('Predictions','Training Set','Experiment','Location','southeast')
+      filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
     end
@@ -121,8 +122,8 @@ if ploton
         xlabel('Error')
         ylabel('Number of Occurances') 
     end
-    filename = sprintf('Output/HistogramOfErrors.PDF');
-    export_fig(filename,'-painters','-transparent');
+    filename = sprintf('Output/Figures/HistogramOfErrors.PDF');
+    print(gcf, '-dpdf', filename);
 end
 
 % Create a structure conataining the errors associated with each solute
@@ -131,8 +132,25 @@ for i = 1:length(common_solutes)
         'Mean_Abs_error',mean(abs(solute_errors(i,:))));
 end
 
-writeDat('SolventErrors.tex',results);
-writeDat('SoluteErrors.tex',solute_struct);
+for i = 1:length(solvents)
+    for j = i:length(solvents)
+        rmsErr = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(rmsErr)
+            rmsdGTransErrorArray(i,j,k) = rmsErr(k);
+        end
+    end
+    
+    for j = i+1:length(solvents)
+        [~,meanAbsError] = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(meanAbsError)
+            rmsdGTransErrorArray(j,i,k) = meanAbsError(k);
+        end
+    end
+end
+
+writeDat('Output/Tables/SolventErrors.tex',results,solvents);
+writeDat('Output/Tables/SoluteErrors.tex',solute_struct,solvents);
+writeDat('Output/Tables/TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
