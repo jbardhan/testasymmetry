@@ -42,6 +42,8 @@ for i = 1:length(solvents)
 
     [~,m] = ismember(testset,mol_list);
     [~,n] = ismember(common_solutes,mol_list);
+    allCases = 1:length(mol_list);
+    allCases(m) = 0;
     
     temp = load(['Run',solvents{i}]);
     solute_errors(i,:) = temp.errfinal(n);
@@ -56,12 +58,12 @@ for i = 1:length(solvents)
                         mean(abs(temp.errfinal(n))));
     if ploton
         figure
-        plot(temp.refE,temp.calcE,'bx','markers',15)
+        plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',12)
         set(gca,'FontSize',15)
         hold on
-        plot(temp.refE(m),temp.calcE(m),'rx','markers',15)
+        plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
         plot([min(temp.refE)-2 max(temp.refE)+2] , [min(temp.calcE)-2 max(temp.calcE)+2],...
-                    'k-','LineWidth',1)
+                    'k-','LineWidth',2)
         axis([min(temp.refE)-2 max(temp.refE)+2 min(temp.calcE)-2 max(temp.calcE)+2]);
         xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
         ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
