@@ -3,7 +3,7 @@ addpath('export_fig/')
 %Water
 %%
 trainingplot_flag=1;
-mnsolplot_flag=0;
+mnsolplot_flag=1;
 mobleyplot_flag=1;
 
 outlier_flag=0;
@@ -71,8 +71,8 @@ if trainingplot_flag==1
     figure
     p=plot(ds_ref_training,ds_calc_training,'r+','markers',15,'LineWidth',1);
     set(gca,'FontSize',15)
-    xlabel('\Delta S_{expt}^{Water} (cal/mol K)');
-    ylabel('\Delta S_{calc}^{Water} (cal/mol K)');
+    xlabel('\Delta S_{expt}^{Water} (cal/mol\circK)');
+    ylabel('\Delta S_{calc}^{Water} (cal/mol\circK)');
     axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
@@ -80,6 +80,8 @@ if trainingplot_flag==1
     leg=legend(['SLIC \DeltaS; training set; RMS = ',num2str(ds_rms_298_training)]);
     leg.Location='southeast';
     leg.FontSize=15;
+    filename = sprintf('Output/DeltaS-water-training_set.PDF');
+    export_fig(filename,'-painters','-transparent');
     hold off
     
     min_axe=round(min(min(cp_ref_training),min(cp_calc_training)));
@@ -88,15 +90,17 @@ if trainingplot_flag==1
     figure
     p=plot(cp_ref_training,cp_calc_training,'r+','markers',15,'LineWidth',1);
     set(gca,'FontSize',15)
-    xlabel('CP_{expt}^{Water} (cal/mol\circK)');
-    ylabel('CP_{calc}^{Water} (cal/mol\circK)');
+    xlabel('Cp_{expt}^{Water} (cal/mol\circK)');
+    ylabel('Cp_{calc}^{Water} (cal/mol\circK)');
     axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
-    leg=legend(['SLIC CP; training set; RMS = ',num2str(cp_rms_298_training)]);
+    leg=legend(['SLIC Cp; training set; RMS = ',num2str(cp_rms_298_training)]);
     leg.Location='northwest';
     leg.FontSize=15;
+    filename = sprintf('Output/Cp-water-training_set.PDF');
+    export_fig(filename,'-painters','-transparent');
     hold off
 end
 
@@ -127,16 +131,16 @@ if mnsolplot_flag==1
     p=plot(dg_ref_mnsol,dg_calc_slic_mnsol,'r+','markers',15,'LineWidth',1);
     set(gca,'FontSize',15)
     axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
-    xlabel('CP_{expt}^{Water} (cal/mol\circK)');
-    ylabel('CP_{calc}^{Water} (cal/mol\circK)');
-    
+    xlabel('\DeltaG_{expt}^{Water} (cal/mol\circK)');
+    ylabel('\DeltaG_{calc}^{Water} (cal/mol\circK)');
     leg=legend( ['SLIC \DeltaG; MNSol database; RMS = ',num2str(dg_rms_slic_mnsol)]);
     leg.Location='northwest';
     leg.FontSize=15;
-    
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
+    filename = sprintf('Output/DeltaG-water-mnsol.PDF');
+    export_fig(filename,'-painters','-transparent');   
     hold off
 
 end
@@ -163,21 +167,20 @@ if mobleyplot_flag==1
     p=plot(dg_ref_mobley,dg_calc_slic_mobley,'r+','markers',15,'LineWidth',1);
     set(gca,'FontSize',15)
     axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
-    xlabel('CP_{expt}^{Water} (cal/mol\circK)');
-    ylabel('CP_{calc}^{Water} (cal/mol\circK)');
+    xlabel('\DeltaG_{expt}^{Water} (cal/mol\circK)');
+    ylabel('\DeltaG_{calc}^{Water} (cal/mol\circK)');
     hold on
     q=plot(dg_ref_mobley,dg_calc_mobley,'bo','markers',4,'LineWidth',2);
-
-
     hold on
     leg=legend( ['SLIC \DeltaG; Mobley database; RMS = ',num2str(dg_rms_slic_mobley)],...
                 ['MD \DeltaG; Mobley database; RMS =',num2str(dg_rms_mobley)]);
     leg.Location='southeast';
-    leg.FontSize=15;
-    
+    leg.FontSize=15;   
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
+    filename = sprintf('Output/DeltaG-water-mobley.PDF');
+    export_fig(filename,'-painters','-transparent');
     hold off
 end
 
