@@ -17,21 +17,28 @@ common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
             'heptan_1_ol','methyl_pentanoate','p_cresol','methyl_propanoate',...
             'o_cresol','propanone','pyridine'};
         
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol',...
-        'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine',...
-        'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-
-
 % This routine will plot all of the calulated vs. experimental results if 
 % plot is set to 1.  Futhermore, it creates structures that contain all of
 % the results for calculated solvation free energies as a function of each 
 % solvent and again as a function of solute
 for i = 1:length(solvents)
-           
-    fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
-    Data = textscan(fid,'%s %f %f','delimiter',',');
-    fclose(fid);
-    mol_list = Data{1};
+        if string(solvents{i}) ~= 'Water'
+                 testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol',...
+            'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine',...
+            'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+            fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
+            Data = textscan(fid,'%s %f %f','delimiter',',');
+            fclose(fid);
+            mol_list = Data{1};
+        else
+                testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol',...
+            'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine',...
+            'nitromethane', 'heptan_1_ol', 'n_butyl_acetate', 'Na', 'Cl'};  
+            fid = fopen(['mnsol/water_ions.csv'],'r'); 
+            Data = textscan(fid,'%s %f %f','delimiter',',');
+            fclose(fid);
+            mol_list = Data{1};
+        end
 
     [~,m] = ismember(testset,mol_list);
     [~,n] = ismember(common_solutes,mol_list);
