@@ -58,13 +58,15 @@ for i = 1:length(solvents)
             plot(refDat(allCases(allCases~=0)),calcDat(allCases(allCases~=0)),'bo','markers',12)
             set(gca,'FontSize',15)
             hold on
-            plot(temp.refE(m,j),temp.calcE(m,j),'rs','markers',12)
-            plot([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2] , [min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2],...
-                    'k-','LineWidth',2)
-            axis([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2 min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2]);
+            plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
+            minax = round(min(min(refDat,calcDat)));
+            maxax = round(max(max(refDat,calcDat)));
+            axis([minax-2 maxax+2 minax-2 maxax+2]);
+            foo = refline(1,0);
+            set(foo,'Linewidth',2,'color','k');
             xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
             ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
-            legend('Predictions','Training Set','Experiment','Location','southeast')
+            legend('Predictions','Training Set','Location','southeast')
           filename = sprintf('Output/Figures/DeltaG-%s%s.PDF',solvents{i},string(j));
           export_fig(filename,'-painters','-transparent');
         end
