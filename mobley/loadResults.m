@@ -5,7 +5,7 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 1;
+ploton = 0;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
@@ -49,17 +49,16 @@ for i = 1:length(solvents)
                         mean(abs(temp.errfinal(n))));
     if ploton
         figure
-        plot(temp.refE,temp.calcE,'bx','markers',12)
+        plot(temp.refE,temp.calcE,'bx','markers',15)
         set(gca,'FontSize',15)
         hold on
-        plot(temp.refE(m),temp.calcE(m),'rx','markers',12)
-        plot([min(temp.refE) max(temp.refE)] , [min(temp.calcE) max(temp.calcE)],...
-                'k-')
-        xlabel('Experimental Solvation Free Energies')
-        ylabel('Calculated Solvation Free Energies')
-        title(['Calculated vs. Experiment Solvation Free Energies for ',...
-                solvents{i}])
-        legend('Calculated','Training Set','Experiment','Location','southeast')
+        plot(temp.refE(m),temp.calcE(m),'rx','markers',15)
+        plot([min(temp.refE)-2 max(temp.refE)+2] , [min(temp.calcE)-2 max(temp.calcE)+2],...
+                    'k-','LineWidth',1)
+        axis([min(temp.refE)-2 max(temp.refE)+2 min(temp.calcE)-2 max(temp.calcE)+2]);
+        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
+        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
+        legend('Predictions','Training Set','Experiment','Location','southeast')
       filename = sprintf('Output/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
@@ -96,8 +95,26 @@ for i = 1:length(common_solutes)
         'Mean_Abs_error',mean(abs(solute_errors(i,:))));
 end
 
-writeDat('SolventErrors.tex',results);
-writeDat('SoluteErrors.tex',solute_struct);
+for i = 1:length(solvents)
+    for j = i:length(solvents)
+        rmsErr = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(rmsErr)
+            rmsdGTransErrorArray(i,j,k) = rmsErr(k);
+        end
+    end
+    
+    for j = i+1:length(solvents)
+        [~,meanAbsError] = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(meanAbsError)
+            rmsdGTransErrorArray(j,i,k) = meanAbsError(k);
+        end
+    end
+end
+
+writeDat('SolventErrors.tex',results,solvents);
+writeDat('SoluteErrors.tex',solute_struct,solvents);
+writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
+
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
