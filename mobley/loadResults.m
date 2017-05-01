@@ -132,6 +132,7 @@ end
 writeDat('SolventErrors.tex',results,solvents);
 writeDat('SoluteErrors.tex',solute_struct,solvents);
 writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
+writeDat('sdevRMSdGtrans.tex',stdevdGTransOverTestSets,solvents);
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
