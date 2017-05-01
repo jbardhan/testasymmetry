@@ -5,7 +5,7 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 0;
+ploton = 1;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
@@ -37,6 +37,8 @@ for i = 1:length(solvents)
     for j = 1:length(temp.calcE(1,:))
         testset = temp.testSets(:,j);
         [~,m] = ismember(testset,mol_list);
+        allCases = 1:length(mol_list);
+        allCases(m) = 0;
         solute_errors(j,:,i) = temp.errfinal(n,j);
         sorted_errors = sort(abs(temp.errfinal(:,j)));
         results(k) = struct('Solvent', solvents{i},'Num_Solutes',round(length(mol_list),3),'CalcE',temp.calcE(:,j),...
@@ -51,12 +53,14 @@ for i = 1:length(solvents)
         
         if ploton
             figure
-            plot(temp.refE(:,j),temp.calcE(:,j),'bx','markers',15)
+            refDat = temp.refE(:,j);
+            calcDat = temp.calcE(:,j);
+            plot(refDat(allCases(allCases~=0)),calcDat(allCases(allCases~=0)),'bo','markers',12)
             set(gca,'FontSize',15)
             hold on
-            plot(temp.refE(m,j),temp.calcE(m,j),'rx','markers',15)
+            plot(temp.refE(m,j),temp.calcE(m,j),'rs','markers',12)
             plot([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2] , [min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2],...
-                    'k-','LineWidth',1)
+                    'k-','LineWidth',2)
             axis([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2 min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2]);
             xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
             ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
