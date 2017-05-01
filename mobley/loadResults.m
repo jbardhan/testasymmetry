@@ -51,17 +51,16 @@ for i = 1:length(solvents)
         
         if ploton
             figure
-            plot(temp.refE(:,j),temp.calcE(:,j),'bx','markers',12)
+            plot(temp.refE(:,j),temp.calcE(:,j),'bx','markers',15)
             set(gca,'FontSize',15)
             hold on
-            plot(temp.refE(m,j),temp.calcE(m,j),'rx','markers',12)
-            plot([min(temp.refE(:,j)) max(temp.refE(:,j))] , [min(temp.calcE(:,j)) max(temp.calcE(:,j))],...
-                    'k-')
-            xlabel('Experimental Solvation Free Energies')
-            ylabel('Calculated Solvation Free Energies')
-            title(['Calculated vs. Experiment Solvation Free Energies for ',...
-                    solvents{i}])
-            legend('Calculated','Training Set','Experiment','Location','southeast')
+            plot(temp.refE(m,j),temp.calcE(m,j),'rx','markers',15)
+            plot([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2] , [min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2],...
+                    'k-','LineWidth',1)
+            axis([min(temp.refE(:,j))-2 max(temp.refE(:,j))+2 min(temp.calcE(:,j))-2 max(temp.calcE(:,j))+2]);
+            xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
+            ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
+            legend('Predictions','Training Set','Experiment','Location','southeast')
           filename = sprintf('Output/DeltaG-%s%s.PDF',solvents{i},string(j));
           export_fig(filename,'-painters','-transparent');
         end
@@ -124,8 +123,14 @@ for i = 1:length(solvents)
     end
 end
 
+for i = 1:length(rmsdGTransErrorArray(:,1,1))
+    for j = 1:length(rmsdGTransErrorArray(1,:,1)) 
+        stdevdGTransOverTestSets(i,j) = std(rmsdGTransErrorArray(i,j,:));
+    end
+end
+
 writeDat('SolventErrors.tex',results,solvents);
-writeDat('SolutetErrors.tex',solute_struct,solvents);
+writeDat('SoluteErrors.tex',solute_struct,solvents);
 writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
 
 Outliers = readErr(max_err);
