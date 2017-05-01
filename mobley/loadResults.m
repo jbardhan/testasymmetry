@@ -6,7 +6,7 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ploton = 0;
+ploton = 1;
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
         
@@ -91,12 +91,14 @@ for i = 1:length(solvents)
         set(gca,'FontSize',15)
         hold on
         plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
-        plot([min(temp.refE)-2 max(temp.refE)+2] , [min(temp.calcE)-2 max(temp.calcE)+2],...
-                    'k-','LineWidth',2)
-        axis([min(temp.refE)-2 max(temp.refE)+2 min(temp.calcE)-2 max(temp.calcE)+2]);
+        minax = round(min(min(temp.refE,temp.calcE)));
+        maxax = round(max(max(temp.refE,temp.calcE)));
+        axis([minax-2 maxax+2 minax-2 maxax+2]);
+        foo = refline(1,0);
+        set(foo,'Linewidth',2,'color','k');
         xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
         ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
-        legend('Predictions','Training Set','Experiment','Location','southeast')
+        legend('Predictions','Training Set','Location','southeast')
       filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
