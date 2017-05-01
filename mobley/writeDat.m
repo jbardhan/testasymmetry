@@ -71,7 +71,9 @@ elseif numel(size(dataStructure))==3
     dataSize = size(dataStructure);
     numDocs = dataSize(3);
     for j = 1:numDocs
-        fname = sprintf(strcat(string(j),fileID));
+        temp1 = strsplit(fileID,'.');
+        temp2 = strcat(temp1(1),string(j));
+        fname = strcat(temp2,'.',temp1(2));
         fid = fopen(fname,'w');
         fprintf(fid,'\\documentclass{amsart} \n');
         fprintf(fid,'\\usepackage{float} \n');

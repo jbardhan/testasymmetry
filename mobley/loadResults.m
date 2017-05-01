@@ -61,7 +61,7 @@ for i = 1:length(solvents)
             xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
             ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
             legend('Predictions','Training Set','Experiment','Location','southeast')
-          filename = sprintf('Output/DeltaG-%s%s.PDF',solvents{i},string(j));
+          filename = sprintf('Output/Figures/DeltaG-%s%s.PDF',solvents{i},string(j));
           export_fig(filename,'-painters','-transparent');
         end
         [~,m1] = ismember(sorted_errors(end),abs(temp.errfinal(:,j)));
@@ -89,7 +89,7 @@ if ploton
             xlabel('Error')
             ylabel('Number of Occurances') 
         end
-        filename = sprintf('Output/HistogramOfErrors%s.PDF',solvents{i});
+        filename = sprintf('Output/Figures/HistogramOfErrors%s.PDF',solvents{i});
         print(gcf, '-dpdf', filename); 
 %     export_fig(filename,'-painters','-transparent');
     end
@@ -129,10 +129,10 @@ for i = 1:length(rmsdGTransErrorArray(:,1,1))
     end
 end
 
-writeDat('SolventErrors.tex',results,solvents);
-writeDat('SoluteErrors.tex',solute_struct,solvents);
-writeDat('TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
-writeDat('sdevRMSdGtrans.tex',stdevdGTransOverTestSets,solvents);
+writeDat('Output/Tables/SolventErrors.tex',results,solvents);
+writeDat('Output/Tables/SoluteErrors.tex',solute_struct,solvents);
+writeDat('Output/Tables/TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
+writeDat('Output/Tables/sdevRMSdGtrans.tex',stdevdGTransOverTestSets,solvents);
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
