@@ -1,4 +1,5 @@
 function writeDat(fileID,dataStructure,solvents)
+format short g
 if isstruct(dataStructure)
     fnames = fieldnames(dataStructure);
     first = sprintf(fnames{1});
@@ -35,9 +36,9 @@ if isstruct(dataStructure)
     fprintf(fid,'\\hline \n');
     for i = 1:length(dataStructure)
         if strcmp(first,'Solvent')
-            fprintf(fid,'\\textbf{%s}&%3.0f&%f&%f&%f&%f&%f&%f \\\\ \\hline \n',replace(string(dataStructure(i).Solvent),'_','\_'),dataStructure(i).Num_Solutes,round(dataStructure(i).RMS,2),round(dataStructure(i).Mean_Abs_error,2),round(dataStructure(i).RMS_Training,2),round(dataStructure(i).Mean_Abs_error_Training,2),round(dataStructure(i).RMS_Cons,2),round(dataStructure(i).Mean_Abs_error_Cons,2)); 
+            fprintf(fid,'\\textbf{%s}&%3.0f&%.2f&%.2f&%.2f&%.2f&%.2f&%.2f \\\\ \\hline \n',replace(string(dataStructure(i).Solvent),'_','\_'),dataStructure(i).Num_Solutes,round(dataStructure(i).RMS,2),round(dataStructure(i).Mean_Abs_error,2),round(dataStructure(i).RMS_Training,2),round(dataStructure(i).Mean_Abs_error_Training,2),round(dataStructure(i).RMS_Cons,2),round(dataStructure(i).Mean_Abs_error_Cons,2)); 
         else
-            fprintf(fid,'\\textbf{%s}&%f&%f \\\\ \\hline \n',replace(string(dataStructure(i).Solute_Name),'_','\_'),round(dataStructure(i).RMS,2),round(dataStructure(i).Mean_Abs_error,2));
+            fprintf(fid,'\\textbf{%s}&%.2f&%.2f \\\\ \\hline \n',replace(string(dataStructure(i).Solute_Name),'_','\_'),round(dataStructure(i).RMS,2),round(dataStructure(i).Mean_Abs_error,2));
         end
     end
     fprintf(fid,'\\end{tabular} \n');
