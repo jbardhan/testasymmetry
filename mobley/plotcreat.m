@@ -10,7 +10,7 @@ mobleyplot_flag=0;
 
 outlier_flag=0;
 %%
-run_water_training=load('RunWater_training_thermo_rand2.mat');
+run_water_training=load('RunWater_training_thermo_25_percent_1.mat');
 
 index_training=run_water_training.index;  % index of 298K =24.85C in the temp vector
 dg_ref_training=run_water_training.refE(index_training,:);   % expaerimental Delta_G of the training set in kcal/mol
