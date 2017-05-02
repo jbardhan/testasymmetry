@@ -168,7 +168,7 @@ end
 es=RunWater.es;
 np=RunWater.np;
 x = RunWater.x;   % parameters at different temperetures
-TEMP=RunWater.new_temp;        % create the temperature vector '
+TEMP=RunWater.new_temp';        % create the temperature vector '
 TEMP_K=TEMP+273.15;
 [m,index]=ismember(24.85,TEMP);
 mol_list=RunWater.mol_list;
@@ -178,13 +178,13 @@ end
 
 for i=1:length(mol_list)
     f = @(R) (R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)))-calcE(:,i);
-    R0=[refE(index,i),-0.001,0.05];
-    options=optimoptions('lsqnonlin','StepTolerance',1e-12);
-    options=optimoptions(options,'OptimalityTolerance',1e-12);
-    options=optimoptions(options,'FunctionTolerance',1e-12);
+    R0=[refE(index,i),1,1];
+    options=optimoptions('lsqnonlin','StepTolerance',1e-6);
+    options=optimoptions(options,'OptimalityTolerance',1e-6);
+    options=optimoptions(options,'FunctionTolerance',1e-6);
     [R,resnorm,residual,exitflag,output]=lsqnonlin(f,R0,[],[],options);
-%     figure()
-%     plot(TEMP_K,calcE(:,i),'ko',TEMP_K,R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)),'b-')
+%      figure()
+%      plot(TEMP_K,calcE(:,i),'ko',TEMP_K,R(1)-R(2)*(TEMP_K-298)+R(3)*((TEMP_K-298)-TEMP_K.*log(TEMP_K./298)),'b-')
     dGfunc(i).name=mol_list(i); 
     dGfunc(i).dg=R(1);
     dGfunc(i).ds=R(2);
