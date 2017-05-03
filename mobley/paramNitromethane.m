@@ -1,4 +1,5 @@
 % Path information
+clear all; clear global
 Home = getenv('HOME');
 addpath(sprintf('%s/repos/pointbem',Home));
 addpath(sprintf('%s/repos/panelbem',Home));
