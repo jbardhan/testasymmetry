@@ -227,5 +227,5 @@ end
 if ionflag==0
     save('OptWater_thermo_wo_ion','xvec','calcvec','refvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','dG_list_ref','dG_list_rand','dS_list_ref','dS_list_rand','CP_list_ref','CP_list_rand','ds_rand_coef_aca','cp_rand_coef_aca','ds_rand_coef_ion','cp_rand_coef_ion');
 elseif ionflag==1
-    save('OptWater_thermo_50 _percent_1',       'xvec','calcvec','refvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','dG_list_ref','dG_list_rand','dS_list_ref','dS_list_rand','CP_list_ref','CP_list_rand','ds_rand_coef_aca','cp_rand_coef_aca','ds_rand_coef_ion','cp_rand_coef_ion');
+    save('OptWater_thermo_50_percent_1',       'xvec','calcvec','refvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','dG_list_ref','dG_list_rand','dS_list_ref','dS_list_rand','CP_list_ref','CP_list_rand','ds_rand_coef_aca','cp_rand_coef_aca','ds_rand_coef_ion','cp_rand_coef_ion');
 end
