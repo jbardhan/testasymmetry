@@ -69,4 +69,4 @@ end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunOctanol','errfinal','calcE','refE','es','np');
+save('RunNitromethane','errfinal','calcE','refE','es','np');
