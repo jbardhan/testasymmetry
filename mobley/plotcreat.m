@@ -10,7 +10,7 @@ mobleyplot_flag=0;
 
 outlier_flag=0;
 %%
-run_water_training=load('RunWater_training_thermo_25_percent_1.mat');
+run_water_training=load('RunWater_training_thermo_100_percent_1.mat');
 
 index_training=run_water_training.index;  % index of 298K =24.85C in the temp vector
 dg_ref_training=run_water_training.refE(index_training,:);   % expaerimental Delta_G of the training set in kcal/mol
@@ -22,6 +22,10 @@ cp_calc_training=run_water_training.calcCP; % calculated S of the training set i
 dg_rms_298_training=run_water_training.dg_rms_298;
 ds_rms_298_training=run_water_training.ds_rms_298;
 cp_rms_298_training=run_water_training.cp_rms_298;
+ds_rand_training=run_water_training.randS; % calculated S of the training set in cal/mol/K
+cp_rand_training=run_water_training.randCP; % calculated S of the training set in cal/mol/K
+
+ds_rand_num=run_water_training.ds_rand;
 
 if outlier_flag==1
 
@@ -90,6 +94,7 @@ if trainingplot_flag==1
 
     figure()
     p=plot(ds_ref_training,ds_calc_training,'o');
+    %p=plot(ds_rand_training,ds_calc_training,'x');
     plotsettings(p,'b') % b is the color of markers
     xlabel('Experimental \DeltaS (cal/mol K)');
     ylabel('Computed \DeltaS (cal/mol K)'); 
@@ -104,6 +109,7 @@ if trainingplot_flag==1
     
     figure()
     p=plot(cp_ref_training,cp_calc_training,'o');
+    %p=plot(cp_rand_training,cp_calc_training,'x');
     plotsettings(p,'b') % b is the color of markers
     xlabel('Experimental CP (cal/mol K)');
     ylabel('Computed CP (cal/mol K)'); 

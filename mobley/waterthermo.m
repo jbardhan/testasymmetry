@@ -18,7 +18,7 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 
-ParamWatInfo = load('Optwater_thermo_25_percent_1');
+ParamWatInfo = load('Optwater_thermo_100_percent_1');
 TEMP= ParamWatInfo.tempvec;
 [m,index]=ismember(24.85,TEMP);
 
@@ -32,6 +32,8 @@ randS= ParamWatInfo.dS_list_rand'*1000;
 
 refCP= ParamWatInfo.CP_list_ref'*1000;
 randCP= ParamWatInfo.CP_list_rand'*1000;
+
+ds_rand=[ParamWatInfo.ds_rand_coef_aca;ParamWatInfo.ds_rand_coef_ion]';
 
 ionflag = ParamWatInfo.ionflag;
 aca_num = ParamWatInfo.aca_num;
@@ -71,7 +73,7 @@ ds_rms_298=rms(refS-calcS);
 cp_rms_298=rms(refCP-calcCP);
 
 
-save('RunWater_training_thermo_25_percent_1','x','calcE','refE','refCP','testset','refS','TEMP','ionflag','aca_num','ion_num','dGfunc','calcS','calcCP','t_ref_ion','t_ref_aca','dg_rms_298','ds_rms_298','cp_rms_298','index');
+save('RunWater_training_thermo_100_percent_1','x','calcE','refE','refCP','randCP','testset','refS','randS','TEMP','ionflag','aca_num','ion_num','dGfunc','calcS','calcCP','t_ref_ion','t_ref_aca','dg_rms_298','ds_rms_298','cp_rms_298','index','ds_rand');
 
    
     
