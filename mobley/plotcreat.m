@@ -25,6 +25,9 @@ cp_rms_298_training=run_water_training.cp_rms_298;
 ds_rand_training=run_water_training.randS; % calculated S of the training set in cal/mol/K
 cp_rand_training=run_water_training.randCP; % calculated S of the training set in cal/mol/K
 
+ds_rms_rand_298_training=rms(ds_calc_training-ds_rand_training);
+cp_rms_rand_298_training=rms(cp_calc_training-cp_rand_training);
+
 ds_rand_num=run_water_training.ds_rand;
 
 if outlier_flag==1
@@ -93,30 +96,32 @@ if trainingplot_flag==1
     hold off
 
     figure()
-    p=plot(ds_ref_training,ds_calc_training,'o');
-    %p=plot(ds_rand_training,ds_calc_training,'x');
-    plotsettings(p,'b') % b is the color of markers
+    %p=plot(ds_ref_training,ds_calc_training,'o','markersize',12,'linewidth',2);
+    p=plot(ds_rand_training,ds_calc_training,'x','markersize',12,'linewidth',2);
+    %plotsettings(p,'b') % b is the color of markers
     xlabel('Experimental \DeltaS (cal/mol K)');
     ylabel('Computed \DeltaS (cal/mol K)'); 
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
-    leg=legend(['SLIC \DeltaS (cal/mol^\circK); training set; RMS = ',num2str(ds_rms_298_training)]);
+    %leg=legend(['SLIC \DeltaS (cal/mol^\circK); training set; RMS = ',num2str(ds_rms_298_training)]);
+    leg=legend(['SLIC \DeltaS (cal/mol^\circK); training set; RMS = ',num2str(ds_rms_rand_298_training)]);
     leg.Location='southeast';
     leg.FontSize=20;
     hold off
     
     
     figure()
-    p=plot(cp_ref_training,cp_calc_training,'o');
-    %p=plot(cp_rand_training,cp_calc_training,'x');
-    plotsettings(p,'b') % b is the color of markers
+    %p=plot(cp_ref_training,cp_calc_training,'o','markersize',12,'linewidth',2);
+    p=plot(cp_rand_training,cp_calc_training,'x','markersize',12,'linewidth',2);
+    %plotsettings(p,'b') % b is the color of markers
     xlabel('Experimental CP (cal/mol K)');
     ylabel('Computed CP (cal/mol K)'); 
     diagline=refline(1,0);
     set(diagline,'LineWidth',2);
     set(diagline,'Color','k');
-    leg=legend(['SLIC CP (cal/mol^\circK); training set; RMS = ',num2str(cp_rms_298_training)]);
+    %leg=legend(['SLIC CP (cal/mol^\circK); training set; RMS = ',num2str(cp_rms_298_training)]);
+    leg=legend(['SLIC CP (cal/mol^\circK); training set; RMS = ',num2str(cp_rms_rand_298_training)]);
     leg.Location='southeast';
     leg.FontSize=20;
     hold off
