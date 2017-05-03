@@ -20,18 +20,19 @@ function writeDat(fileID,run_water_training)
     fprintf(fid,'\\begin{document} \n');
     
     
-    fprintf(fid,'\\begin{center}\n');
+    %fprintf(fid,'\\begin{center}\n');
     fprintf(fid,'\\captionof{table}{} \n');   
     fprintf(fid,'\\begin{tabular}{l|c|c|c} \n');
     fprintf(fid,'\\textbf{Solute Name}&\\textbf{$\\Delta G$(kcal/mol)}&\\textbf{$\\Delta S$(cal/mol$^\\circ$K)}&\\textbf{$Cp$(cal/mol$^\\circ$K)} \\\\ \n');
     fprintf(fid,'\\hline \\\\ \n');
     for i=1:length(run_water_training.testset)
         fprintf(fid,'%s & %.2f(\\textit{%.2f}) & %.2f(\\textit{%.2f}) & %.2f(\\textit{%.2f}) \\\\ \n',replace(string(testset(i)),'_','\_'),dg_calc_training(i),dg_ref_training(i),ds_calc_training(i),ds_ref_training(i),cp_calc_training(i),cp_ref_training(i));
+        fprintf(fid,
     end
     
     
     fprintf(fid,'\\end{tabular} \n');
-    fprintf(fid,'\\end{center} \n');
+   % fprintf(fid,'\\end{center} \n');
     fprintf(fid,'\\end{document} \n');
     fclose(fid);
 
