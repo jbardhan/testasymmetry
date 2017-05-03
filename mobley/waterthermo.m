@@ -18,7 +18,7 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 
-ParamWatInfo = load('Optwater_thermo_100_percent_1');
+ParamWatInfo = load('Optwater_thermo_50_percent_1');
 TEMP= ParamWatInfo.tempvec;
 [m,index]=ismember(24.85,TEMP);
 
@@ -73,7 +73,7 @@ ds_rms_298=rms(refS-calcS);
 cp_rms_298=rms(refCP-calcCP);
 
 
-save('RunWater_training_thermo_100_percent_1','x','calcE','refE','refCP','randCP','testset','refS','randS','TEMP','ionflag','aca_num','ion_num','dGfunc','calcS','calcCP','t_ref_ion','t_ref_aca','dg_rms_298','ds_rms_298','cp_rms_298','index','ds_rand');
+save('RunWater_training_thermo_50_percent_1','x','calcE','refE','refCP','randCP','testset','refS','randS','TEMP','ionflag','aca_num','ion_num','dGfunc','calcS','calcCP','t_ref_ion','t_ref_aca','dg_rms_298','ds_rms_298','cp_rms_298','index','ds_rand');
 
    
     
