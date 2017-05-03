@@ -13,7 +13,7 @@ elif Run_Type == 'run':
 	Solvent_List = ['runWater', 'runOctanol', 'runMethanol', 'runAcetonitrile', 'runNitromethane', 'runPropanol',
  		        'runDichloroethane','runDimethylsulfoxide', 'runDimethylformamide', 'runButanol', 'runEthanol', 'runNitrobenzene']
 
-Solvent_List = Solvent_List[:]
+Solvent_List = Solvent_List[9:]
 
 if len(Solvent_List) <= 12:
 	for solvent in Solvent_List:
