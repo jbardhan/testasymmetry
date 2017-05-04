@@ -4,7 +4,7 @@ import os
 Home = os.environ['HOME']
 os.chdir(Home+'/repos/testasymmetry/mobley')
 
-Run_Type = 'param'
+Run_Type = 'run'
 
 if Run_Type == 'param':
 	Solvent_List = ['paramWater', 'paramOctanol', 'paramMethanol', 'paramAcetonitrile', 'paramNitromethane', 'paramPropanol',
@@ -13,7 +13,7 @@ elif Run_Type == 'run':
 	Solvent_List = ['runWater', 'runOctanol', 'runMethanol', 'runAcetonitrile', 'runNitromethane', 'runPropanol',
  		        'runDichloroethane','runDimethylsulfoxide', 'runDimethylformamide', 'runButanol', 'runEthanol', 'runNitrobenzene']
 
-Solvent_List = Solvent_List[9:]
+Solvent_List = Solvent_List[2:]
 
 if len(Solvent_List) <= 12:
 	for solvent in Solvent_List:
