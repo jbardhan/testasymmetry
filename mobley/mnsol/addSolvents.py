@@ -70,7 +70,7 @@ for key in addInfo.keys():
     datTemp = pd.DataFrame(data=zip(*[solutes,dgList]), columns=[row1,key])
     foo = foo.combine_first(datTemp)
 
-final = foo.combine_first(driverFile)
+final = driverFile.combine_first(foo)
 cols = final.columns.tolist()
 colInd = len(cols)
 cols = cols[-(colInd-2):] + cols[:-(colInd-2)]
