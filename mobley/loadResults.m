@@ -5,7 +5,7 @@ addpath('export_fig/')
 %%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 1;
+ploton = 0;
 
 solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
             'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
@@ -106,7 +106,7 @@ end
 k = 1;
 for i = 1:length(common_solutes)
     for j = 1:length(solvents)
-        solute_struct(k) = struct('Solvnet',solvents{j},'Solute_Name',common_solutes(i),'RMS',rms(solute_errors(i,:,j)),...
+        solute_struct(k) = struct('Solute_Name',common_solutes(i),'RMS',rms(solute_errors(i,:,j)),...
             'Mean_Abs_error',mean(abs(solute_errors(i,:,j))));
         k = k + 1;
     end
