@@ -7,8 +7,9 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
 
-solvents = {'Water', 'Octanol', 'Hexadecane', 'Chloroform', 'Cyclohexane',...
-            'Carbontet', 'Hexane', 'Toluene', 'Xylene'}; 
+solvents = {'Water', 'Octanol', 'Dichloroethane', 'Nitrobenzene', 'Dimethylsulfoxide',...
+            'Butanol', 'Propanol', 'Dimethylformamide', 'Nitromethane', 'Ethanol', 'Methanol', 'Acetonitrile'}; 
+ 
         
 common_solutes = {'ethanol','butanone','toluene','n_octane','nitromethane',...
             '14_dioxane','phenol','acetic_acid','methanol','propanoic_acid',...
@@ -28,39 +29,39 @@ testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol',...
 % solvent and again as a function of solute
 for i = 1:length(solvents)
            
-    fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
+    fid = fopen(['mnsol/',lower(solvents{i}),'_ions.csv'],'r'); 
     Data = textscan(fid,'%s %f %f','delimiter',',');
     fclose(fid);
     mol_list = Data{1};
 
-    [~,m] = ismember(testset,mol_list);
-    [~,n] = ismember(common_solutes,mol_list);
-    
+%     [~,m] = ismember(testset,mol_list);
+%     [~,n] = ismember(common_solutes,mol_list);
+%     
+%     allCases = 1:length(mol_list);
+%     allCases(m) = 0;
     temp = load(['Run',solvents{i}]);
-    solute_errors(i,:) = temp.errfinal(n);
+%     solute_errors(i,:) = temp.errfinal(n);
     sorted_errors = sort(abs(temp.errfinal));
     results(i) = struct('Solvent', solvents{i},'Num_Solutes',round(length(mol_list),3),'CalcE',temp.calcE,...
                         'errfinal',temp.errfinal,'es',temp.es,'np',...
                         temp.np,'refE',temp.refE,'RMS',rms(temp.calcE-temp.refE),...
-                        'Mean_Abs_error',mean(abs(temp.errfinal)),'RMS_Training',...
-                        rms(temp.errfinal(m)),'Mean_Abs_error_Training',...
-                        mean(abs(temp.errfinal(m))),'RMS_Cons',...
-                        rms(temp.errfinal(n)),'Mean_Abs_error_Cons',...
-                        mean(abs(temp.errfinal(n))));
+                        'Mean_Abs_error',mean(abs(temp.errfinal)));
     if ploton
         figure
-        plot(temp.refE,temp.calcE,'bx','markers',12)
+%         plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',12)
+        plot(temp.refE,temp.calcE,'bo','markers',12)
         set(gca,'FontSize',15)
         hold on
-        plot(temp.refE(m),temp.calcE(m),'rx','markers',12)
-        plot([min(temp.refE) max(temp.refE)] , [min(temp.calcE) max(temp.calcE)],...
-                'k-')
-        xlabel('Experimental Solvation Free Energies')
-        ylabel('Calculated Solvation Free Energies')
-        title(['Calculated vs. Experiment Solvation Free Energies for ',...
-                solvents{i}])
-        legend('Calculated','Training Set','Experiment','Location','southeast')
-      filename = sprintf('Output/DeltaG-%s.PDF',solvents{i});
+%         plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
+        minax = round(min(min(temp.refE,temp.calcE)));
+        maxax = round(max(max(temp.refE,temp.calcE)));
+        axis([minax-2 maxax+2 minax-2 maxax+2]);
+        foo = refline(1,0);
+        set(foo,'Linewidth',2,'color','k');
+        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
+        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
+        legend('Predictions','Training Set','Location','southeast')
+      filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
     end
@@ -85,8 +86,8 @@ if ploton
         xlabel('Error')
         ylabel('Number of Occurances') 
     end
-    filename = sprintf('Output/HistogramOfErrors.PDF');
-    print(gcf, '-dpdf', 'Output/HistogramOfErrors.pdf'); 
+    filename = sprintf('Output/Figures/HistogramOfErrors.pdf');
+    print(gcf, '-dpdf', filename); 
 %     export_fig(filename,'-painters','-transparent');
 end
 
@@ -96,8 +97,26 @@ for i = 1:length(common_solutes)
         'Mean_Abs_error',mean(abs(solute_errors(i,:))));
 end
 
-writeDat('SolventErrors.tex',results);
-writeDat('SoluteErrors.tex',solute_struct);
+for i = 1:length(solvents)
+    for j = i:length(solvents)
+        rmsErr = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(rmsErr)
+            rmsdGTransErrorArray(i,j,k) = rmsErr(k);
+        end
+    end
+    
+    for j = i+1:length(solvents)
+        [~,meanAbsError] = calcRMSTrans(solvents{i},solvents{j});
+        for k = 1:length(meanAbsError)
+            rmsdGTransErrorArray(j,i,k) = meanAbsError(k);
+        end
+    end
+end
+
+writeDat('Output/Tables/SolventErrors.tex',results,solvents);
+writeDat('Output/Tables/SoluteErrors.tex',solute_struct,solvents);
+writeDat('Output/Tables/TransferRMSErrors.tex',rmsdGTransErrorArray,solvents);
+
 
 Outliers = readErr(max_err);
 save('Solvent Outliers','Outliers');
