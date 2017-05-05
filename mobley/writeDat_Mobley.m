@@ -4,6 +4,7 @@ function writeDat_Mobley(fileID,data)
     index=data.index;
     dg_ref=data.refE(index,:);
     dg_calc_slic=data.calcE(index,:);
+    dg_md=data.calc_mobley;
     ds_calc_slic=data.dsvec;
     cp_calc_slic=data.cpvec;
 
@@ -17,26 +18,64 @@ function writeDat_Mobley(fileID,data)
     fprintf(fid,'\\usepackage{float} \n');
     fprintf(fid,'\\usepackage{caption} \n');
     fprintf(fid,'\\usepackage{longtable} \n');
+    fprintf(fid,'\\usepackage{multirow} \n');
+    fprintf(fid,'\\usepackage{array} \n');
+    fprintf(fid,'\\newcolumntype{C}{>{\\centering\\arraybackslash}p{5em}}  \n');
+    fprintf(fid,'\\newcolumntype{X}{>{\\centering\\arraybackslash}p{8em}}  \n');
+    fprintf(fid,'\\newcolumntype{L}{>{\\raggedright\\arraybackslash}p{17em}}  \n');
     fprintf(fid,'\\addtolength{\\oddsidemargin}{-1.6in} \n');
     fprintf(fid,'\\addtolength{\\evensidemargin}{-1.6in} \n');
     fprintf(fid,'\\addtolength{\\topmargin}{-1in} \n');
+    
     fprintf(fid,'\\begin{document} \n');
     
+    fprintf(fid,'\\captionof{table}{} \n');
     
-    fprintf(fid,'\\begin{center}\n');
-    fprintf(fid,'\\captionof{table}{} \n');   
-    fprintf(fid,'\\begin{longtable}{l|c|c|c} \n');
-    fprintf(fid,'\\textbf{Solute Name}&\\textbf{$\\Delta G$(kcal/mol)}&\\textbf{$\\Delta S$(cal/mol$^\\circ$K)}&\\textbf{$Cp$(cal/mol$^\\circ$K)} \\\\ \n');
-    fprintf(fid,'\\hline \\\\ \n');
+    fprintf(fid,'\\begin{longtable}{L|C|C|C|X|X} \n');
+    fprintf(fid,'\\centering \n');
+    
+    fprintf(fid,'\\textbf{Solute Name}  &   \\multicolumn{3}{c|}{\\textbf{$\\Delta G^{water}$}($\\frac{kcal}{mol}$)}  &   \\textbf{$\\Delta S^{water}$}($\\frac{cal}{mol.K}$) &   \\textbf{$Cp^{water}$}($\\frac{cal}{mol.K}$) \\\\ \n');
+    fprintf(fid,'&  SLIC & MD & Expt. & SLIC & SLIC \\\\ \n');
+    fprintf(fid,'\\hline \n');
+    
+    fprintf(fid,'\\endhead \n');
+    
+    
     for i=1:length(mol_list)
-        fprintf(fid,'%s & %.2f(\\textit{%.2f}) & %.2f & %.2f \\\\ \n',replace(string(mol_list(i)),'_','\_'),dg_calc_slic(i),dg_ref(i),ds_calc_slic(i),cp_calc_slic(i));
+        fprintf(fid,'%s & %.2f & %.2f & %.2f & %.2f & %.2f \\\\ \n',replace(string(mol_list(i)),'_','\_'),dg_calc_slic(i),dg_md(i),dg_ref(i),ds_calc_slic(i),cp_calc_slic(i));
     end
     
-    
     fprintf(fid,'\\end{longtable} \n');
-    fprintf(fid,'\\end{center} \n');
     fprintf(fid,'\\end{document} \n');
     fclose(fid);
+
+    
+    
+    
+    
+    
+    
+    
+%     fprintf(fid,'\\addtolength{\\oddsidemargin}{-1.6in} \n');
+%     fprintf(fid,'\\addtolength{\\evensidemargin}{-1.6in} \n');
+%     fprintf(fid,'\\addtolength{\\topmargin}{-1in} \n');
+%     fprintf(fid,'\\begin{document} \n');
+%     
+%     
+%     fprintf(fid,'\\begin{center}\n');
+%     fprintf(fid,'\\captionof{table}{} \n');   
+%     fprintf(fid,'\\begin{longtable}{l|c|c|c} \n');
+%     fprintf(fid,'\\textbf{Solute Name}&\\textbf{$\\Delta G$(kcal/mol)}&\\textbf{$\\Delta S$(cal/mol$^\\circ$K)}&\\textbf{$Cp$(cal/mol$^\\circ$K)} \\\\ \n');
+%     fprintf(fid,'\\hline \\\\ \n');
+%     for i=1:length(mol_list)
+%         fprintf(fid,'%s & %.2f(\\textit{%.2f}) & %.2f & %.2f \\\\ \n',replace(string(mol_list(i)),'_','\_'),dg_calc_slic(i),dg_ref(i),ds_calc_slic(i),cp_calc_slic(i));
+%     end
+%     
+%     
+%     fprintf(fid,'\\end{longtable} \n');
+%     fprintf(fid,'\\end{center} \n');
+%     fprintf(fid,'\\end{document} \n');
+%     fclose(fid);
 
 %     fprintf(fid,'\\hline \n');
 %     for i = 1:length(dataStructure)
