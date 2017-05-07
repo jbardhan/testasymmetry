@@ -33,11 +33,10 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 'staticpotential',staticpotential);
      
 fid = fopen('mnsol/ethanol_ions.csv','r'); 
-Data = textscan(fid,'%s %f %f','delimiter',',');
+Data = textscan(fid,'%s %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
 dG_list = Data{2};
-old_surf = Data{3};
 
 fid = fopen('mnsol/mobley_sa.csv','r');
 Data = textscan(fid,'%s %f','delimiter',',');
@@ -48,7 +47,8 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 %testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-testset  = {'14_dioxane','butanone','n_octane','ethanol','nitromethane','toluene','Li','Na','K','Rb','Cs','Cl','Br','I'};
+
+testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene','Li','Na','K','Cl','Br','I'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
