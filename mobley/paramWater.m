@@ -47,7 +47,7 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
 
 TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
 
-for mm=1:5
+for mm=1:1
 
     sub_index = datasample(1:20,12,'Replace',false);
 
@@ -91,14 +91,17 @@ for mm=1:5
             testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
         end
 
-
+        testset=testset_total(sub_index);
+        
         fid = fopen('~/Research/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol.csv','r');
         Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
         fclose(fid);
         all_solutes = Data{1};
         all_dG = Data{2};
         all_surfAreas = Data{3};
-        [m, index] = ismember(testset_total,all_solutes);
+        [m, index] = ismember(testset,all_solutes);
+        [m1, index1] = ismember(testset_total,all_solutes);
+        surfArea_list_total= all_surfAreas(index1);
         surfArea_list = all_surfAreas(index);
         t_ref_aca=24.85; %reference tempereture for amino acid analogues
         t_ref_ion=25;  %reference tempereture for ions
@@ -132,7 +135,7 @@ for mm=1:5
         dG_list=dG_list_total(sub_index,kk);
         dS_list=dS_list_total(sub_index,kk);
         CP_list=CP_list_total(sub_index,kk);
-        testset=testset_total(sub_index);
+
 
         curdir=pwd;
         for i=1:length(testset)
@@ -187,7 +190,7 @@ for mm=1:5
 
     end
 
-    save(mat_name,'xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','sub_index','testset_total','dG_listtotal','dS_list_total','CP_list_total');
+    save(mat_name,'xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion','sub_index','testset_total','dG_list_total','dS_list_total','CP_list_total','surfArea_list','surfArea_list_total');
 
     
 end

@@ -18,7 +18,7 @@ dropbox_path=sprintf('%s/Dropbox',Home);
                    
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
-calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
@@ -40,6 +40,9 @@ addpath(sprintf('%s/testasymmetry/born',repo_path));
 
 
 if calcflag==1
+    
+for mm=1:5    
+    
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% Load data from parameterization
@@ -51,7 +54,11 @@ if calcflag==1
 
     %%% Finding the values of parameters from the quadratic fit at the new
     %%% temperatures
-    ParamWatInfo=load('OptWater_thermo');
+    
+    mat_name=sprintf('OptWater_thermo_rand_%d',mm);
+    
+    ParamWatInfo=load(mat_name);
+    
     x = ParamWatInfo.xvec;
     x=x(2:4,:);
     
@@ -86,33 +93,47 @@ if calcflag==1
                      'staticpotential',staticpotential);
 
         
-        if strcmp(dataset,'mnsol')
-                 
-                 
-            fid = fopen('mnsol/water.csv','r'); 
-            Data = textscan(fid,'%s %f %f','delimiter',',');
-            fclose(fid);
-            mol_list = Data{1};
-            dG_list = Data{2};
-
-            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
-            Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
-            fclose(fid);
-            all_solutes = Data{1};
-            all_surfAreas = Data{3};
-            [m, index] = ismember(mol_list,all_solutes);
-            surfArea_list = all_surfAreas(index);
-            
-        elseif strcmp(dataset,'mobley')
-            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
-            Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
-            fclose(fid);
-            mol_list = Data{1};
-            dG_list = Data{2};
-            surfArea_list = Data{3};
-            calc_mobley= Data{8};
-        end
+%         if strcmp(dataset,'mnsol')
+%                  
+%                  
+%             fid = fopen('mnsol/water.csv','r'); 
+%             Data = textscan(fid,'%s %f %f','delimiter',',');
+%             fclose(fid);
+%             mol_list = Data{1};
+%             dG_list = Data{2};
+% 
+%             fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+%             Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
+%             fclose(fid);
+%             all_solutes = Data{1};
+%             all_surfAreas = Data{3};
+%             [m, index] = ismember(mol_list,all_solutes);
+%             surfArea_list = all_surfAreas(index);
+%             
+%         elseif strcmp(dataset,'mobley')
+%             fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+%             Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
+%             fclose(fid);
+%             mol_list = Data{1};
+%             dG_list = Data{2};
+%             surfArea_list = Data{3};
+%             calc_mobley= Data{8};
+%         end
         
+
+        mol_list=ParamWatInfo.testset_total;
+        dG_list =ParamWatInfo.dG_list_total;
+        fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+        Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
+        fclose(fid);
+        all_solutes = Data{1};
+        all_surfAreas = Data{3};
+        [m, index] = ismember(mol_list,all_solutes);
+        surfArea_list = all_surfAreas(index);
+
+        
+        
+
 
                  
         curdir = pwd;
@@ -137,6 +158,8 @@ if calcflag==1
     elseif strcmp(dataset,'mobley')
         save('RunWater_mobley_513_ini_run','errfinal','calcE','refE','es','np','new_temp','x','mol_list','calc_mobley');
     end
+    
+end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

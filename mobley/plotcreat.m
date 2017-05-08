@@ -1,20 +1,24 @@
-clear all;clc;close all
+clear all;%clc;%close all
 addpath('export_fig/')
 %Water
 %%
 trainingplot_flag=1;
 mnsolplot_flag=0;
-mobleyplot_flag=1;
-ploton=0;
+mobleyplot_flag=0;
+ploton=1;
 
 outlier_flag=0;
+
+for mm=1:5
+
+    mat_name=sprintf('RunWater_training_thermo_rand_%d',mm);
 
 %%
 
 if trainingplot_flag==1
     
     
-    run_water_training=load('RunWater_training_thermo.mat');
+    run_water_training=load(mat_name);
 
     index_training=run_water_training.index;  % index of 298K =24.85C in the temp vector
     dg_ref_training=run_water_training.refE(index_training,:);   % expaerimental Delta_G of the training set in kcal/mol
@@ -52,7 +56,8 @@ if trainingplot_flag==1
         min_axe=round(min(min(dg_ref_training),min(dg_calc_training)));
         max_axe=round(max(max(dg_ref_training),max(dg_calc_training)));
 
-        figure
+        %figure
+        subplot(5,3,3*(mm-1)+1)
         p=plot(dg_ref_training,dg_calc_training,'r+','markers',15,'LineWidth',1);
         set(gca,'FontSize',15)
         xlabel('\Delta G_{expt}^{Water} (kcal/mol)');
@@ -64,14 +69,15 @@ if trainingplot_flag==1
         leg=legend(['SLIC; Training set; RMS = ',num2str(dg_rms_298_training)],'location','southeast');
         leg.Location='southeast';
         leg.FontSize=15;
-        filename = sprintf('Output/DeltaG-water-training_set.PDF');
-        export_fig(filename,'-painters','-transparent');
-        hold off
+%         filename = sprintf('Output/DeltaG-water-training_set.PDF');
+%         export_fig(filename,'-painters','-transparent');
+        %hold off
 
         min_axe=round(min(min(ds_ref_training),min(ds_calc_training)));
         max_axe=round(max(max(ds_ref_training),max(ds_calc_training)));
 
-        figure
+        %figure
+        subplot(5,3,3*(mm-1)+2)
         p=plot(ds_ref_training,ds_calc_training,'r+','markers',15,'LineWidth',1);
         set(gca,'FontSize',15)
         xlabel('\Delta S_{expt}^{Water} (cal/mol\circK)');
@@ -83,14 +89,15 @@ if trainingplot_flag==1
         leg=legend(['SLIC \DeltaS; training set; RMS = ',num2str(ds_rms_298_training)]);
         leg.Location='southeast';
         leg.FontSize=15;
-        filename = sprintf('Output/DeltaS-water-training_set.PDF');
-        export_fig(filename,'-painters','-transparent');
-        hold off
+%         filename = sprintf('Output/DeltaS-water-training_set.PDF');
+%         export_fig(filename,'-painters','-transparent');
+       % hold off
 
         min_axe=round(min(min(cp_ref_training),min(cp_calc_training)));
         max_axe=round(max(max(cp_ref_training),max(cp_calc_training)));
 
-        figure
+        %figure
+        subplot(5,3,3*(mm-1)+3)
         p=plot(cp_ref_training,cp_calc_training,'r+','markers',15,'LineWidth',1);
         set(gca,'FontSize',15)
         xlabel('Cp_{expt}^{Water} (cal/mol\circK)');
@@ -102,14 +109,14 @@ if trainingplot_flag==1
         leg=legend(['SLIC Cp; training set; RMS = ',num2str(cp_rms_298_training)]);
         leg.Location='northwest';
         leg.FontSize=15;
-        filename = sprintf('Output/Cp-water-training_set.PDF');
-        export_fig(filename,'-painters','-transparent');
-        hold off
+%         filename = sprintf('Output/Cp-water-training_set.PDF');
+%         export_fig(filename,'-painters','-transparent');
+       % hold off
         
     end
     
     
-    writeDat('Trainingset_Thermo.tex',run_water_training);
+    %writeDat('Trainingset_Thermo_rand_1.tex',run_water_training);
 end
 
 %%
@@ -195,6 +202,8 @@ if mobleyplot_flag==1
     end
     
     writeDat_Mobley('Mobley_Thermo.tex',run_water_Mobley);
+end
+
 end
 
 
