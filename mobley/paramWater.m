@@ -16,14 +16,11 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 repo_path=sprintf('%s/Research',Home);
-dropbox_path=sprintf('%s/Dropbox',Home);
+dropbox_path=sprintf('%s/Dropbox-NEU/Dropbox',Home);
 
 
 ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
-paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
-                    % if paramboundflag=1 there is abound
-                    
 
 temp_min=4.85;     % lower bound of the temperature interval 
 temp_max=44.85;    % upper bound in the temperature interval
@@ -72,7 +69,9 @@ for kk=1:tempdiv
     staticpotential = 0.0; % this only affects charged molecules;
     kappa = 0.0;  % should be zero, meaning non-ionic solutions!
     temp=TEMP(kk);
-    epsOut = (-1.410e-6)*temp^3+(9.398e-4)*temp^2-0.40008*temp+87.740;
+    epsOut = (-1.410e-6)*temp^3+(9.398e-4)*temp^2-0.40008*temp+87.740;  % function for dielectric constant
+                                             % of water as a function of
+                                             % temperature in C
 
 
     % the staticpotential below should not be used any more, please check
@@ -80,21 +79,8 @@ for kk=1:tempdiv
                  kappa,'conv_factor',conv_factor,...
                  'staticpotential',staticpotential);
 
-%     fid = fopen('mnsol/water.csv','r'); 
-%     Data = textscan(fid,'%s %f %f','delimiter',',');
-%     fclose(fid);
-%     mol_list = Data{1};
-%     dG_list = Data{2};
-% 
-%     fid = fopen('mnsol/mobley_sa.csv','r');
-%     Data = textscan(fid,'%s %f','delimiter',',');
-%     fclose(fid);
-%     all_solutes = Data{1};
-%     all_surfAreas = Data{2};
-%     [m, index] = ismember(mol_list,all_solutes);
-%     surfArea_list = all_surfAreas(index);
+
     if ionflag==1
-    %    testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','F','Cl','Br','I'};
         testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
 
     elseif ionflag==0
@@ -118,6 +104,9 @@ for kk=1:tempdiv
     dS_list_ref_at_298=(H_list_ref_at_298-dG_list_ref_at_298(1:12))/298;  % in kcal/mol/K
     dG_list_aca=dG_list_ref_at_298-dS_list_ref_at_298*(TEMP(kk)-t_ref_aca);
     
+    aca_num=length(dG_list_ref_at_298);
+    ion_num=0;
+    
     if ionflag==1
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
@@ -125,22 +114,16 @@ for kk=1:tempdiv
         dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion);
         
         dG_list=[dG_list_aca;dG_list_ion];
+        dS_list=[dS_list_ref_at_298;dS_list_ref_ion_at_298_15];
+        
+        ion_num=length(dG_list_ref_ion_at_298_15);
+        
+    elseif ionflag==0
+        
+        dG_list=dG_list_aca;
+        dS_list=dS_list_ref_at_298;
         
     end
-    
-    % all octanol available side chain analogues 
-    %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
-    % 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
-
-    % complete list of side chain analogues. not available for all solvents
-    %testset = {'1_methyl_imidazole','2_methylpropane', ...
-    %	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
-    %	   'ethanol','methane','methanethiol','methanol', ...
-    %	   'methyl_ethyl_sulfide','n_butane','n_butylamine', ...
-    %	   'p_cresol','propane','propanoic_acid','toluene'};
-    
-    
-    
     
     curdir=pwd;
     for i=1:length(testset)
@@ -171,21 +154,11 @@ for kk=1:tempdiv
     % alpha beta gamma mu phi_stat np_a np_b
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 -0.03 1.6];
     if ionflag==0
-        if paramboundflag==1
-            lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-            ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
-        elseif paramboundflag==0
-            lb = [-inf -inf -inf -inf  -inf  -inf  -inf];
-            ub = [ inf  inf  inf  inf   inf   inf   inf];
-        end
+        lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
+        ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
     elseif ionflag==1
-        if paramboundflag==1
             lb = [-2 -200 -100 -20  -20  -0.1  -2];
             ub = [+2 +200 +100 +20  +20  +0.1  +2];
-        elseif paramboundflag==0
-            lb = [-inf -inf -inf -inf  -inf  -inf  -inf];
-            ub = [ inf  inf  inf  inf   inf   inf   inf];
-        end
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
@@ -196,29 +169,13 @@ for kk=1:tempdiv
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-    xvec(kk,:)=x;
-    refvec(kk,:)=ref;
-    calcvec(kk,:)=calc;
-    esvec(kk,:)=es;
-    npvec(kk,:)=np;
-    x0vec(kk,:)=x0;
-    calc0vec(kk,:)=calc0;
-    es0vec(kk,:)=es0;
-    np0vec(kk,:)=np0;
+    xvec(kk,:)=x;refvec(kk,:)=ref;calcvec(kk,:)=calc;
+    esvec(kk,:)=es;npvec(kk,:)=np;x0vec(kk,:)=x0;
+    calc0vec(kk,:)=calc0;es0vec(kk,:)=es0;np0vec(kk,:)=np0;
     tempvec(kk,:)=temp;
 end
 if ionflag==0
-    if paramboundflag==1
-        save('OptWater_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-    else
-        save('OptWater_wo_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-    end
+    save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 elseif ionflag==1
-    if paramboundflag==1
-        %save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-        save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-
-    else
-        save('OptWater_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-    end
+    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 end
