@@ -7,10 +7,10 @@ os.chdir(Home+'/repos/testasymmetry/mobley')
 Run_Type = 'run'
 
 if Run_Type == 'param':
-	Solvent_List = ['paramDimethylacetamide','paramNitromethane', 'paramButanol', 'paramWater', 'paramOctanol', 'paramMethanol', 'paramAcetonitrile', 'paramPropanone', 'paramPropanol',
+	Solvent_List = ['paramNitrobenzene','paramDimethylacetamide','paramNitromethane', 'paramButanol', 'paramWater', 'paramOctanol', 'paramMethanol', 'paramAcetonitrile', 'paramPropanone', 'paramPropanol',
  		        'paramDichloroethane','paramDimethylsulfoxide', 'paramDimethylformamide', 'paramEthanol']
 elif Run_Type == 'run':
-	Solvent_List = ['runDimethylacetamide','runNitromethane', 'runButanol', 'runWater', 'runOctanol', 'runMethanol', 'runAcetonitrile', 'runPropanone', 'runPropanol',
+	Solvent_List = ['runNitrobenzene','runDimethylacetamide','runNitromethane', 'runButanol', 'runWater', 'runOctanol', 'runMethanol', 'runAcetonitrile', 'runPropanone', 'runPropanol',
  		        'runDichloroethane','runDimethylsulfoxide', 'runDimethylformamide', 'runEthanol']
 
 Solvent_List = Solvent_List[0]
