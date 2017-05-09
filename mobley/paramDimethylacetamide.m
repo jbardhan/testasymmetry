@@ -32,11 +32,24 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-[mol_list,dG_list,surfArea_list]=textread('mnsol/dimethylacetamide.csv',...
-					  '%s %f %f','delimiter',',');
+fid = fopen('mnsol/dimethylacetamide_ions.csv','r'); 
+Data = textscan(fid,'%s %f %f','delimiter',',');
+fclose(fid);
+mol_list = Data{1};
+dG_list = Data{2};
+old_surf = Data{3};
 
+fid = fopen('mnsol/mobley_sa.csv','r');
+Data = textscan(fid,'%s %f','delimiter',',');
+fclose(fid);
+all_solutes = Data{1};
+all_surfAreas = Data{2};
+[m, index] = ismember(mol_list,all_solutes);
+surfArea_list = all_surfAreas(index);
 
-testset  = {'toluene','ethanol','butanone','nitromethane','n_octane','14_dioxane'};
+%testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+
+testset  = {'butanone','n_octane','ethanol','toluene','14_dioxane','nitromethane','Li','Na','K','Cl','Br','I'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -68,27 +81,16 @@ for i=1:length(testset)
   addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
 
-NaReference = -0.239*436.1; NaR = 0.92*1.41075; NaSurfArea = 4*pi*NaR^2;
-KReference  = -0.239*363.7; KR = 0.92*1.76375; KSurfArea = 4*pi*KR^2;
-ClReference = -0.239*249.1; ClR = 0.92*2.27; ClSurfArea = 4*pi*ClR^2;
-
-addProblemSA('Na',pqrData,'../born/Na_2.srf',1, ...
-	   NaReference,NaSurfArea);
-addProblemSA('K',pqrData,'../born/K_2.srf',1, ...
-	   KReference,KSurfArea);
-addProblemSA('Cl',pqrData,'../born/Cl_2.srf',-1, ...
-	   ClReference,ClSurfArea);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5  -60  -0.5 0.0 -0.03 1.6];
-lb = [-2 -200 -100 -20   -0.1  0];
-ub = [+2 +200 +100 +20   +0.1 +4];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
+lb = [-2 -200 -100 -20  -20  -0.1  -2];
+ub = [+2 +200 +100 +20  +20  +0.1  +2];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
@@ -97,3 +99,6 @@ y = @(x)ObjectiveFromBEMSA(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
+
+save('OptDimethyacetamide','x','ref','calc','es','np','x0','calc0','es0','np0');
+
