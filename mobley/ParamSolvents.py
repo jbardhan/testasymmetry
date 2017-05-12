@@ -4,7 +4,7 @@ import os
 Home = os.environ['HOME']
 os.chdir(Home+'/repos/testasymmetry/mobley')
 
-Run_Type = 'param'
+Run_Type = 'run'
 
 if Run_Type == 'param':
 	Solvent_List = ['paramButanol', 'paramWater', 'paramOctanol', 'paramMethanol', 'paramPropanol', 'paramEthanol']
