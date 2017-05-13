@@ -48,11 +48,22 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 %testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-testset  = {'4_nitroaniline','benzene','butanone','ethane',...
-    'n_heptane','methanol','n_octane','nitromethane',...
-    'pyridine','toluene','propan_1_ol','triethylamine',...
+testset  = {'anthracene','butan_1_ol','cyclohexane','ethanol',...
+    'n_butane','n_pentane','n_hexane','nitromethane',...
+    'phenanthrene','pyrene','pyridine','triethylamine',...
     'Na','K','Rb','Cl','Br','I'};
-
+anthracene
+butan_1_ol
+cyclohexane
+ethanol
+n_butane
+n_hexane
+n_pentane
+nitromethane
+phenanthrene
+pyrene
+pyridine
+triethylamine
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
 % 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
