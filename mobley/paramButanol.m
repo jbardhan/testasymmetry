@@ -52,18 +52,7 @@ testset  = {'anthracene','butan_1_ol','cyclohexane','ethanol',...
     'n_butane','n_pentane','n_hexane','nitromethane',...
     'phenanthrene','pyrene','pyridine','triethylamine',...
     'Na','K','Rb','Cl','Br','I'};
-anthracene
-butan_1_ol
-cyclohexane
-ethanol
-n_butane
-n_hexane
-n_pentane
-nitromethane
-phenanthrene
-pyrene
-pyridine
-triethylamine
+
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
 % 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
