@@ -18,7 +18,7 @@ logfileName = 'junklogfile';
 
 epsIn  =  1;
 Tbase = 300; 
-epsOut = 1.8819; % from MNSol
+epsOut = 1.9846; % from MNSol
 
 mytemp=Tbase;
 KelvinOffset = 273.15;
@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/hexane.csv','r'); 
+fid = fopen('mnsol/decane.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -46,8 +46,8 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-testset  = {'33_dimethylbutan_2_one','butan_1_ol','ethanol','ethyl_acetate','ethylamine','heptan_1_ol','heptan_2_one','hexan_1_ol','hexan_2_one','methanol','methyl_hexanoate','methyl_pentanoate'};
 
+testset  = {'33_dimethylbutan_2_one','butan_1_ol','ethanol','ethyl_acetate','ethylamine','heptan_1_ol','heptan_2_one','hexan_1_ol','hexan_2_one','methanol','methyl_hexanoate','methyl_pentanoate'};
 
 curdir=pwd;
 for i=1:length(testset)
@@ -85,4 +85,4 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptHexane','x','ref','calc','es','np','x0','calc0','es0','np0');
+save('OptDecane','x','ref','calc','es','np','x0','calc0','es0','np0');
