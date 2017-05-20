@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/nonane.csv','r'); 
+fid = fopen('mnsol/nonane_fake.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -73,7 +73,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.1 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
 lb = [-1 -200 -100 -1  -0.1  -0.1  -10];
 ub = [1 +200 +100 +1  +0.1  +0.1  +10];
 
