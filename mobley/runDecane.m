@@ -13,7 +13,7 @@ loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'decane.out';
-epsOut = 1.8819; % from MNSol
+epsOut = 1.9846; % from MNSol
 
 ParamHexaneInfo = load('OptDecane');
 x = ParamHexaneInfo.x;

@@ -13,7 +13,7 @@ loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'pentane.out';
-epsOut = 1.8819; % from MNSol
+epsOut = 1.8371; % from MNSol
 
 ParamHexaneInfo = load('OptPentane');
 x = ParamHexaneInfo.x;

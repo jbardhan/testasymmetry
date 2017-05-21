@@ -13,7 +13,7 @@ loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'nonane.out';
-epsOut = 1.8819; % from MNSol
+epsOut = 1.9605; % from MNSol
 
 ParamHexaneInfo = load('OptNonane');
 x = ParamHexaneInfo.x;
