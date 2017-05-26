@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/nonane_fake.csv','r'); 
+fid = fopen('mnsol/nonane.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -47,7 +47,7 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 
-testset  = {'33_dimethylbutan_2_one','butan_1_ol','ethanol','ethyl_acetate','ethylamine','heptan_1_ol','heptan_2_one','hexan_1_ol','hexan_2_one','methanol','methyl_hexanoate','methyl_pentanoate'};
+testset  = {'33_dimethylbutan_2_one','ethanol','ethyl_acetate','ethylamine','heptan_1_ol','hexan_2_one','methanol','methyl_pentanoate','n_propyl_acetate','propan_1_ol'};
 
 curdir=pwd;
 for i=1:length(testset)
@@ -73,9 +73,9 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
-lb = [-1 -200 -100 -1  -0.1  -0.1  -10];
-ub = [1 +200 +100 +1  +0.1  +0.1  +10];
+x0 = [0.3 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
+lb = [0.2 -200 -100 -1  -0.1  -0.1  -4];
+ub = [0.4 +200 +100 +1  +0.1  +0.1  +4];
 
 options = optimoptions('lsqnonlin','MaxIter',6);
 options = optimoptions(options,'Display', 'iter');
