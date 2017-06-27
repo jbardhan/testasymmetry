@@ -49,11 +49,11 @@ for i = 1:length(solvents)
                         'Mean_Abs_error',mean(abs(temp.errfinal)));
     if ploton
         figure
-        plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',12)
+        plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',8)
         %plot(temp.refE,temp.calcE,'bo','markers',12)
         set(gca,'FontSize',15)
         hold on
-        plot(temp.refE(m),temp.calcE(m),'rs','markers',12)
+        plot(temp.refE(m),temp.calcE(m),'rs','markers',8,'linewidth',3)
         minax = round(min(min(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
         maxax = round(max(max(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
         axis([minax-2 maxax+2 minax-2 maxax+2]);
