@@ -7,9 +7,9 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
 
-solvents = {'Water','Octanol','Dichloroethane', 'Propanone', 'Dimethylsulfoxide',...
-             'Propanol', 'Dimethylformamide', 'Ethanol', 'Methanol', 'Acetonitrile'}; 
-solvents_1 = {'Octanol'};
+solvents = {'water','octanol','dichloroethane', 'propanone', 'dimethylsulfoxide',...
+             'propanol', 'dimethylformamide', 'ethanol', 'methanol', 'acetonitrile'}; 
+solvents_1 = {'octanol'};
        
 %common_solutes = {'ethanol','butanone','n_octane','pyrene','cyclohexane',};
         
@@ -59,9 +59,9 @@ for i = 1:length(solvents)
         axis([minax-2 maxax+2 minax-2 maxax+2]);
         foo = refline(1,0);
         set(foo,'Linewidth',2,'color','k');
-        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
-        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
-        legend('Predictions','Training Set','Location','southeast')
+        xlabel(['\Delta','G_{expt}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
+        ylabel(['\Delta','G_{calc}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
+        legend('Predictions ','Training Set ','Location','southeast')
       filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
@@ -77,9 +77,9 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
 
-solvents = {'Water','Octanol','Dichloroethane', 'Propanone', 'Dimethylsulfoxide',...
-             'Propanol', 'Dimethylformamide', 'Ethanol', 'Methanol', 'Acetonitrile'}; 
-solvents_1 = {'Octanol'};
+solvents = {'water','octanol','dichloroethane', 'propanone', 'dimethylsulfoxide',...
+             'propanol', 'dimethylformamide', 'ethanol', 'methanol', 'acetonitrile'}; 
+solvents_1 = {'octanol'};
        
 %common_solutes = {'ethanol','butanone','n_octane','pyrene','cyclohexane',};
         
@@ -113,13 +113,13 @@ for i = 1:length(solvents)
         figure
         if ~ismember(solvents{i},solvents_1)
             [~,p] = ismember(test_ion,mol_list);
-            plot(temp.refE(allCases(p)),temp.calcE(allCases(p)),'bo','markers',12)
+            plot(temp.refE(allCases(p)),temp.calcE(allCases(p)),'bo','markers',20,'linewidth',3)
             hold on
         else
             plot(800,800,'bo','markers',12)
             hold on
         end
-        plot(temp.refE(allCases(n)),temp.calcE(allCases(n)),'rs','markers',12)
+        plot(temp.refE(allCases(n)),temp.calcE(allCases(n)),'rs','markers',20,'linewidth',3)
         %plot(temp.refE,temp.calcE,'bo','markers',12)
         set(gca,'FontSize',15)
         minax = round(min(min(temp.refE(allCases(n)),temp.calcE(allCases(n)))));
@@ -127,9 +127,9 @@ for i = 1:length(solvents)
         axis([minax-2 maxax+2 minax-2 maxax+2]);
         foo = refline(1,0);
         set(foo,'Linewidth',2,'color','k');
-        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
-        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
-        legend('Predictions','Training Set','Location','southeast')
+        xlabel(['\Delta','G_{expt}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
+        ylabel(['\Delta','G_{calc}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
+        legend('Predictions ','Training Set ','Location','southeast')
       filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
