@@ -2,9 +2,9 @@ clear all;clc;close all
 addpath('export_fig/')
 %Water
 %%
-trainingplot_flag=1;
+trainingplot_flag=0;
 mnsolplot_flag=1;
-mobleyplot_flag=1;
+mobleyplot_flag=0;
 ploton=1;
 outlier_flag=0;
 
@@ -166,28 +166,28 @@ if mobleyplot_flag==1
     dg_calc_slic_mobley=run_water_Mobley.calcE(index_mobley,:);
     ds_calc_slic_mobley=run_water_Mobley.dsvec;
     dg_calc_mobley=run_water_Mobley.calc_mobley;
-    dg_rms_slic_mobley=run_water_Mobley.dg_rms_298;
-    dg_rms_mobley=run_water_Mobley.dg_rms_298_MD;
+    dg_rms_slic_mobley=run_water_Mobley.dg_rms_298_mol;
+    dg_rms_mobley=run_water_Mobley.dg_rms_298_MD_mol;
     
     dg_ref_average=mean(dg_ref_mobley);
     dg_ref_average_5=0.2*dg_ref_average;
     dg_ref_average_10=0.5*dg_ref_average;
     
 
-    min_axe=round(min([min(dg_ref_mobley),min(dg_calc_slic_mobley),min(dg_calc_mobley)]));
-    max_axe=round(max([max(dg_ref_mobley),max(dg_calc_slic_mobley),max(dg_calc_mobley)]));
+    min_axe=round(min([min(dg_ref_mobley(1:502)),min(dg_calc_slic_mobley(1:502)),min(dg_calc_mobley)]));
+    max_axe=round(max([max(dg_ref_mobley(1:502)),max(dg_calc_slic_mobley(1:502)),max(dg_calc_mobley)]));
     
 
     if ploton 
 
         figure
-        q=plot(dg_ref_mobley,dg_calc_mobley,'r+','markers',10,'LineWidth',1.5);
+        q=plot(dg_ref_mobley(1:502),dg_calc_mobley,'r+','markers',10,'LineWidth',1.5);
         set(gca,'FontSize',15)
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         xlabel('\DeltaG_{expt}^{Water} (kcal.mol^{-1})');
         ylabel('\DeltaG_{calc}^{Water} (kcal.mol^{-1})');
         hold on
-        p=plot(dg_ref_mobley,dg_calc_slic_mobley,'bo','markers',5,'LineWidth',1.5);
+        p=plot(dg_ref_mobley(1:502),dg_calc_slic_mobley(1:502),'bo','markers',5,'LineWidth',1.5);
         hold on
         leg=legend( ['MD; Mobley database; RMS = ',num2str(dg_rms_mobley)],...
                     ['SLIC; Mobley database; RMS = ',num2str(dg_rms_slic_mobley)]);

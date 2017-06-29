@@ -160,9 +160,13 @@ refE = RunWater.refE; %calculated values for \Delta G at different temperatures
 %refS = RunWater_mobleyset_184.dS_list; %calculated values for \Delta G at
 %different temperatures
 if strcmp(dataset,'mobley')
-    calcE = RunWater.calcE(:,1:502); %calculated values for \Delta G at different temperatures
-    refE = RunWater.refE(:,1:502); %calculated values for \Delta G at different temperatures
-    calc_mobley=RunWater.calc_mobley(1:502);
+%     calcE = RunWater.calcE(:,1:502); %calculated values for \Delta G at different temperatures
+%     refE = RunWater.refE(:,1:502); %calculated values for \Delta G at different temperatures
+%     calcE_ion = RunWater.calcE(:,503:end); %calculated values for \Delta G at different temperatures
+%     refE_ion = RunWater.refE(:,503:end); %calculated values for \Delta G at different temperatures
+     calcE = RunWater.calcE; %calculated values for \Delta G at different temperatures
+     refE = RunWater.refE; %calculated values for \Delta G at different temperatures
+     calc_mobley=RunWater.calc_mobley(1:502);
 end
     
 es=RunWater.es;
@@ -173,7 +177,8 @@ TEMP_K=TEMP+273.15;
 [m,index]=ismember(24.85,TEMP);
 mol_list=RunWater.mol_list;
 if strcmp(dataset,'mobley')
-    mol_list=RunWater.mol_list(1:502);
+%     mol_list=RunWater.mol_list(1:502);
+    mol_list=RunWater.mol_list;
 end
 
 for i=1:length(mol_list)
@@ -198,8 +203,9 @@ end
  dg_rms_298=rms(calcE-refE);
  
  if strcmp(dataset,'mobley')
-    dg_rms_298=rms(calcE(index,1:502)-refE(index,1:502));
-    dg_rms_298_MD=rms(calc_mobley(1:502)'-refE(index,1:502));
+    dg_rms_298_mol=rms(calcE(index,1:502)-refE(index,1:502));
+    dg_rms_298_MD_mol=rms(calc_mobley(1:502)'-refE(index,1:502));
+    dg_rms_298_ion=rms(calcE(index,503:end)-refE(index,503:end));
  end
 
 
@@ -209,7 +215,7 @@ elseif strcmp(dataset,'mobley')
     output_name='RunWater_mobley_thermo';
 end
     
-save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298','dg_rms_298_MD','index','calc_mobley');
+save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_ion','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley');
 
 
 
