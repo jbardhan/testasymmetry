@@ -52,10 +52,10 @@ if trainingplot_flag==1
         max_axe=round(max(max(dg_ref_training),max(dg_calc_training)));
 
         figure
-        p=plot(dg_ref_training,dg_calc_training,'bo','markers',8,'LineWidth',1.5);
+        p=plot(dg_ref_training,dg_calc_training,'bo','markers',12);
         set(gca,'FontSize',15)
-        xlabel('\Delta G_{expt}^{Water} (kcal.mol^{-1})');
-        ylabel('\Delta G_{calc}^{Water} (kcal.mol^{-1})');
+        xlabel('\DeltaG_{expt}^{water} (kcal.mol^{-1})');
+        ylabel('\DeltaG_{calc}^{water} (kcal.mol^{-1})');
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         diagline=refline(1,0);
         set(diagline,'LineWidth',2);
@@ -71,10 +71,10 @@ if trainingplot_flag==1
         max_axe=round(max(max(ds_ref_training),max(ds_calc_training)));
 
         figure
-        p=plot(ds_ref_training,ds_calc_training,'bo','markers',8,'LineWidth',1.5);
+        p=plot(ds_ref_training,ds_calc_training,'bo','markers',12);
         set(gca,'FontSize',15)
-        xlabel('\Delta S_{expt}^{Water} (cal.mol^{-1}.K^{-1})');
-        ylabel('\Delta S_{calc}^{Water} (cal.mol^{-1}.K^{-1})');
+        xlabel('\DeltaS_{expt}^{water} (cal.mol^{-1}.K^{-1})');
+        ylabel('\DeltaS_{calc}^{water} (cal.mol^{-1}.K^{-1})');
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         diagline=refline(1,0);
         set(diagline,'LineWidth',2);
@@ -90,10 +90,10 @@ if trainingplot_flag==1
         max_axe=round(max(max(cp_ref_training),max(cp_calc_training)));
 
         figure
-        p=plot(cp_ref_training,cp_calc_training,'bo','markers',8,'LineWidth',1.5);
+        p=plot(cp_ref_training,cp_calc_training,'bo','markers',12);
         set(gca,'FontSize',15)
-        xlabel('Cp_{expt}^{Water} (cal.mol^{-1}.K^{-1})');
-        ylabel('Cp_{calc}^{Water} (cal.mol^{-1}.K^{-1})');
+        xlabel(['C_p','{ }_{expt}^{water} (cal.mol^{-1}.K^{-1})']);
+        ylabel(['C_p','{ }_{calc}^{water} (cal.mol^{-1}.K^{-1})']);
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         diagline=refline(1,0);
         set(diagline,'LineWidth',2);
@@ -140,8 +140,8 @@ if mnsolplot_flag==1
         p=plot(dg_ref_mnsol,dg_calc_slic_mnsol,'bo','markers',8,'LineWidth',1.5);
         set(gca,'FontSize',15)
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
-        xlabel('\DeltaG_{expt}^{Water} (kcal.mol^{-1})');
-        ylabel('\DeltaG_{calc}^{Water} (kcal.mol^{-1})');
+        xlabel('\DeltaG_{expt}^{water} (kcal.mol^{-1})');
+        ylabel('\DeltaG_{calc}^{water} (kcal.mol^{-1})');
         leg=legend( ['SLIC; MNSol database; RMS = ',num2str(dg_rms_slic_mnsol)]);
         leg.Location='northwest';
         leg.FontSize=15;
@@ -184,8 +184,8 @@ if mobleyplot_flag==1
         q=plot(dg_ref_mobley,dg_calc_mobley,'r+','markers',10,'LineWidth',1.5);
         set(gca,'FontSize',15)
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
-        xlabel('\DeltaG_{expt}^{Water} (kcal.mol^{-1})');
-        ylabel('\DeltaG_{calc}^{Water} (kcal.mol^{-1})');
+        xlabel('\DeltaG_{expt}^{water} (kcal.mol^{-1})');
+        ylabel('\DeltaG_{calc}^{water} (kcal.mol^{-1})');
         hold on
         p=plot(dg_ref_mobley,dg_calc_slic_mobley,'bo','markers',5,'LineWidth',1.5);
         hold on
