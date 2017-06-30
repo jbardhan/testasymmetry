@@ -3,8 +3,8 @@ addpath('export_fig/')
 %Water
 %%
 trainingplot_flag=0;
-mnsolplot_flag=1;
-mobleyplot_flag=0;
+mnsolplot_flag=0;
+mobleyplot_flag=1;
 ploton=1;
 outlier_flag=0;
 
@@ -137,7 +137,7 @@ if mnsolplot_flag==1
     if ploton
         
         figure
-        p=plot(dg_ref_mnsol,dg_calc_slic_mnsol,'bo','markers',8,'LineWidth',1.5);
+        p=plot(dg_ref_mnsol,dg_calc_slic_mnsol,'bo','markers',12);
         set(gca,'FontSize',15)
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         xlabel('\DeltaG_{expt}^{water} (kcal.mol^{-1})');
@@ -181,13 +181,13 @@ if mobleyplot_flag==1
     if ploton 
 
         figure
-        q=plot(dg_ref_mobley(1:502),dg_calc_mobley,'r+','markers',10,'LineWidth',1.5);
+        q=plot(dg_ref_mobley(1:502),dg_calc_mobley,'ro','markers',6);
         set(gca,'FontSize',15)
         axis([min_axe-2 max_axe+2 min_axe-2 max_axe+2]);
         xlabel('\DeltaG_{expt}^{water} (kcal.mol^{-1})');
         ylabel('\DeltaG_{calc}^{water} (kcal.mol^{-1})');
         hold on
-        p=plot(dg_ref_mobley(1:502),dg_calc_slic_mobley(1:502),'bo','markers',5,'LineWidth',1.5);
+        p=plot(dg_ref_mobley(1:502),dg_calc_slic_mobley(1:502),'bo','markers',6);
         hold on
         leg=legend( ['MD; Mobley database; RMS = ',num2str(dg_rms_mobley)],...
                     ['SLIC; Mobley database; RMS = ',num2str(dg_rms_slic_mobley)]);
