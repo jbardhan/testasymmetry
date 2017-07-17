@@ -7,9 +7,9 @@ os.chdir(Home+'/repos/testasymmetry/mobley')
 Run_Type = 'param'
 
 if Run_Type == 'param':
-	Solvent_List = ['paramHexane', 'paramHeptane', 'paramOctane', 'paramNonane', 'paramDecane','paramPentane']
+	Solvent_List = ['paramPentane','paramHexane', 'paramHeptane', 'paramOctane', 'paramNonane', 'paramDecane']
 elif Run_Type == 'run':
-	Solvent_List = ['runHexane', 'runHeptane', 'runOctane', 'runNonane', 'runDecane','runPentane']
+	Solvent_List = ['runPentane','runHexane', 'runHeptane', 'runOctane', 'runNonane', 'runDecane']
 
 Solvent_List = Solvent_List[:]
 

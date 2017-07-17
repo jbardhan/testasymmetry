@@ -46,8 +46,7 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-
-testset  = {'33_dimethylbutan_2_one','ethanol','ethyl_acetate','ethylamine','heptan_1_ol','hexan_2_one','methanol','methyl_pentanoate','n_propyl_acetate','pentan_1_ol'};
+testset  = {'33_dimethylbutan_2_one','ethanol','propan_1_ol','methanol','heptan_2_one','ethylamine','hexan_2_one','methyl_propanoate','n_butyl_acetate','butan_1_ol'};
 
 curdir=pwd;
 for i=1:length(testset)
@@ -73,9 +72,9 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.7 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
-lb = [0.6 -200 -100 -1  -0.1  -0.1  -4];
-ub = [0.8 +200 +100 +1  +0.1  +0.1  +4];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
+lb = [0 -200 -100 -1  -0.1  -0.1  -4];
+ub = [2.0 +200 +100 +1  +0.1  +0.1  +4];
 
 options = optimoptions('lsqnonlin','MaxIter',6);
 options = optimoptions(options,'Display', 'iter');
