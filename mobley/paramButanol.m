@@ -47,10 +47,9 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-testset  = {'anthracene','cyclohexane','ethane','benzene'...                                                             
-    'butanone','n_heptane','n_hexane','n_octane',...                                                                     
-    'phenanthrene','nitromethane','toluene','pyridine',...                                                                
-    'Na','K','Li','Cl','Br','I'}; 
+testset  = {'anthracene','cyclohexane','ethane','ethanol'...
+    'methanol','n_heptane','n_hexane','n_octane',...
+    'n_pentane','nitromethane','propan_1_ol','pyrene'}; 
 
 curdir=pwd;
 for i=1:length(testset)
@@ -80,8 +79,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
-lb = [0 -200 -100 -1  -10  -0.1  -4];
-ub = [+2 +200 +100 +1  +10  +0.1  +4];
+lb = [0 -200 -100 -1  -0.1  -0.1  -4];
+ub = [+2 +200 +100 +1  +0.1  +0.1  +4];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
