@@ -7,15 +7,15 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
 
-solvents = {'Water','Octanol','Dichloroethane', 'Propanone', 'Dimethylsulfoxide',...
-             'Propanol', 'Dimethylformamide', 'Ethanol', 'Methanol', 'Acetonitrile'}; 
-solvents_1 = {'Octanol'};
+solvents = {'pentane','hexane','heptane','octane','nonane','decane'}; 
+%solvents_1 = {'Octanol'};
        
 %common_solutes = {'ethanol','butanone','n_octane','pyrene','cyclohexane',};
         
-testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene'};
-testset_ions = {'Li','Na','K','Cl','Br','I'};
-test_ion = {'Rb','Cs'};
+testset  = {'33_dimethylbutan_2_one','ethanol','hexan_1_ol','heptan_2_one','heptan_1_ol','propan_1_ol',...
+            'hexan_2_one','n_propylamine','methyl_hexanoate','pentan_1_ol'};
+%testset_ions = {'Li','Na','K','Cl','Br','I'};
+%test_ion = {'Rb','Cs'};
 
 
 % This routine will plot all of the calulated vs. experimental results if 
@@ -24,21 +24,21 @@ test_ion = {'Rb','Cs'};
 % solvent and again as a function of solute
 for i = 1:length(solvents)
            
-    fid = fopen(['mnsol/',lower(solvents{i}),'_ions.csv'],'r'); 
+    fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
     Data = textscan(fid,'%s %f %f','delimiter',',');
     fclose(fid);
     mol_list = Data{1};
     [~,m] = ismember(testset,mol_list);
-    [~,n] = ismember(testset_ions,mol_list);
+    %[~,n] = ismember(testset_ions,mol_list);
     
     allCases = 1:length(mol_list);
-    if ~ismember(solvents{i},solvents_1)
-        [~,p] = ismember(test_ion,mol_list);
-        allCases(p) = 0;
-    end 
+    %if ~ismember(solvents{i},solvents_1)
+    %    [~,p] = ismember(test_ion,mol_list);
+    %    allCases(p) = 0;
+    %end 
     
     allCases(m) = 0;
-    allCases(n) = 0;
+    %allCases(n) = 0;
     
     temp = load(['Run',solvents{i}]);
 %     solute_errors(i,:) = temp.errfinal(n);
@@ -59,86 +59,14 @@ for i = 1:length(solvents)
         axis([minax-2 maxax+2 minax-2 maxax+2]);
         foo = refline(1,0);
         set(foo,'Linewidth',2,'color','k');
-        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
-        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
+        xlabel(['\Delta','G_{expt}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
+        ylabel(['\Delta','G_{calc}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
         legend('Predictions','Training Set','Location','southeast')
       filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
     end
-    
-end
-clear all
-addpath('export_fig/')
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% Set your toggles and define the solute and solvent lists %%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ploton = 1;
-
-solvents = {'Water','Octanol','Dichloroethane', 'Propanone', 'Dimethylsulfoxide',...
-             'Propanol', 'Dimethylformamide', 'Ethanol', 'Methanol', 'Acetonitrile'}; 
-solvents_1 = {'Octanol'};
-       
-%common_solutes = {'ethanol','butanone','n_octane','pyrene','cyclohexane',};
-        
-testset_ions = {'Li','Na','K','Cl','Br','I'};
-test_ion = {'Rb','Cs'};
-for i = 1:length(solvents)
-           
-    fid = fopen(['mnsol/',lower(solvents{i}),'_ions.csv'],'r'); 
-    Data = textscan(fid,'%s %f %f','delimiter',',');
-    fclose(fid);
-    mol_list = Data{1};
-%     [~,m] = ismember(testset,mol_list);
-    [~,n] = ismember(testset_ions,mol_list);
-    
-    allCases = 1:length(mol_list);
-    if ~ismember(solvents{i},solvents_1)
-        [~,p] = ismember(test_ion,mol_list);
-    end 
-    
-%     allCases(~m) = 0;
-%     allCases(~n) = 0;
-    
-    temp = load(['Run',solvents{i}]);
-%     solute_errors(i,:) = temp.errfinal(n);
-%    sorted_errors = sort(abs(temp.errfinal));
-    results(i) = struct('Solvent', solvents{i},'Num_Solutes',round(length(mol_list),3),'CalcE',temp.calcE,...
-                        'errfinal',temp.errfinal,'es',temp.es,'np',...
-                        temp.np,'refE',temp.refE,'RMS',rms(temp.calcE-temp.refE),...
-                        'Mean_Abs_error',mean(abs(temp.errfinal)));
-    if ploton
-        figure
-        if ~ismember(solvents{i},solvents_1)
-            [~,p] = ismember(test_ion,mol_list);
-            plot(temp.refE(allCases(p)),temp.calcE(allCases(p)),'bo','markers',12)
-            hold on
-        else
-            plot(800,800,'bo','markers',12)
-            hold on
-        end
-        plot(temp.refE(allCases(n)),temp.calcE(allCases(n)),'rs','markers',12)
-        %plot(temp.refE,temp.calcE,'bo','markers',12)
-        set(gca,'FontSize',15)
-        minax = round(min(min(temp.refE(allCases(n)),temp.calcE(allCases(n)))));
-        maxax = round(max(max(temp.refE(allCases(n)),temp.calcE(allCases(n)))));
-        axis([minax-2 maxax+2 minax-2 maxax+2]);
-        foo = refline(1,0);
-        set(foo,'Linewidth',2,'color','k');
-        xlabel(['\Delta G_{expt}^{solv, ',solvents{i},'}'])
-        ylabel(['\Delta G_{calc}^{solv, ',solvents{i},'}'])
-        legend('Predictions','Training Set','Location','southeast')
-      filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
-      export_fig(filename,'-painters','-transparent');
-
-    end
-    %[~,m1] = ismember(sorted_errors(end),abs(temp.errfinal));
-    %[~,m2] = ismember(sorted_errors(end-1),abs(temp.errfinal));
-    %max_err(i) = struct('Solvent', solvents{i},'First_Max',...
-    %    m1, 'Second_Max',m2);
-    clear temp 
+    clear temp
 end
 
 
