@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/ethanol_ions.csv','r'); 
+fid = fopen('mnsol/ethanol.csv','r'); 
 Data = textscan(fid,'%s %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'methanol_ions.out';
+logfileName = 'methanol.out';
 epsOut = 32.613; % from MNSol
 
 ParamOctInfo = load('OptMethanol');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/methanol_ions.csv','r'); 
+fid = fopen('mnsol/methanol.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
