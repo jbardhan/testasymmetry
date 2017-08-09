@@ -17,7 +17,7 @@ epsOut = 48.826; % Mnsol
 
 ParamOctInfo = load('OptDimethylformamide');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/dimethylformamide_ions.csv','r'); 
+fid = fopen('mnsol/dimethylformamide.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

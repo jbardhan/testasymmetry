@@ -17,7 +17,7 @@ epsOut = 35.6881; % from MNSol
 
 ParamOctInfo = load('OptAcetonitrile');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/acetonitrile_ions.csv','r'); 
+fid = fopen('mnsol/acetonitrile.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

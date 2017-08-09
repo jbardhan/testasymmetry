@@ -17,7 +17,7 @@ epsOut = 48.826; % Mnsol
 
 ParamOctInfo = load('OptDimethylsulfoxide');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/dimethylsulfoxide_ions.csv','r'); 
+fid = fopen('mnsol/dimethylsulfoxide.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

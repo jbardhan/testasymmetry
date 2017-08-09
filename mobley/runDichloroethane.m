@@ -17,7 +17,7 @@ epsOut = 10.125; % from MNSol
 
 ParamOctInfo = load('OptDichloroethane');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/dichloroethane_ions.csv','r'); 
+fid = fopen('mnsol/dichloroethane.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

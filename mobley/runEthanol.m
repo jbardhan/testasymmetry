@@ -17,7 +17,7 @@ epsOut = 24.852; % from MNSol
 
 ParamOctInfo = load('OptEthanol');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/ethanol_ions.csv','r'); 
+fid = fopen('mnsol/ethanol.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

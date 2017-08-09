@@ -17,7 +17,7 @@ epsOut = 20.83; % from Lomize et. al Anistoropic solvent model of the lipid bila
 
 ParamOctInfo = load('OptPropanone');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/propanone_ions.csv','r'); 
+fid = fopen('mnsol/propanone.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

@@ -17,7 +17,7 @@ epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 
 ParamOctInfo = load('OptOctanol');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/octanol_ions.csv','r'); 
+fid = fopen('mnsol/octanol.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
