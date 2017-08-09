@@ -46,7 +46,7 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 
-testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene'};
+testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene','n_heptane'};
 	    
 
 

@@ -17,7 +17,7 @@ epsOut = 17.3323; % from MNSol
 
 ParamOctInfo = load('OptButanol');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/butanol_ions.csv','r'); 
+fid = fopen('mnsol/butanol.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

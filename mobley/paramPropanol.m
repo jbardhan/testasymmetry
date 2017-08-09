@@ -47,7 +47,7 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene'};
+testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene','n_heptane'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
