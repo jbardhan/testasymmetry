@@ -32,7 +32,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
      
-fid = fopen('mnsol/dimethylsulfoxide_ions.csv','r'); 
+fid = fopen('mnsol/dimethylsulfoxide.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -48,7 +48,7 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 %testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene','Li','Na','K','Cl','Br','I'};
+testset  = {'butanone','n_octane','ethanol','benzene','cyclohexane','pyrene'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -88,8 +88,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
-lb = [0 -200 -100 -1  -10  -0.1  -4];
-ub = [+2 +200 +100 +1  +10  +0.1  +4];
+lb = [0 -200 -100 -1  -0.1  -0.1  -4];
+ub = [+2 +200 +100 +1  +0.1  +0.1  +4];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
