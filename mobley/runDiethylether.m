@@ -12,12 +12,12 @@ addpath(sprintf('%s/repos/testasymmetry/born',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'water.out';
-epsOut = 78.36; %from MNsol
+logfileName = 'diethylether.out';
+epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 
-ParamWatInfo = load('OptWater');
-x = ParamWatInfo.x;
-fid = fopen('mnsol/water.csv','r'); 
+ParamOctInfo = load('OptDiethylether');
+x = ParamOctInfo.x;
+fid = fopen('mnsol/diethylether.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -30,6 +30,7 @@ all_solutes = Data{1};
 all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
+
 saveMemory = 1;
 writeLogfile = 1;
 epsIn  =  1;
@@ -44,7 +45,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
 
-% here we define the actual params for the NLBC test
+% here we define the actual params for the NLBC test     
 
 curdir = pwd;
 for i=1:length(mol_list)
@@ -60,13 +61,12 @@ for i=1:length(mol_list)
   addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-% xNoIonsInParam = [  1.8570  -75.6855   -2.9884    8.7302    0.0113    0.4098];
-% xIonsInParam   = [  0.5479 -97.8176 -1.0219 -9.7033 0.0049 2.4240];
-% xIonsAndMDStat = [    0.4004  -44.3595   -1.1232   -0.7356    0.0139    2.5034];
-% xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
+% xWithoutIons = [1.98 -86.3423 -2.5825 18.8733 -0.0162 1.5785];
+% xWithIons8Iter = [0.3637 -108.4867 -1.5807 -5.9281 -0.0214 3.9611];
 % 
-% x = xIonsAnd8Iter;
+% x = xWithIons8Iter;
+
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunWater','errfinal','calcE','refE','es','np');
+save('RunDiethylether','errfinal','calcE','refE','es','np');

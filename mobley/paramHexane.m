@@ -46,9 +46,18 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
+testset  = {'butanone','n_octane','ethanol','toluene','nitromethane','14_dioxane','phenol'};
 
+% all octanol available side chain analogues 
+%testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
+% 'n_butane', 'n_butylamine', 'p_cresol', 'propane', 'propanoic_acid','toluene'};
 
+% complete list of side chain analogues. not available for all solvents
+%testset = {'1_methyl_imidazole','2_methylpropane', ...
+%	   '3_methyl_1h_indole','acetic_acid','ethanamide', ...
+%	   'ethanol','methane','methanethiol','methanol', ...
+%	   'methyl_ethyl_sulfide','n_butane','n_butylamine', ...
+%	   'p_cresol','propane','propanoic_acid','toluene'};
 curdir=pwd;
 for i=1:length(testset)
   dir=sprintf('%s/Dropbox/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',getenv('HOME'),testset{i});
@@ -70,14 +79,17 @@ for i=1:length(testset)
 end
 
 
+% The following script is specialized to this example.  We'll
+% handle generating others.  Not complicated, but it's not self-explanatory.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
-lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
+lb = [0 -200 -100 -1  -0.1  -0.1  -4];
+ub = [+2 +200 +100 +1  +0.1  +0.1  +4];
 
-options = optimoptions('lsqnonlin','MaxIter',6);
+options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);

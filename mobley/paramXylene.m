@@ -47,8 +47,7 @@ all_surfAreas = Data{2};
 surfArea_list = all_surfAreas(index);
 
 
-testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
-
+testset  = {'butanone','n_octane','ethanol','toluene','nitromethane','14_dioxane','phenol'};
 
 % all octanol available side chain analogues 
 %testset = {'2_methylpropane', 'acetic_acid', 'ethanol', 'methane', 'methanol',...
@@ -80,7 +79,6 @@ for i=1:length(testset)
   addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
 end
 
-pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 % The following script is specialized to this example.  We'll
 % handle generating others.  Not complicated, but it's not self-explanatory.
@@ -88,12 +86,11 @@ pqrData = struct('xyz', [0 0 0], 'q', 1, 'R', 1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 1.6];
-lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 -0.03 0];
+lb = [0 -200 -100 -1  -0.1  -0.1  -4];
+ub = [+2 +200 +100 +1  +0.1  +0.1  +4];
 
-
-options = optimoptions('lsqnonlin','MaxIter',4);
+options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMSA(x);

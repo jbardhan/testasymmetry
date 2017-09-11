@@ -4,18 +4,16 @@ import os
 Home = os.environ['HOME']
 os.chdir(Home+'/repos/testasymmetry/mobley')
 
-Run_Type = 'run'
+Run_Type = 'param'
 
 if Run_Type == 'param':
-	Solvent_List = ['paramButanol', 'paramWater', 'paramOctanol', 'paramMethanol', 'paramAcetonitrile', 'paramPropanone', 'paramPropanol',
- 		        'paramDichloroethane','paramDimethylsulfoxide', 'paramDimethylformamide', 'paramEthanol']
+	Solvent_List = ['paramWater','paramCarbontet','paramOctanol','paramToluene','paramBenzene','paramXylene','paramHexane','paramHexadecane','paramCyclohexane','paramChlorobenzene','paramDecane','paramBromobenzene','paramDiethylether','paramDibutylether','paramIsooctane','paramIodobenzene']
 elif Run_Type == 'run':
-	Solvent_List = ['runButanol', 'runWater', 'runOctanol', 'runMethanol', 'runAcetonitrile', 'runPropanone', 'runPropanol',
- 		        'runDichloroethane','runDimethylsulfoxide', 'runDimethylformamide', 'runEthanol']
+	Solvent_List = ['runWater','runCarbontet','runOctanol','runToluene','runBenzene','runXylene','runHexane','runHexadecane','runCyclohexane','runChlorobenzene','runDecane','runBromobenzene','runDiethylether','runDibutylether','runIsooctane','runIodobenzene']
 
-Solvent_List = Solvent_List[1:]
+Solvent_List = Solvent_List[:]
 
-if len(Solvent_List) <= 11:
+if len(Solvent_List) <= 16:
 	for solvent in Solvent_List:
 		eng = matlab.engine.start_matlab()
 		eng.eval(solvent,nargout=0)

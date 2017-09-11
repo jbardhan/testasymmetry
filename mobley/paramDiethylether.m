@@ -18,11 +18,12 @@ logfileName = 'junklogfile';
 
 epsIn  =  1;
 Tbase = 300; 
+epsOut = 4.24; % from MNSol
+
 mytemp=Tbase;
 KelvinOffset = 273.15;
-epsOut = 10.3; % Zhao+Abraham J. Org. Chem 2005
 conv_factor = 332.112;
-staticpotential = 2.0; % this only affects charged molecules;
+staticpotential = 0.0; % this only affects charged molecules;
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
 
 
@@ -30,12 +31,13 @@ kappa = 0.0;  % should be zero, meaning non-ionic solutions!
 UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
- 
-fid = fopen('mnsol/octanol.csv','r'); 
+     
+fid = fopen('mnsol/diethylether.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
 dG_list = Data{2};
+old_surf = Data{3};
 
 fid = fopen('mnsol/mobley_sa.csv','r');
 Data = textscan(fid,'%s %f','delimiter',',');
@@ -45,7 +47,7 @@ all_surfAreas = Data{2};
 [m, index] = ismember(mol_list,all_solutes);
 surfArea_list = all_surfAreas(index);
 
-
+%testset  = {'acetic_acid', 'ethanol', 'methanol', 'p_cresol', 'propanoic_acid', 'toluene', 'ethylamine', 'n_octane', 'pyridine', 'nitromethane', 'heptan_1_ol', 'n_butyl_acetate'};
 testset  = {'butanone','n_octane','ethanol','toluene','nitromethane','14_dioxane','phenol'};
 
 % all octanol available side chain analogues 
@@ -97,5 +99,5 @@ y = @(x)ObjectiveFromBEMSA(x);
 [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
-save('OptOctanol','x','ref','calc','es','np','x0','calc0','es0','np0');
+save('OptDiethylether','x','ref','calc','es','np','x0','calc0','es0','np0');
 
