@@ -1,5 +1,5 @@
-close all; clear all;
-solvents = {'Water','Methanol','Ethanol','Propanol','Acetonitrile','Dimethylformamide','Dimethylsulfoxide','Propanone','Dichloroethane','Octanol'};
+emacs Para  close all; clear all;
+solvents = {'Water','Octanol','Benzene','Bromobenzene','Carbontet','Chlorobenzene','Cyclohexane','Decane','Dibutylether','Diethylether','Hexadecane','Hexane','Iodobenzene','Isooctane','Toluene','Xylene'};
 clc
 for i = 1:length(solvents)
     ans = load(['Opt',solvents{i}]);
