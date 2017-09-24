@@ -17,7 +17,7 @@ epsOut = 2.3879; % Zhao+Abraham J. Org. Chem 2005
 
 ParamXyleneInfo = load('OptXylene');
 x = ParamXyleneInfo.x;
-fid = fopen('mnsol/xylene.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

@@ -17,7 +17,7 @@ epsOut = 5.6968; % from MNSol
 
 ParamOctInfo = load('OptChlorobenzene');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/chlorobenzene.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

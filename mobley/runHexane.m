@@ -17,7 +17,7 @@ epsOut = 1.8819; % from MNSol
 
 ParamHexaneInfo = load('OptHexane');
 x = ParamHexaneInfo.x;
-fid = fopen('mnsol/hexane.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

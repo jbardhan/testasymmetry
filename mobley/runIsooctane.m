@@ -17,7 +17,7 @@ epsOut = 1.9358; % from MNSol
 
 ParamOctInfo = load('OptIsooctane');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/isooctane.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

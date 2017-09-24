@@ -17,7 +17,7 @@ epsOut = 2.0402;
 
 ParamHexadecaneInfo = load('OptHexadecane');
 x = ParamHexadecaneInfo.x;
-fid = fopen('mnsol/hexadecane.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

@@ -17,7 +17,7 @@ epsOut = 1.9846; % from MNSol
 
 ParamOctInfo = load('OptDecane');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/octanol.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
