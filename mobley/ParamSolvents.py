@@ -4,14 +4,14 @@ import os
 Home = os.environ['HOME']
 os.chdir(Home+'/repos/testasymmetry/mobley')
 
-Run_Type = 'param'
+Run_Type = 'run'
 
 if Run_Type == 'param':
-	Solvent_List = ['paramWater','paramCarbontet','paramOctanol','paramToluene','paramBenzene','paramXylene','paramHexane','paramHexadecane','paramCyclohexane','paramChlorobenzene','paramDecane','paramBromobenzene','paramDiethylether','paramDibutylether','paramIsooctane','paramIodobenzene']
+	Solvent_List = ['paramWater','paramCarbontet','paramOctanol','paramToluene','paramXylene','paramHexane','paramHexadecane','paramCyclohexane','paramBenzene','paramChlorobenzene','paramDecane','paramBromobenzene','paramDiethylether','paramDibutylether','paramIsooctane','paramIodobenzene']
 elif Run_Type == 'run':
-	Solvent_List = ['runWater','runCarbontet','runOctanol','runToluene','runBenzene','runXylene','runHexane','runHexadecane','runCyclohexane','runChlorobenzene','runDecane','runBromobenzene','runDiethylether','runDibutylether','runIsooctane','runIodobenzene']
+	Solvent_List = ['runWater','runOctanol','runCarbontet','runToluene','runBenzene','runXylene','runHexane','runHexadecane','runCyclohexane','runChlorobenzene','runBromobenzene','runDiethylether','runDibutylether','runIsooctane','runDecane','runIodobenzene']
 
-Solvent_List = Solvent_List[:]
+Solvent_List = Solvent_List[14:]
 
 if len(Solvent_List) <= 16:
 	for solvent in Solvent_List:

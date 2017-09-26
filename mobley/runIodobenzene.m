@@ -17,7 +17,7 @@ epsOut = 4.547; % from MNSol
 
 ParamOctInfo = load('OptIodobenzene');
 x = ParamOctInfo.x;
-fid = fopen('mnsol/iodobenzene.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

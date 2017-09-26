@@ -17,7 +17,7 @@ epsOut = 2.228; % from MNSol
 
 ParamCarbontetInfo = load('OptCarbontet');
 x = ParamCarbontetInfo.x;
-fid = fopen('mnsol/carbontet.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

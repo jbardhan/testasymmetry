@@ -17,7 +17,7 @@ epsOut = 2.0165;
 
 ParamCyclohexaneInfo = load('OptCyclohexane');
 x = ParamCyclohexaneInfo.x;
-fid = fopen('mnsol/cyclohexane.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};

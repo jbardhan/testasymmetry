@@ -17,7 +17,7 @@ epsOut = 2.3741;
 
 ParamTolueneInfo = load('OptToluene');
 x = ParamTolueneInfo.x;
-fid = fopen('mnsol/toluene.csv','r'); 
+fid = fopen('mnsol/water.csv','r'); 
 Data = textscan(fid,'%s %f %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
