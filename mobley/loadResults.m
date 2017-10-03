@@ -7,7 +7,7 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
 
-solvents = {'Hexadecane','Diethylether','Hexane','Carbontet','Benzene','Toluene','Dichloroethane'};%,'methanol','butanol','methanol','butanol','xylene','cyclohexane','dibutylether','chloroform'};
+solvents = {'Water','Hexadecane','Diethylether','Hexane','Carbontet','Dichloroethane','Benzene','Toluene','Xylene'};%,'methanol','butanol','methanol','butanol','xylene','cyclohexane','dibutylether','chloroform'};
         
 testset  = {'butanone','n_octane','ethanol','toluene','nitromethane','14_dioxane','phenol'};
 flag_testset = 1;
@@ -402,152 +402,182 @@ for i = 1:length(solvents)
         flag_pred = 1;
         if flag_pred
             plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',2)
+            err_pred = rms(temp.refE(allCases(allCases~=0))-temp.calcE(allCases(allCases~=0)));
         end
         set(gca,'FontSize',15)
         
         if (flag_testset && sum(ismember(testset,mol_list)))
             hold on
             plot(temp.refE(m),temp.calcE(m),'gs','markers',12)
+            err_testset = rms(temp.refE(m)-temp.calcE(m));
         end
         
         if (flag_est && sum(ismember(esters,mol_list)))
             hold on
             plot(temp.refE(est),temp.calcE(est),'r+','markers',12)
+            err_est = rms(temp.refE(est)-temp.calcE(est));
         end
         
         if (flag_eth && sum(ismember(ethers,mol_list)))
             hold on
             plot(temp.refE(eth),temp.calcE(eth),'rd','markers',12)
+            err_eth = rms(temp.refE(eth)-temp.calcE(eth));
         end
         
         if (flag_alc && sum(ismember(alcohols,mol_list)))
             hold on
             plot(temp.refE(alc),temp.calcE(alc),'ro','markers',12)
+            err_alc = rms(temp.refE(alc)-temp.calcE(alc));
         end
         
         if (flag_amd && sum(ismember(amides,mol_list)))
             hold on
             plot(temp.refE(amd),temp.calcE(amd),'b+','markers',12)
+            err_amd = rms(temp.refE(amd)-temp.calcE(amd));
         end
         
         if (flag_am1 && sum(ismember(amines_1,mol_list)))
             hold on
             plot(temp.refE(am1),temp.calcE(am1),'b*','markers',12)
+            err_am1 = rms(temp.refE(am1)-temp.calcE(am1));
         end
         
         if (flag_am2 && sum(ismember(amines_2,mol_list)))
             hold on
             plot(temp.refE(am2),temp.calcE(am2),'bd','markers',12)
+            err_am2 = rms(temp.refE(am2)-temp.calcE(am2));
         end
         
         if (flag_am3 && sum(ismember(amines_3,mol_list)))
             hold on
             plot(temp.refE(am3),temp.calcE(am3),'bx','markers',12)
+            err_am3 = rms(temp.refE(am3)-temp.calcE(am3));
         end
         
         if (flag_ham && sum(ismember(halo_amines,mol_list)))
             hold on
             plot(temp.refE(ham),temp.calcE(ham),'b<','markers',12)
+            err_ham = rms(temp.refE(ham)-temp.calcE(ham));
         end
         
         if (flag_eam && sum(ismember(ether_amines,mol_list)))
             hold on
             plot(temp.refE(eam),temp.calcE(eam),'b>','markers',12)
+            err_eam = rms(temp.refE(eam)-temp.calcE(eam));
         end
         
         if (flag_kam && sum(ismember(ketone_amines,mol_list)))
             hold on
             plot(temp.refE(kam),temp.calcE(kam),'b^','markers',12)
+            err_kam = rms(temp.refE(kam)-temp.calcE(kam));
         end
         
         if (flag_nit && sum(ismember(nitro_compounds,mol_list)))
             hold on
             plot(temp.refE(nit),temp.calcE(nit),'bo','markers',12)
+            err_nit = rms(temp.refE(nit)-temp.calcE(nit));
         end
         
         if (flag_ntr && sum(ismember(nitriles,mol_list)))
             hold on
             plot(temp.refE(ntr),temp.calcE(ntr),'bd','markers',12)
+            err_ntr = rms(temp.refE(ntr)-temp.calcE(ntr));
         end
         
         if (flag_acd && sum(ismember(acids,mol_list))) 
             hold on
             plot(temp.refE(acd),temp.calcE(acd),'rx','markers',12)
+            err_acd = rms(temp.refE(acd)-temp.calcE(acd));
         end
         
         if (flag_ktn && sum(ismember(ketones,mol_list)))
             hold on
             plot(temp.refE(ktn),temp.calcE(ktn),'rs','markers',12)
+            err_ktn = rms(temp.refE(ktn)-temp.calcE(ktn));
         end
         
         if (flag_hlk && sum(ismember(haloalkanes,mol_list)))
             hold on
             plot(temp.refE(hlk),temp.calcE(hlk),'m*','markers',12)
+            err_hlk = rms(temp.refE(hlk)-temp.calcE(hlk));
         end
         
         if (flag_hle && sum(ismember(haloalkenes,mol_list)))
             hold on
             plot(temp.refE(hle),temp.calcE(hle),'mx','markers',12)
+            err_hle = rms(temp.refE(hle)-temp.calcE(hle));
         end
         
         if (flag_hlf && sum(ismember(halo_phenols,mol_list)))
             hold on
             plot(temp.refE(hlf),temp.calcE(hlf),'ks','markers',12)
+            err_hlf = rms(temp.refE(hlf)-temp.calcE(hlf));
         end
         
         if (flag_phn && sum(ismember(phenols,mol_list)))
             hold on
             plot(temp.refE(phn),temp.calcE(phn),'kd','markers',12)
+            err_phn = rms(temp.refE(phn)-temp.calcE(phn));
         end
         
         if (flag_hbz && sum(ismember(halobenzenes,mol_list)))
             hold on
             plot(temp.refE(hbz),temp.calcE(hbz),'m+','markers',12)
+            err_hbz = rms(temp.refE(hbz)-temp.calcE(hbz));
         end
         
         if (flag_ahc && sum(ismember(aromatic_hydrocarbons,mol_list)))
             hold on
             plot(temp.refE(ahc),temp.calcE(ahc),'k*','markers',12)
+            err_ahc = rms(temp.refE(ahc)-temp.calcE(ahc));
         end
         
         if (flag_ald && sum(ismember(aldehydes,mol_list)))
             hold on
             plot(temp.refE(ald),temp.calcE(ald),'r<','markers',12)
+            err_ald = rms(temp.refE(ald)-temp.calcE(ald));
         end
         
         if (flag_lka && sum(ismember(alkanes,mol_list)))
             hold on
             plot(temp.refE(lka),temp.calcE(lka),'ko','markers',12)
+            err_lka = rms(temp.refE(lka)-temp.calcE(lka));
         end
         
         if (flag_lke && sum(ismember(alkenes,mol_list)))
             hold on
             plot(temp.refE(lke),temp.calcE(lke),'kx','markers',12)
+            err_lke = rms(temp.refE(lke)-temp.calcE(lke));
         end
         
         if (flag_slf && sum(ismember(sulfides,mol_list)))
             hold on
             plot(temp.refE(slf),temp.calcE(slf),'co','markers',12)
+            err_slf = rms(temp.refE(slf)-temp.calcE(slf));
         end
         
         if (flag_etg && sum(ismember(ether_glycols,mol_list)))
             hold on
             plot(temp.refE(etg),temp.calcE(etg),'r>','markers',12)
+            err_etg = rms(temp.refE(etg)-temp.calcE(etg));
         end
         
         if (flag_are && sum(ismember(aromatic_ethers,mol_list)))
             hold on
             plot(temp.refE(are),temp.calcE(are),'r<','markers',12)
+            err_are = rms(temp.refE(are)-temp.calcE(are));
         end
         
         if (flag_thi && sum(ismember(thiols,mol_list)))
             hold on
             plot(temp.refE(thi),temp.calcE(thi),'k<','markers',12)
+            err_thi = rms(temp.refE(thi)-temp.calcE(thi));
         end
         
         if (flag_tst && sum(ismember(test,mol_list)))
             hold on
             plot(temp.refE(tst),temp.calcE(tst),'g*','markers',12)
+            err_tst = rms(temp.refE(tst)-temp.calcE(tst));
         end
         
         A = [flag_pred (flag_testset && sum(ismember(testset,mol_list))) ...
@@ -565,16 +595,34 @@ for i = 1:length(solvents)
             (flag_lke && sum(ismember(alkenes,mol_list))) (flag_slf && sum(ismember(sulfides,mol_list))) ...
             (flag_etg && sum(ismember(ether_glycols,mol_list))) (flag_are && sum(ismember(aromatic_ethers,mol_list))) ...
             (flag_thi && sum(ismember(thiols,mol_list))) (flag_tst && sum(ismember(test,mol_list)))];
-        Leg = {'Predictions','Training Set','Esters','Ethers','Alcohols','Amides','Primary amines','Secondary amines','Teritiary amines','Halo amines','Ether + amines','Ketone + amines','Nitro compounds','Nitriles','Acids','Ketones','Haloalkanes','Haloalkenes','Halo phenols','Phenol derivatives','Halobenzenes','Aromatic hydrocarbons','Aldehydes','Alkanes','Alkenes','Sulfides','Ether glycols','Aromatic ethers','Thiols','test'};
+        
+        Leg = {strcat('Unclassified: ',num2str(err_pred)),strcat('Training Set: ',num2str(err_testset)),strcat('Esters: ',num2str(err_est)),...
+               strcat('Ethers: ',num2str(err_eth)),strcat('Alcohols: ',num2str(err_alc)),strcat('Amides: ',num2str(err_amd)),...
+               strcat('Primary amines: ',num2str(err_am1)),strcat('Secondary amines: ',num2str(err_am2)),strcat('Teritiary amines: ',num2str(err_am3)),...
+               strcat('Halo amines: ',num2str(err_ham)),strcat('Ether + amines: ',num2str(err_eam)),strcat('Ketone + amines: ',num2str(err_kam)),...
+               strcat('Nitro compounds: ',num2str(err_nit)),strcat('Nitriles: ',num2str(err_ntr)),strcat('Acids: ',num2str(err_acd)),...
+               strcat('Ketones: ',num2str(err_ktn)),strcat('Haloalkanes: ',num2str(err_hlk)),strcat('Haloalkenes: ',num2str(err_hle)),...
+               strcat('Halo phenols: ',num2str(err_hlf)),strcat('Phenol derivatives: ',num2str(err_phn)),strcat('Halobenzenes: ',num2str(err_hbz)),...
+               strcat('Aromatic hydrocarbons: ',num2str(err_ahc)),strcat('Aldehydes: ',num2str(err_ald)),strcat('Alkanes: ',num2str(err_lka)),...
+               strcat('Alkenes: ',num2str(err_lke)),strcat('Sulfides: ',num2str(err_slf)),strcat('Ether glycols: ',num2str(err_etg)),...
+               strcat('Aromatic ethers: ',num2str(err_are)),strcat('Thiols: ',num2str(err_thi)),strcat('test: ',num2str(err_tst))};
+       
         Leg(A==0)=[];
         minax = round(min(min(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
         maxax = round(max(max(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
+        axis([minax-2 maxax+2 minax-2 maxax+2]);
+        bar = refline(1,-1);
+        set(bar,'Linewidth',2,'color','r','LineStyle','--');
+        axis([minax-2 maxax+2 minax-2 maxax+2]);
+        foobar = refline(1,1);
+        set(foobar,'Linewidth',2,'color','r','LineStyle','--');
         axis([minax-2 maxax+2 minax-2 maxax+2]);
         foo = refline(1,0);
         set(foo,'Linewidth',2,'color','k');
         xlabel(['\Delta','G_{expt}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
         ylabel(['\Delta','G_{calc}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
         legend(Leg,'Location','southeast')
+        
       filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
       export_fig(filename,'-painters','-transparent');
 
