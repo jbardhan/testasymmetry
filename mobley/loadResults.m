@@ -6,17 +6,18 @@ addpath('export_fig/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ploton = 1;
-
-solvents = {'Water','Ethanol','Methanol','Propanol','Butanol','Octanol'};%,'Hexadecane','Diethylether','Hexane','Carbontet','Dichloroethane','Benzene','Toluene','Xylene'};%,'methanol','butanol','methanol','butanol','xylene','cyclohexane','dibutylether','chloroform'};
+ 
+solvents = {'water','methanol','ethanol','propanol','butanol','octanol'};%,'Hexadecane','Diethylether','Hexane','Carbontet','Dichloroethane','Benzene','Toluene','Xylene'};%,'methanol','butanol','methanol','butanol','xylene','cyclohexane','dibutylether','chloroform'};
         
-testset  = {'butanone','n_octane','ethanol','toluene','nitromethane','14_dioxane','phenol'};
-flag_testset = 1;
+testset = {'anthracene','cyclohexane','ethane','ethanol','methanol','n_heptane','n_hexane','n_octane','n_pentane','nitromethane','propan_1_ol','pyrene'};
+ions = {'Br','Cl','I','Li','K','Na','Rb','Cs','F'};
+flag_testset = 0;
 %testset_ions = {'Li','Na','K','Cl','Br','I'};
 %test_ion = {'Rb','Cs'};
-
-
+ 
+ 
 %Solute families:
-
+ 
 alkanes = {'1_methylcyclohexene','2_methylbutane','2_methylhexane','2_methylpentane','2_methylpropane','2_methylpropene',...
            '22_dimethylbutane','22_dimethylpentane','22_dimethylpropane','224_trimethylpentane','225_trimethylhexane','23_dimethylbutane',...
             '23_dimethylpentane','234_trimethylpentane','24_dimethylpentane','3_methylheptane','3_methylhexane','3_methylpentane',...
@@ -24,26 +25,26 @@ alkanes = {'1_methylcyclohexene','2_methylbutane','2_methylhexane','2_methylpent
             'methylcyclopentane','n_butane','n_decane','n_heptane','n_hexane','n_nonane',...
             'n_octane','n_pentane','n_pentylcyclopentane','n_propylcyclopentane','propane','trans_14_dimethylcyclohexane'};
 flag_lka =1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 alkenes = {'2_methyl_but_2_ene','2_methylbut_2_ene','2_methylbuta_13_diene','2_methylpent_1_ene',...
            '23_dimethylbuta_13_diene','3_methyl_but_1_ene','3_methylbut_1_ene','but_1_ene','buta_13_diene','cyclohepta_135_triene','cyclohexene',...
            'cyclopentene','E_hept_2_ene','ethene','hept_1_ene','hex_1_ene','hexa_15_diene',...
            'non_1_ene','oct_1_ene','pent_1_ene','penta_14_diene','propene','styrene','Z_pent_2_ene'};
 flag_lke = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 aromatic_hydrocarbons ={'1_ethylnaphthalene','1_methylnaphthalene','123_trimethylbenzene','124_trimethylbenzene','13_dimethylnaphthalene',...
                         '135_trimethylbenzene','14_dimethylnaphthalene','2_ethyltoluene','23_dimethylnaphthalene','26_dimethylnaphthalene','4_ethyltoluene',...
                         '4_isopropyltoluene','acenaphthene','alpha_methylstyrene','anthracene','benzene','biphenyl','ethylbenzene','fluorene',...
                         'indane','isobutylbenzene','isopropylbenzene','m_xylene','n_butylbenzene','n_hexylbenzene','n_pentylbenzene','n_propylbenzene',...
                         'naphthalene','o_xylene','p_xylene','phenanthrene','pyrene','sec_butylbenzene','tert_butylbenzene','toluene'};
 flag_ahc = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 esters = {'11_diacetoxyethane','12_diacetoxyethane','diethyl_malonate','diethyl_succinate','ethyl_acetate','ethyl_benzoate',...
           'ethyl_butanoate','ethyl_formate','ethyl_hexanoate','ethyl_pentanoate','ethyl_phenyl_ether','ethyl_propanoate','isoamyl_acetate',...
           'isoamyl_formate','isobutyl_acetate','isobutyl_formate','isobutyl_isobutanoate','isopropyl_acetate','isopropyl_formate','methyl_acetate',...
@@ -51,104 +52,104 @@ esters = {'11_diacetoxyethane','12_diacetoxyethane','diethyl_malonate','diethyl_
           'methyl_methanesulfonate','methyl_octanoate','methyl_pentanoate','methyl_p_methoxybenzoate','methyl_propanoate','methyl_trimethylacetate','n_butyl_acetate','n_hexyl_acetate',...
           'n_pentyl_acetate','n_pentyl_propanoate','n_propyl_acetate','n_propyl_butyrate','n_propyl_formate','n_propyl_propanoate','phenyl_formate'};
 flag_est = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 alcohols = {'2_methylbutan_1_ol','2_methylbutan_2_ol','2_methylpentan_2_ol','2_methylpentan_3_ol','2_methylpropan_1_ol',...
             '2_methylpropan_2_ol','3_methylbutan_1_ol','4_methylpentan_2_ol','butan_1_ol','butan_2_ol','cycloheptanol',...
             'cyclohexanol','cyclopentanol','decan_1_ol','ethanol','heptan_1_ol','hexan_1_ol',...
-            'hexan_3_ol	methanol','nonan_1_ol','octan_1_ol','pentan_1_ol','pentan_2_ol',...
+            'hexan_3_ol methanol','nonan_1_ol','octan_1_ol','pentan_1_ol','pentan_2_ol',...
             'pentan_3_ol','prop_2_en_1_ol','propan_1_ol','propan_2_ol','3_phenylpropanol','2_phenylethanol','benzyl_alcohol'};
 flag_alc = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 aldehydes = {'acetaldehyde','butyraldehyde','E_but_2_enal','E_hex_2_enal','E_oct_2_enal','formaldehyde','heptanal',...
              'hexanal','isobutyraldehyde','nonanal','octanal','pentanal','propionaldehyde','4_methylbenzaldehyde','benzaldehyde'};
-flag_ald = 1;
-
+flag_ald = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 ethers = {'11_diethoxyethane','111_trimethoxyethane','12_diethoxyethane','12_dimethoxyethane','14_dioxane','2_methoxy_111_trimethoxyethane',...
           'di_n_butyl_ether','di_n_propyl_ether','diethyl_ether','diisopropyl_ether','dimethoxymethane','dimethyl_ether',...
           'methyl_ethyl_ether','methyl_isopropyl_ether','methyl_propyl_ether','methyl_t_butyl_ether','methyl_tert_butyl_ether','tetrahydrofuran','tetrahydropyran','trimethoxy_methane'};
-flag_eth = 1;
-
+flag_eth = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 amides = {'benzamide','ethanamide','n_butylacetamide','N_methylacetamide','NN_dimethyl_p_methylbenzamide','NN_dimethylbenzamide','NN_dimethylformamide'};
-flag_amd = 1;
-
+flag_amd = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 amines_1 = {'1_naphthylamine','2_naphthylamine','aniline','cyclohexylamine','ethylamine','hydrazine',...
             'methylamine','n_butylamine','n_heptylamine','n_hexylamine','n_octylamine','n_pentylamine','n_propylamine',...
             'o_toluidine','p_toluidine'};
-flag_am1 = 1;
-
+flag_am1 = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 amines_2 = {'1_methyl_pyrrole','14_dimethyl_piperazine','4_methyl_1h_imidazole','azetidine','di_n_butylamine',...
             'di_n_propylamine','diethylamine','diisopropylamine','dimethylamine','imidazole','morpholine','N_methylaniline',...
             'N_methylpiperazine','piperazine','piperidine','pyrrole','pyrrolidine'};
-flag_am2 = 1;
-
+flag_am2 = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 amines_3 = {'1_methyl_imidazole','2_ethylpyrazine','2_ethylpyridine','2_isobutylpyrazine','2_methylpyrazine','2_methylpyridine','23_dimethylpyridine',...
             '24_dimethylpyridine','25_dimethylpyridine','26_dimethylpyridine','3_cyanopyridine','3_ethylpyridine','3_methylpyridine',...
             '34_dimethylpyridine','35_dimethylpyridine','4_cyanopyridine','4_ethylpyridine','4_methylpyridine',...
             'N_methylmorpholine','N_methylpiperidine','NN_dimethylaniline','pyridine','quinoline','triethylamine','trimethylamine','N_acetylpyrrolidine'};
-flag_am3 = 1;
-
+flag_am3 = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 ether_amines = {'2_methoxyaniline','2_methoxyethanamine','3_methoxyaniline','333_trimethoxypropionitrile','4_methoxyaniline'};
-flag_eam = 1;
-
+flag_eam = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 ketone_amines = {'3_acetylpyridine','3_formylpyridine','4_acetylpyridine','4_formylpyridine'};
-flag_kam = 1;
-
+flag_kam = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 halo_amines = {'2_chloroaniline','2_chloropyridine','3_chloroaniline','3_chloropyridine','4_chloroaniline','N_methyl_N__222_trifluoroethyl__aniline'};
-flag_ham = 1;
-
+flag_ham = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 nitro_compounds = {'1_nitrobutane','1_nitropentane','1_nitropropane','2_nitropropane','nitroethane','nitromethane','2_nitroaniline',...
                 '3_nitroaniline','4_nitroaniline','2_nitrotoluene','3_nitrotoluene','3_nitrophenol','4_nitrophenol','2_nitrophenol','NN_dimethyl_p_nitrobenzamide'};
-flag_nit = 1;
-
+flag_nit = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 nitriles = {'benzonitrile','acetonitrile','butanenitrile','pentanenitrile','propanenitrile'};
-flag_ntr = 1;
-
+flag_ntr = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 phenols ={'1_naphthol','2_chlorophenol','2_fluorophenol','2_iodophenol','2_naphthol','23_dimethylphenol',...
           '24_dimethylphenol','25_dimethylphenol','26_dimethylphenol','3_ethylphenol','34_dimethylphenol',...
           '35_dimethylphenol','4_ethylphenol','4_n_propylphenol','4_tert_butylphenol','m_cresol','o_cresol',...
           '2_methoxyphenol','3_methoxyphenol','p_cresol','phenol'};
-flag_phn = 1;
-
+flag_phn = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 acids = {'3_methylbutanoic_acid','acetic_acid','butanoic_acid','hexanoic_acid','pentanoic_acid','propanoic_acid'};
 flag_acd = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 ketones = {'24_dimethylpentan_3_one','3_methylbutan_2_one','33_dimethylbutan_2_one','4_methylpentan_2_one','butanone','cyclohexanone',...
            'cyclopentanone','decan_2_one','heptan_2_one','heptan_4_one','hexan_2_one','methyl_cyclohexyl_ketone','methyl_cyclopropyl_ketone',...
            'nonan_2_one','nonan_5_one','octan_2_one','pentan_2_one','pentan_3_one','propanone','undecan_2_one'};
 flag_ktn = 1;
-
+ 
 %%%%%%%%%%%%%%%%%%% 
-
+ 
 haloalkanes = {'1_bromo_2_chloroethane','1_bromo_2_methylpropane','1_bromobutane','1_bromoheptane','1_bromohexane','1_bromooctane',...
                '1_bromopentane','1_bromopropane','1_chloro_222_trifluoroethane','1_chlorobutane','1_chloroheptane','1_chlorohexane',...
                '1_chloropentane','1_chloropropane','1_iodobutane','1_iodoheptane','1_iodohexane','1_iodopentane','1_iodopropane','11_dichloroethane',...
@@ -159,51 +160,51 @@ haloalkanes = {'1_bromo_2_chloroethane','1_bromo_2_methylpropane','1_bromobutane
                'chloroethane','chlorofluoromethane','chloromethane','dibromomethane','dichloromethane','diiodomethane','fluoromethane',...
                'halothane','iodoethane','iodoethane','iodomethane','pentachloroethane','teflurane','tetrachloromethane','tetrafluoromethane',...
                'tribromomethane','trichloroethene','trichloromethane'};
-flag_hlk = 1;
-
+flag_hlk = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 haloalkenes = {'11_dichloroethene','3_chloroprop_1_ene','chloroethylene','E_12_dichloroethene','hexafluoropropene','tetrachloroethene','Z_12_dichloroethene'};
-flag_hle = 1;
-
+flag_hle = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 halobenzenes = {'12_dichlorobenzene','123_trichlorobenzene','1234_tetrachlorobenzene','1235_tetrachlorobenzene','124_trichlorobenzene',...
                 '1245_tetrachlorobenzene','13_dichlorobenzene','135_trichlorobenzene','14_dichlorobenzene','2_chlorotoluene','4_bromotoluene',...
                 'benzotrifluoride','benzyl_chloride','bromobenzene','chlorobenzene','fluorobenzene','iodobenzene','p_dibromobenzene','m_bis_trifluoromethyl__benzene',};
-flag_hbz = 1;
-
+flag_hbz = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 halo_phenols = {'3_chlorophenol','4_bromophenol','4_chloro_3_methylphenol','4_chlorophenol','4_fluorophenol'};
-flag_hlf = 1;
-
+flag_hlf = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 sulfides = {'di_isopropyl_sulfide','di_n_propyl_sulfide','diethyl_disulfide','diethyl_sulfide','dimethyl_disulfide',...
             'dimethyl_sulfide','hydrogen_sulfide','methyl_ethyl_sulfide','phenyl_methyl_sulfide'};
-flag_slf = 1;
-
+flag_slf = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 ether_glycols = {'12_ethanediol','2_ethoxyethanol','2_methoxyethanol','2_propoxyethanol','2_butoxyethanol'};
-flag_etg = 1;
-
+flag_etg = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 aromatic_ethers = {'anisole','diethoxymethoxybenzene','trimethoxymethylbenzene','phenyl_trifluoroethyl_ether'};
-flag_are = 1;
-
+flag_are = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 thiols = {'thiophenol','ethanethiol','methanethiol','n_butanethiol','n_propanethiol'};
-flag_thi = 1;
-
+flag_thi = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
-
+ 
 test = {'N_methyl_N__222_trifluoroethyl__aniline','phenyl_trifluoroethyl_ether','m_bis_trifluoromethyl__benzene'};
-flag_tst = 1;
-
+flag_tst = 0;
+ 
 %%%%%%%%%%%%%%%%%%%
 % This routine will plot all of the calulated vs. experimental results if 
 % plot is set to 1.  Futhermore, it creates structures that contain all of
@@ -211,7 +212,7 @@ flag_tst = 1;
 % solvent and again as a function of solute
 for i = 1:length(solvents)
            
-    fid = fopen(['mnsol/',lower(solvents{i}),'.csv'],'r'); 
+    fid = fopen(['mnsol/',lower(solvents{i}),'_ions.csv'],'r'); 
     Data = textscan(fid,'%s %f %f','delimiter',',');
     fclose(fid);
     mol_list = Data{1};
@@ -399,186 +400,245 @@ for i = 1:length(solvents)
                         'Mean_Abs_error',mean(abs(temp.errfinal)));
     if ploton
         figure
-        flag_pred = 1;
+        flag_pred = 0;
         if flag_pred
             plot(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)),'bo','markers',2)
             err_pred = rms(temp.refE(allCases(allCases~=0))-temp.calcE(allCases(allCases~=0)));
         end
+        err_pred = rms(temp.refE(allCases(allCases~=0))-temp.calcE(allCases(allCases~=0)));
         set(gca,'FontSize',15)
+        
+        
         
         if (flag_testset && sum(ismember(testset,mol_list)))
             hold on
-            plot(temp.refE(m),temp.calcE(m),'gs','markers',12)
-            err_testset = rms(temp.refE(m)-temp.calcE(m));
+            plot(temp.refE(m),temp.calcE(m),'p','markers',12)
         end
+        err_testset = rms(temp.refE(m)-temp.calcE(m));
+        
+        
         
         if (flag_est && sum(ismember(esters,mol_list)))
             hold on
             plot(temp.refE(est),temp.calcE(est),'r+','markers',12)
-            err_est = rms(temp.refE(est)-temp.calcE(est));
         end
+        err_est = rms(temp.refE(est)-temp.calcE(est));
+        
+        
         
         if (flag_eth && sum(ismember(ethers,mol_list)))
             hold on
             plot(temp.refE(eth),temp.calcE(eth),'rd','markers',12)
-            err_eth = rms(temp.refE(eth)-temp.calcE(eth));
         end
+        err_eth = rms(temp.refE(eth)-temp.calcE(eth));
+        
+        
         
         if (flag_alc && sum(ismember(alcohols,mol_list)))
             hold on
             plot(temp.refE(alc),temp.calcE(alc),'ro','markers',12)
-            err_alc = rms(temp.refE(alc)-temp.calcE(alc));
         end
+        err_alc = rms(temp.refE(alc)-temp.calcE(alc));
+        
+        
         
         if (flag_amd && sum(ismember(amides,mol_list)))
             hold on
             plot(temp.refE(amd),temp.calcE(amd),'b+','markers',12)
-            err_amd = rms(temp.refE(amd)-temp.calcE(amd));
         end
+        err_amd = rms(temp.refE(amd)-temp.calcE(amd));
+        
+        
         
         if (flag_am1 && sum(ismember(amines_1,mol_list)))
             hold on
             plot(temp.refE(am1),temp.calcE(am1),'b*','markers',12)
-            err_am1 = rms(temp.refE(am1)-temp.calcE(am1));
         end
+        err_am1 = rms(temp.refE(am1)-temp.calcE(am1));
+        
+        
         
         if (flag_am2 && sum(ismember(amines_2,mol_list)))
             hold on
             plot(temp.refE(am2),temp.calcE(am2),'bd','markers',12)
-            err_am2 = rms(temp.refE(am2)-temp.calcE(am2));
         end
+        err_am2 = rms(temp.refE(am2)-temp.calcE(am2));
+          
+        
         
         if (flag_am3 && sum(ismember(amines_3,mol_list)))
             hold on
             plot(temp.refE(am3),temp.calcE(am3),'bx','markers',12)
-            err_am3 = rms(temp.refE(am3)-temp.calcE(am3));
         end
+        err_am3 = rms(temp.refE(am3)-temp.calcE(am3));
+        
+        
         
         if (flag_ham && sum(ismember(halo_amines,mol_list)))
             hold on
             plot(temp.refE(ham),temp.calcE(ham),'b<','markers',12)
-            err_ham = rms(temp.refE(ham)-temp.calcE(ham));
         end
+        err_ham = rms(temp.refE(ham)-temp.calcE(ham));
+        
+        
         
         if (flag_eam && sum(ismember(ether_amines,mol_list)))
             hold on
             plot(temp.refE(eam),temp.calcE(eam),'b>','markers',12)
-            err_eam = rms(temp.refE(eam)-temp.calcE(eam));
         end
+        err_eam = rms(temp.refE(eam)-temp.calcE(eam));
+        
+        
         
         if (flag_kam && sum(ismember(ketone_amines,mol_list)))
             hold on
             plot(temp.refE(kam),temp.calcE(kam),'b^','markers',12)
-            err_kam = rms(temp.refE(kam)-temp.calcE(kam));
         end
+        err_kam = rms(temp.refE(kam)-temp.calcE(kam));
+        
+        
         
         if (flag_nit && sum(ismember(nitro_compounds,mol_list)))
             hold on
             plot(temp.refE(nit),temp.calcE(nit),'bo','markers',12)
-            err_nit = rms(temp.refE(nit)-temp.calcE(nit));
         end
+        err_nit = rms(temp.refE(nit)-temp.calcE(nit));
+        
+        
         
         if (flag_ntr && sum(ismember(nitriles,mol_list)))
             hold on
             plot(temp.refE(ntr),temp.calcE(ntr),'bd','markers',12)
-            err_ntr = rms(temp.refE(ntr)-temp.calcE(ntr));
         end
+        err_ntr = rms(temp.refE(ntr)-temp.calcE(ntr));
+        
+        
         
         if (flag_acd && sum(ismember(acids,mol_list))) 
             hold on
             plot(temp.refE(acd),temp.calcE(acd),'rx','markers',12)
-            err_acd = rms(temp.refE(acd)-temp.calcE(acd));
         end
+        err_acd = rms(temp.refE(acd)-temp.calcE(acd));
+        
+        
         
         if (flag_ktn && sum(ismember(ketones,mol_list)))
             hold on
             plot(temp.refE(ktn),temp.calcE(ktn),'rs','markers',12)
-            err_ktn = rms(temp.refE(ktn)-temp.calcE(ktn));
         end
+        err_ktn = rms(temp.refE(ktn)-temp.calcE(ktn));
+        
+        
         
         if (flag_hlk && sum(ismember(haloalkanes,mol_list)))
             hold on
             plot(temp.refE(hlk),temp.calcE(hlk),'m*','markers',12)
-            err_hlk = rms(temp.refE(hlk)-temp.calcE(hlk));
         end
+        err_hlk = rms(temp.refE(hlk)-temp.calcE(hlk));
+        
+        
         
         if (flag_hle && sum(ismember(haloalkenes,mol_list)))
             hold on
             plot(temp.refE(hle),temp.calcE(hle),'mx','markers',12)
-            err_hle = rms(temp.refE(hle)-temp.calcE(hle));
         end
+        err_hle = rms(temp.refE(hle)-temp.calcE(hle));
+        
+        
         
         if (flag_hlf && sum(ismember(halo_phenols,mol_list)))
             hold on
             plot(temp.refE(hlf),temp.calcE(hlf),'ks','markers',12)
-            err_hlf = rms(temp.refE(hlf)-temp.calcE(hlf));
         end
+        err_hlf = rms(temp.refE(hlf)-temp.calcE(hlf));
+        
+        
         
         if (flag_phn && sum(ismember(phenols,mol_list)))
             hold on
             plot(temp.refE(phn),temp.calcE(phn),'kd','markers',12)
-            err_phn = rms(temp.refE(phn)-temp.calcE(phn));
         end
+        err_phn = rms(temp.refE(phn)-temp.calcE(phn));
+        
+        
         
         if (flag_hbz && sum(ismember(halobenzenes,mol_list)))
             hold on
             plot(temp.refE(hbz),temp.calcE(hbz),'m+','markers',12)
-            err_hbz = rms(temp.refE(hbz)-temp.calcE(hbz));
         end
+        err_hbz = rms(temp.refE(hbz)-temp.calcE(hbz));
+        
+        
         
         if (flag_ahc && sum(ismember(aromatic_hydrocarbons,mol_list)))
             hold on
             plot(temp.refE(ahc),temp.calcE(ahc),'k*','markers',12)
-            err_ahc = rms(temp.refE(ahc)-temp.calcE(ahc));
         end
+        err_ahc = rms(temp.refE(ahc)-temp.calcE(ahc));
+        
+        
         
         if (flag_ald && sum(ismember(aldehydes,mol_list)))
             hold on
             plot(temp.refE(ald),temp.calcE(ald),'r<','markers',12)
-            err_ald = rms(temp.refE(ald)-temp.calcE(ald));
         end
+        err_ald = rms(temp.refE(ald)-temp.calcE(ald));
+        
+        
         
         if (flag_lka && sum(ismember(alkanes,mol_list)))
             hold on
             plot(temp.refE(lka),temp.calcE(lka),'ko','markers',12)
-            err_lka = rms(temp.refE(lka)-temp.calcE(lka));
         end
+        err_lka = rms(temp.refE(lka)-temp.calcE(lka));
+        
+        
         
         if (flag_lke && sum(ismember(alkenes,mol_list)))
             hold on
             plot(temp.refE(lke),temp.calcE(lke),'kx','markers',12)
-            err_lke = rms(temp.refE(lke)-temp.calcE(lke));
         end
+        err_lke = rms(temp.refE(lke)-temp.calcE(lke));
+        
+        
         
         if (flag_slf && sum(ismember(sulfides,mol_list)))
             hold on
             plot(temp.refE(slf),temp.calcE(slf),'co','markers',12)
-            err_slf = rms(temp.refE(slf)-temp.calcE(slf));
         end
+        err_slf = rms(temp.refE(slf)-temp.calcE(slf));
+        
+        
         
         if (flag_etg && sum(ismember(ether_glycols,mol_list)))
             hold on
             plot(temp.refE(etg),temp.calcE(etg),'r>','markers',12)
-            err_etg = rms(temp.refE(etg)-temp.calcE(etg));
         end
+        err_etg = rms(temp.refE(etg)-temp.calcE(etg));
+        
+        
         
         if (flag_are && sum(ismember(aromatic_ethers,mol_list)))
             hold on
             plot(temp.refE(are),temp.calcE(are),'r<','markers',12)
-            err_are = rms(temp.refE(are)-temp.calcE(are));
         end
+        err_are = rms(temp.refE(are)-temp.calcE(are));
+        
+        
         
         if (flag_thi && sum(ismember(thiols,mol_list)))
             hold on
             plot(temp.refE(thi),temp.calcE(thi),'k<','markers',12)
-            err_thi = rms(temp.refE(thi)-temp.calcE(thi));
         end
+        err_thi = rms(temp.refE(thi)-temp.calcE(thi));
+        
+        
         
         if (flag_tst && sum(ismember(test,mol_list)))
             hold on
             plot(temp.refE(tst),temp.calcE(tst),'g*','markers',12)
-            err_tst = rms(temp.refE(tst)-temp.calcE(tst));
         end
+        err_tst = rms(temp.refE(tst)-temp.calcE(tst));
         
             err_all = rms(temp.refE-temp.calcE);
             plot(temp.refE(1),temp.calcE(1),'w*','markers',12)
@@ -598,8 +658,8 @@ for i = 1:length(solvents)
             (flag_lke && sum(ismember(alkenes,mol_list))) (flag_slf && sum(ismember(sulfides,mol_list))) ...
             (flag_etg && sum(ismember(ether_glycols,mol_list))) (flag_are && sum(ismember(aromatic_ethers,mol_list))) ...
             (flag_thi && sum(ismember(thiols,mol_list))) (flag_tst && sum(ismember(test,mol_list)))];
-        
-        Leg = {strcat('Unclassified: ',num2str(err_pred,'%.2f')),strcat('Training Set: ',num2str(err_testset,'%.2f')),strcat('Esters: ',num2str(err_est,'%.2f')),...
+        %
+        Leg_w_rms = {strcat('Unclassified: ',num2str(err_pred,'%.2f')),strcat('Training Set: ',num2str(err_testset,'%.2f')),strcat('Esters: ',num2str(err_est,'%.2f')),...
                strcat('Ethers: ',num2str(err_eth,'%.2f')),strcat('Alcohols: ',num2str(err_alc,'%.2f')),strcat('Amides: ',num2str(err_amd,'%.2f')),...
                strcat('Primary amines: ',num2str(err_am1,'%.2f')),strcat('Secondary amines: ',num2str(err_am2,'%.2f')),strcat('Teritiary amines: ',num2str(err_am3,'%.2f')),...
                strcat('Halo amines: ',num2str(err_ham,'%.2f')),strcat('Ether + amines: ',num2str(err_eam,'%.2f')),strcat('Ketone + amines: ',num2str(err_kam,'%.2f')),...
@@ -609,11 +669,30 @@ for i = 1:length(solvents)
                strcat('Aromatic hydrocarbons: ',num2str(err_ahc,'%.2f')),strcat('Aldehydes: ',num2str(err_ald,'%.2f')),strcat('Alkanes: ',num2str(err_lka,'%.2f')),...
                strcat('Alkenes: ',num2str(err_lke,'%.2f')),strcat('Sulfides: ',num2str(err_slf,'%.2f')),strcat('Ether glycols: ',num2str(err_etg,'%.2f')),...
                strcat('Aromatic ethers: ',num2str(err_are,'%.2f')),strcat('Thiols: ',num2str(err_thi,'%.2f')),strcat('test: ',num2str(err_tst,'%.2f')),strcat('RMS total: ',num2str(err_all,'%.2f'))};
+        
+        Leg_w_rms(A==0)=[];
+        %
+        %{
+        Leg = {'Unclassified','Training set','Esters','Ethers','Alcohols','Amides','Primary amines','Secondary amines','Teritiary amines',...
+               'Halo amines','Ether amines','Ketone amines','Nitro compounds','Nitriles','Acids','Ketones','Haloalkanes','Haloalkenes',....
+               'Halo phenols','Phenols','Halobenzenes','Aromatic HC','Aldehydes','Alkanes','Alkenes','Sulfides',...
+               'Ether glycols','Aromatic ethers','Thiols','Test'};
        
         Leg(A==0)=[];
+        %}
+        
         allCases = 1:length(mol_list);
+        [~,ion] = ismember(ions,mol_list);
+        ion(ion==0)=[];
+        allCases(ion) = 0;
         minax = round(min(min(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
         maxax = round(max(max(temp.refE(allCases(allCases~=0)),temp.calcE(allCases(allCases~=0)))));
+        
+        if ismember(solvents{i},{'water','octanol'})
+            minax=-12;
+            maxax=2;
+        end
+        
         axis([minax-2 maxax+2 minax-2 maxax+2]);
         bar = refline(1,-1);
         set(bar,'Linewidth',2,'color','r','LineStyle','--');
@@ -625,15 +704,39 @@ for i = 1:length(solvents)
         set(foo,'Linewidth',2,'color','k');
         xlabel(['\Delta','G_{expt}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
         ylabel(['\Delta','G_{calc}^{solv, ',solvents{i},'}',' (kcal.mol^{-1})'])
-        legend(Leg,'Location','southeast')
+        
+        
+        %Comment/Uncomment below line if you don't want/want the RMS errors for each chemical
+        %group shown on the legend
+        
+        %1
+        legend(Leg_w_rms,'Location','se')
+        
+        %legend(Leg,'Location','se')
+        
+        
+        
+        
+        % Uncomment the below section if you want the optimized parameters(alpha,beta,...) shown on
+        % the figure
+        %{
         temp1 = load(['Opt',solvents{i}]);
-        Leg_param = {strcat('\alpha:  ',num2str(temp1.x(1),'%.2f')),strcat('\beta:  ',num2str(temp1.x(2),'%.2f')),...
+Leg_param = {strcat('\alpha:  ',num2str(temp1.x(1),'%.2f')),strcat('\beta:  ',num2str(temp1.x(2),'%.2f')),...
                      strcat('\gamma:  ',num2str(temp1.x(3),'%.2f')),strcat('\mu:  ',num2str(temp1.x(4),'%.2f')),...
                      strcat('\gamma_{A}:  ',num2str(temp1.x(6),'%.3f')),strcat('\gamma_{B}:  ',num2str(temp1.x(7),'%.2f'))};
         text(minax-2+0.01*(abs(maxax-minax)+4),maxax+2-0.07*(abs(maxax-minax)+4),Leg_param,'FontSize',14);
-        filename = sprintf('Output/Figures/DeltaG-%s.PDF',solvents{i});
-        export_fig(filename,'-painters','-transparent');
-
+        %}
+        
+        
+        
+        %Comment
+        %filename = sprintf('../../../Desktop/SLIC/All/DeltaG-%s',solvents{i});
+        filename = sprintf('../../../Desktop/SLIC/1/DeltaG-%s_rms',solvents{i});
+        fig = gcf;
+        set(fig,'PaperOrientation','landscape');
+        fig.PaperUnits = 'inches';
+        fig.PaperPosition = [-0.5 0 12 7];
+        saveas(fig,filename,'pdf');
     end
     
 end
@@ -643,4 +746,5 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %ploton = 1;
+ 
 
