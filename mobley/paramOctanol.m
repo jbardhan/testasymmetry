@@ -85,7 +85,7 @@ for kk=1:tempdiv
     end
 
 
-    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
     all_solutes = Data{1};
@@ -129,7 +129,7 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 1.6];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0.0];
     if ionflag==0
         if paramboundflag==1
             lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
@@ -169,16 +169,16 @@ for kk=1:tempdiv
 end
 if ionflag==0
     if paramboundflag==1
-        save('OptWater_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     else
-        save('OptWater_wo_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_wo_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     end
 elseif ionflag==1
     if paramboundflag==1
-        %save('OptWater_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-        save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        %save('OptOctanol_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
 
     else
-        save('OptWater_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     end
 end

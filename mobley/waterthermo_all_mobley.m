@@ -13,7 +13,7 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-repo_path=sprintf('%s/Research',Home);
+repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
                    
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
@@ -95,8 +95,9 @@ if calcflag==1
             mol_list = Data{1};
             dG_list = Data{2};
 
-            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
             Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
+	    fprintf('Dont use this option for now!\n');
             fclose(fid);
             all_solutes = Data{1};
             all_surfAreas = Data{3};
@@ -104,7 +105,7 @@ if calcflag==1
             surfArea_list = all_surfAreas(index);
             
         elseif strcmp(dataset,'mobley')
-            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+            fid = fopen('mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
             Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
             fclose(fid);
             mol_list = Data{1};

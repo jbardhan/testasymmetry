@@ -15,7 +15,7 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-repo_path=sprintf('%s/Research',Home);
+repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
@@ -88,7 +88,7 @@ for kk=1:tempdiv
     end
 
 
-    fid = fopen('~/Research/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol.csv','r');
+    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
     all_solutes = Data{1};
@@ -157,7 +157,7 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 -0.03 1.6];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0.0 0.0];
     if ionflag==0
         lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
         ub = [+2 +200 +100 +20  +0.1  +0.1  +2];

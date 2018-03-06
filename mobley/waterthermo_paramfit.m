@@ -13,15 +13,15 @@ Home = getenv('HOME');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-repo_path=sprintf('%s/Research',Home);
-dropbox_path=sprintf('%s/Dropbox-NEU/Dropbox',Home);
+repo_path=sprintf('%s/repos',Home);
+dropbox_path=sprintf('%s/Dropbox',Home);
 
 ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in the optimization process 
                     % if paramboundflag=1 there is abound
                     
-calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
@@ -98,11 +98,11 @@ if calcflag==1
             testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
         end         
 
-        fid = fopen('~/Research/testasymmetry/mobley/mnsol/mobley_sa.csv','r');
-        Data = textscan(fid,'%s %f','delimiter',',');
+        fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_and_sa_and_vol_fixed.csv','r');
+	Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
         fclose(fid);
         all_solutes = Data{1};
-        all_surfAreas = Data{2};
+        all_surfAreas = Data{3};
         [m, index] = ismember(testset,all_solutes);
         surfArea_list = all_surfAreas(index);
         t_ref_aca=24.85; %reference tempereture for amino acid analogouses
