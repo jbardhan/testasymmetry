@@ -22,9 +22,9 @@ calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's usin
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
-temp_min=14.85;     % lower bound of the temperature interval 
-temp_max=34.85;    % upper bound in the temperature interval
-tempdiv=3;      % number of divisions in the temperature interval                     
+temp_min=4.85;     % lower bound of the temperature interval 
+temp_max=44.85;    % upper bound in the temperature interval
+tempdiv=5;      % number of divisions in the temperature interval                                                   11      
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +53,7 @@ if calcflag==1
     %%% temperatures
     ParamWatInfo=load('OptWater_thermo');
     x = ParamWatInfo.xvec;
-    x=x(2:4,:);
+    %x=x(2:4,:);
     
     for j=1:length(new_temp)
         clear global
@@ -197,6 +197,9 @@ for i=1:length(mol_list)
     dGfunc(i).cp=R(3); 
     dsvec(i)=dGfunc(i).ds*1000;
     cpvec(i)=dGfunc(i).cp*1000;
+    resnorm(i)=resnorm;
+    exitflag(i)=exitflag;
+    output(i)=output;
 end
 
 
@@ -216,7 +219,7 @@ elseif strcmp(dataset,'mobley')
     output_name='RunWater_mobley_thermo';
 end
     
-save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_ion','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley');
+save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_ion','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley','resnorm','residual','output','exitflag');
 
 
 
