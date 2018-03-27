@@ -35,7 +35,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
       
        
-fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
+fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_and_sa_and_vol_fixed.csv','r');
 Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
@@ -71,7 +71,8 @@ end
  
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+chdir('../');
+
 x0 = [0.0001 0.0001 0.0001   0.0001     0.0001 0.00001 0.00001];
 lb = [-0.001 -0.001 -0.001 -0.001  -0.001  -0.1  -2];
 ub = [+0.001 +0.001 +0.001 +0.001  +0.001  +0.1  +2];
