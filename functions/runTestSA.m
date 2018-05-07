@@ -41,5 +41,8 @@ dG_asym = 0.5 * pqrData.q' * phiReac;
 electrostatic = dG_asym + params.phiStatic*sum(pqrData.q);
 
 % now account for the nonpolar solvation term
-nonpolar = params.surfAreaConstant * problem.surfArea + params.NPoffset;
+nonpolar = 0.593 * (1 - (problem.solventVol / problem.vol) + log(problem.solventVol / problem.vol) -...
+        params.coordNum * (1 - ((problem.surfArea * problem.solventVol) / (problem.vol * problem.solventArea)) +...
+        log((problem.surfArea * problem.solventVol) / (problem.solventArea * problem.vol))));
+%nonpolar = params.surfAreaConstant * problem.surfArea ;
 E = electrostatic + nonpolar;

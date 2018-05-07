@@ -54,13 +54,16 @@ for kk=1:tempdiv
     clear global
     loadConstants
     convertKJtoKcal = 1/joulesPerCalorie;
-    global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
+    global UsefulConstants ProblemSet saveMemory writeLogfile logfileName 
     saveMemory = 0;
     writeLogfile = 0;
     logfileName = 'junklogfile';
 
     epsIn  =  1;
-    Tbase = 300; 
+    Tbase = 300;
+    solventArea = 25;
+    solventVol = 9.5;
+    
     %epsOut = 78.36; % from MNSol
     
     mytemp=Tbase;
@@ -94,8 +97,10 @@ for kk=1:tempdiv
     all_solutes = Data{1};
     all_dG = Data{2};
     all_surfAreas = Data{3};
+    all_vols = Data{4};
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
+    vol_list = all_vols(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     t_ref_ion=25;  %reference tempereture for ions
     
@@ -146,8 +151,9 @@ for kk=1:tempdiv
       end
       referenceData{i} = dG_list(i);
       surfArea{i} = surfArea_list(i);
+      vol{i} = vol_list(i);
       chdir(curdir);
-      addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
+      addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i},vol{i},solventArea,solventVol);
     end
 
 
@@ -157,13 +163,13 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0.0 0.0];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 10];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
-        ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
+        lb = [-2 -200 -100 -20  -0.1  0];
+        ub = [+2 +200 +100 +20  +0.1  50];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  -0.1  -2];
-            ub = [+2 +200 +100 +20  +20  +0.1  +2];
+            lb = [-2 -200 -100 -20  -20  0];
+            ub = [+2 +200 +100 +20  +20  50];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
