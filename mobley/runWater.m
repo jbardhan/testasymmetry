@@ -15,21 +15,19 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
 
-ParamWatInfo = load('OptWater');
-x = ParamWatInfo.x;
-fid = fopen('mnsol/water.csv','r'); 
-Data = textscan(fid,'%s %f %f','delimiter',',');
+ParamWatInfo = load('OptWater_thermo');
+x = ParamWatInfo.xvec(3,:);
+solventArea = 25;
+solventVol = 9.5;
+    
+fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
+Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
 dG_list = Data{2};
-
-fid = fopen('mnsol/mobley_sa.csv','r');
-Data = textscan(fid,'%s %f','delimiter',',');
-fclose(fid);
-all_solutes = Data{1};
-all_surfAreas = Data{2};
-[m, index] = ismember(mol_list,all_solutes);
-surfArea_list = all_surfAreas(index);
+surfArea_list = Data{3};
+vol_list = Data{4};
+calc_mobley= Data{8};
 saveMemory = 1;
 writeLogfile = 1;
 epsIn  =  1;
@@ -56,8 +54,9 @@ for i=1:length(mol_list)
   chargeDist{i} = pqrData.q;
   referenceData{i} = dG_list(i);
   surfArea{i} = surfArea_list(i);
+  vol{i} = vol_list(i);
   chdir(curdir);
-  addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
+  addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i},vol{i},solventArea,solventVol);
 end
 
 % xNoIonsInParam = [  1.8570  -75.6855   -2.9884    8.7302    0.0113    0.4098];
@@ -69,4 +68,4 @@ end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunWater','errfinal','calcE','refE','es','np');
+save('RunWaterSG','errfinal','calcE','refE','es','np');

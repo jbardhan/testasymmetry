@@ -61,8 +61,8 @@ for kk=1:tempdiv
 
     epsIn  =  1;
     Tbase = 300;
-    solventArea = 25;
-    solventVol = 9.5;
+    solventArea = 27;
+    solventVol = 12;
     
     %epsOut = 78.36; % from MNSol
     
@@ -163,13 +163,13 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 10];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 20];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  0];
-        ub = [+2 +200 +100 +20  +0.1  50];
+        lb = [-2 -200 -100 -20  -0.1  18];
+        ub = [+2 +200 +100 +20  +0.1  22];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  0];
-            ub = [+2 +200 +100 +20  +20  50];
+            lb = [-2 -200 -100 -20  -20  18];
+            ub = [+2 +200 +100 +20  +20  22];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);

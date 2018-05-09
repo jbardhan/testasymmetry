@@ -68,6 +68,9 @@ if calcflag==1
         epsIn  =  1;
         Tbase = 300; 
         %epsOut = 78.36; % from MNSol
+        solventArea = 25;
+        solventVol = 9.5;
+    
         
         mytemp=Tbase;
         KelvinOffset = 273.15;
@@ -101,8 +104,10 @@ if calcflag==1
             fclose(fid);
             all_solutes = Data{1};
             all_surfAreas = Data{3};
+            all_vols = Data{4};
             [m, index] = ismember(mol_list,all_solutes);
             surfArea_list = all_surfAreas(index);
+            vol_list = all_vols(index);
             
         elseif strcmp(dataset,'mobley')
             fid = fopen('mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
@@ -111,6 +116,7 @@ if calcflag==1
             mol_list = Data{1};
             dG_list = Data{2};
             surfArea_list = Data{3};
+            vol_list = Data{4};
             calc_mobley= Data{8};
         end
         
@@ -126,8 +132,9 @@ if calcflag==1
           chargeDist{i} = pqrData.q;
           referenceData{i} = dG_list(i);
           surfArea{i} = surfArea_list(i);
+          vol{i} = vol_list(i);
           chdir(curdir);
-          addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
+          addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i},vol{i},solventArea,solventVol);
         end         
 
         [errfinal(j,:),calcE(j,:),refE(j,:),es(j,:),np(j, :)]=ObjectiveFromBEMSA(x(j,:));

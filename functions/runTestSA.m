@@ -1,3 +1,4 @@
+
 function [E,electrostatic,nonpolar] = runTestSA(params, problem, chargeDistribution)
 global UsefulConstants ProblemSet
 
@@ -41,8 +42,8 @@ dG_asym = 0.5 * pqrData.q' * phiReac;
 electrostatic = dG_asym + params.phiStatic*sum(pqrData.q);
 
 % now account for the nonpolar solvation term
-nonpolar = 0.593 * (1 - (problem.solventVol / problem.vol) + log(problem.solventVol / problem.vol) -...
-        params.coordNum * (1 - ((problem.surfArea * problem.solventVol) / (problem.vol * problem.solventArea)) +...
-        log((problem.surfArea * problem.solventVol) / (problem.solventArea * problem.vol))));
+nonpolar = 0.593 * (1 - (problem.vol / problem.solventVol) - log(problem.solventVol / problem.vol) -...
+        params.coordNum * (1 - ((problem.vol * problem.solventArea) / (problem.surfArea * problem.solventVol)) +...
+        log((problem.vol * problem.solventArea) / (problem.surfArea * problem.solventVol))));
 %nonpolar = params.surfAreaConstant * problem.surfArea ;
 E = electrostatic + nonpolar;
