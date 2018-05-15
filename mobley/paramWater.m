@@ -19,7 +19,7 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+ionflag=0;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
@@ -91,9 +91,38 @@ for kk=1:tempdiv
     fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
-    all_solutes = Data{1};
-    all_dG = Data{2};
-    all_surfAreas = Data{3};
+    
+    if ionflag==1
+        
+        all_solutes = Data{1};
+        all_dG = Data{2};
+        all_surfAreas = Data{3};
+        dG_np = Data{6};% nonpolar energies
+        
+    elseif ionflag==0
+        
+        all_solutes = Data{1}(1:502);
+        all_dG = Data{2}(1:502);
+        all_surfAreas = Data{3}(1:502);
+        dG_np = Data{6}(1:502);% nonpolar energies (no ion)
+        
+    end
+    
+    %Optimizing non-polar part
+    
+    npMinimizer  = @(x_np)(x_np(1).*all_surfAreas + x_np(2))-dG_np;
+    
+    % Initialize the coefficients of the np function and upper/lower bounds.
+
+    x0_np=[0.0 0.0];
+    lb_np = [-0.1 -2];
+    ub_np = [+0.1 +2];
+    
+    % Calculate the new coefficients using LSQNONLIN.
+
+    options = optimoptions('lsqnonlin','Display','iter');
+    [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
+
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
@@ -157,13 +186,13 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 +0.002818 +1.046];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(2)];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  +0.00280  +1.047];
-        ub = [+2 +200 +100 +20  +0.1  +0.00285  +1.045];
+        lb = [-2 -200 -100 -20  -0.1  x_np(1)-0.0001  x_np(2)-0.05];
+        ub = [+2 +200 +100 +20  +0.1  x_np(1)+0.0001  x_np(2)+0.05];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  +0.00280  +1.047];
-            ub = [+2 +200 +100 +20  +20  +0.00285  +1.045];
+            lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
+            ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
