@@ -18,7 +18,7 @@ dropbox_path=sprintf('%s/Dropbox',Home);
                    
 dataset='mobley';   % options are mobley or mnsol , in the mnsol case we use mobley syrface areas               
                     
-calcflag=0;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
+calcflag=1;     % if calcflag=1 the code actually calculate the /delta G 's using BEM if it is zero, it means 
                 % delta G's has been calculated before and all we need is
                 % to load the data. 
                     
