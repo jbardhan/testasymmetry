@@ -3,7 +3,7 @@ clear all
 clc
 
 
-% Path information
+% Path information 
 Home = getenv('HOME');
 
 

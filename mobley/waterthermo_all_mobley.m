@@ -48,10 +48,19 @@ if calcflag==1
     %%% define the new tempereture vector 
     new_temp=linspace(temp_min,temp_max,tempdiv);
     
+    ionflag=0;      % if ionflag=0, ions data are not included in the testset 
+                    % if ionflag=1, ions data are included in the testset
+
 
     %%% Finding the values of parameters from the quadratic fit at the new
     %%% temperatures
-    ParamWatInfo=load('OptWater_thermo');
+    
+    if ionflag==1
+        ParamWatInfo=load('OptWater_thermo');
+    elseif ionflag==0
+        ParamWatInfo=load('OptWater_thermo_wo_ion');
+    end
+        
     x = ParamWatInfo.xvec;
     %x=x(2:4,:);
     
@@ -105,13 +114,26 @@ if calcflag==1
             surfArea_list = all_surfAreas(index);
             
         elseif strcmp(dataset,'mobley')
+            
             fid = fopen('mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
             Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
             fclose(fid);
-            mol_list = Data{1};
-            dG_list = Data{2};
-            surfArea_list = Data{3};
-            calc_mobley= Data{8};
+            
+            if ionflag==1
+                
+                mol_list = Data{1};
+                dG_list = Data{2};
+                surfArea_list = Data{3};
+                calc_mobley= Data{8};
+            
+            elseif ionflag==0
+                
+                mol_list = Data{1}(1:502);
+                dG_list = Data{2}(1:502);
+                surfArea_list = Data{3}(1:502);
+                calc_mobley= Data{8}(1:502);
+                
+            end
         end
         
 
@@ -209,17 +231,28 @@ end
  if strcmp(dataset,'mobley')
     dg_rms_298_mol=rms(calcE(index,1:502)-refE(index,1:502));
     dg_rms_298_MD_mol=rms(calc_mobley(1:502)'-refE(index,1:502));
-    dg_rms_298_ion=rms(calcE(index,503:end)-refE(index,503:end));
+    if ionflag == 1
+        dg_rms_298_ion=rms(calcE(index,503:end)-refE(index,503:end));
+ 
+    end
  end
 
 
 if strcmp(dataset,'mnsol')
     output_name='RunWater_mnsol_mobleySurf_thermo';
 elseif strcmp(dataset,'mobley')
-    output_name='RunWater_mobley_thermo';
+    if ionflag == 1
+        output_name='RunWater_mobley_thermo';
+    elseif ionflag == 0
+        output_name='RunWater_mobley_thermo_wo_ion';
+    end
 end
-    
-save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_ion','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley','resnorm','residual','output','exitflag');
+if ionflag == 1
+    save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_ion','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley','resnorm','residual','output','exitflag');
+elseif ionflag == 0
+    save(output_name,'errfinal','calcE','refE','es','np','TEMP','x','mol_list','dGfunc','dsvec','cpvec','dg_rms_298_mol','dg_rms_298_MD_mol','index','calc_mobley','resnorm','residual','output','exitflag');
+end
+
 
 
 
