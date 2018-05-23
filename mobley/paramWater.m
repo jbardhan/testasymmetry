@@ -107,21 +107,6 @@ for kk=1:tempdiv
         dG_np = Data{6}(1:502);% nonpolar energies (no ion)
         
     end
-    
-    %Optimizing non-polar part
-    
-    npMinimizer  = @(x_np)(x_np(1).*all_surfAreas + x_np(2))-dG_np;
-    
-    % Initialize the coefficients of the np function and upper/lower bounds.
-
-    x0_np=[0.0 0.0];
-    lb_np = [-0.1 -2];
-    ub_np = [+0.1 +2];
-    
-    % Calculate the new coefficients using LSQNONLIN.
-
-    options = optimoptions('lsqnonlin','Display','iter');
-    [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
 
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
@@ -158,6 +143,27 @@ for kk=1:tempdiv
         CP_list=CP_list_ref_at_298;
         
     end
+    
+        
+    %Optimizing non-polar part
+    
+    npMinimizer  = @(x_np)(x_np(1).*surfArea_list + x_np(2))-(dG_list-dG_list_ref_at_298);
+    
+    % Initialize the coefficients of the np function and upper/lower bounds.
+
+    x0_np=[0.0 0.0];
+    lb_np = [-0.1 -2];
+    ub_np = [+0.1 +2];
+    
+    % Calculate the new coefficients using LSQNONLIN.
+
+    options = optimoptions('lsqnonlin','Display','iter');
+    [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
+
+    
+    
+    
+    
     
     curdir=pwd;
     for i=1:length(testset)
