@@ -98,6 +98,7 @@ for kk=1:tempdiv
         all_dG = Data{2};
         all_surfAreas = Data{3};
         dG_np = Data{6};% nonpolar energies
+        dG_es = Data{7};% electrotatic energies
         
     elseif ionflag==0
         
@@ -105,11 +106,13 @@ for kk=1:tempdiv
         all_dG = Data{2}(1:502);
         all_surfAreas = Data{3}(1:502);
         dG_np = Data{6}(1:502);% nonpolar energies (no ion)
+        dG_es = Data{7}(1:502);% electrotatic energies
         
     end
 
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
+    dG_es_list = dG_es(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     t_ref_ion=25;  %reference tempereture for ions
     
@@ -147,7 +150,7 @@ for kk=1:tempdiv
         
     %Optimizing non-polar part
     
-    npMinimizer  = @(x_np)(x_np(1).*surfArea_list + x_np(2))-(dG_list-dG_list_ref_at_298);
+    npMinimizer  = @(x_np)(x_np(1).*surfArea_list + x_np(2))-(dG_list-dG_es_list);
     
     % Initialize the coefficients of the np function and upper/lower bounds.
 
