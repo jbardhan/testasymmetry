@@ -19,7 +19,7 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=0;          % if ionflag=0, ions data are not included in the testset 
+ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
@@ -150,7 +150,7 @@ for kk=1:tempdiv
         
     %Optimizing non-polar part
     
-    npMinimizer  = @(x_np)(x_np(1).*surfArea_list + x_np(2))-(dG_list-dG_es_list);
+    npMinimizer  = @(x_np)(x_np(1).*surfArea_list(1:12) + x_np(2))-(dG_list(1:12)-dG_es_list(1:12));
     
     % Initialize the coefficients of the np function and upper/lower bounds.
 
