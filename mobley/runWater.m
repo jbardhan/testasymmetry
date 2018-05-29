@@ -15,21 +15,16 @@ global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
 
-ParamWatInfo = load('OptWater');
+ParamWatInfo = load('OptWater_SLIC_OFF');
 x = ParamWatInfo.x;
-fid = fopen('mnsol/water.csv','r'); 
-Data = textscan(fid,'%s %f %f','delimiter',',');
+
+
+fid = fopen('mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
+Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
 fclose(fid);
 mol_list = Data{1};
 dG_list = Data{2};
-
-fid = fopen('mnsol/mobley_sa.csv','r');
-Data = textscan(fid,'%s %f','delimiter',',');
-fclose(fid);
-all_solutes = Data{1};
-all_surfAreas = Data{2};
-[m, index] = ismember(mol_list,all_solutes);
-surfArea_list = all_surfAreas(index);
+surfArea_list = Data{3};
 saveMemory = 1;
 writeLogfile = 1;
 epsIn  =  1;
@@ -69,4 +64,4 @@ end
 
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
 
-save('RunWater','errfinal','calcE','refE','es','np');
+save('RunWater_SLIC_Off','errfinal','calcE','refE','es','np');
