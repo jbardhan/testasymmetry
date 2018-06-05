@@ -129,7 +129,7 @@ for kk=1:tempdiv
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
+        CP_list_ref_ion_at_298_15=1e-3*[-23;-42;-72;-94;-108;-70;-74;-64]./joulesPerCalorie; %Marcus 94
         dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
     
         
