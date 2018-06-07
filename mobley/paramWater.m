@@ -19,7 +19,7 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+ionflag=0;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
@@ -129,7 +129,7 @@ for kk=1:tempdiv
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        CP_list_ref_ion_at_298_15=1e-3*[-23;-42;-72;-94;-108;-70;-74;-64]./joulesPerCalorie; %Marcus 94
+        CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
         dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
     
         
