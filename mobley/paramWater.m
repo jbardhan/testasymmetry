@@ -19,13 +19,13 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=0;          % if ionflag=0, ions data are not included in the testset 
+ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
 temp_max=44.85;    % upper bound in the temperature interval
 tempdiv=5;      % number of divisions in the temperature interval                     
-                    
+                        
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -164,7 +164,7 @@ for kk=1:tempdiv
     [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
 
     
-    
+    dG_list = dG_list - surfArea_list.*x_np(1)+ones(20,1).*x_np(2);
     
     
     
@@ -195,13 +195,13 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(2)];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  x_np(1)-0.0001  x_np(2)-0.05];
-        ub = [+2 +200 +100 +20  +0.1  x_np(1)+0.0001  x_np(2)+0.05];
+        lb = [-2 -200 -100 -20  -0.1  -0.0001  -0.01];
+        ub = [+2 +200 +100 +20  +0.1  +0.0001  +0.01];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
-            ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
+            lb = [-2 -200 -100 -20  -20  -0.0001  -0.01];
+            ub = [+2 +200 +100 +20  +20  +0.0001  +0.01];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
@@ -209,6 +209,8 @@ for kk=1:tempdiv
 
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
+    
+    x = [x(1) x(2) x(3) x(4) x(5) x_np(1) x_np(2)];
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
