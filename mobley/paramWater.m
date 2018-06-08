@@ -19,7 +19,7 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+ionflag=0;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
@@ -129,7 +129,7 @@ for kk=1:tempdiv
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
+        CP_list_ref_ion_at_298_15=1e-3*[-23;-42;-72;-94;-108;-70;-74;-64]./joulesPerCalorie;
         dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
     
         
@@ -163,11 +163,6 @@ for kk=1:tempdiv
     options = optimoptions('lsqnonlin','Display','iter');
     [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
 
-    
-    dG_list = dG_list - surfArea_list.*x_np(1)+ones(20,1).*x_np(2);
-    
-    
-    
     curdir=pwd;
     for i=1:length(testset)
       dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
@@ -195,13 +190,13 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(1)];
     if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  -0.0001  -0.01];
-        ub = [+2 +200 +100 +20  +0.1  +0.0001  +0.01];
+        lb = [-2 -200 -100 -20  -0.1  x_np(1)-0.0001  x_np(2)-0.01];
+        ub = [+2 +200 +100 +20  +0.1  x_np(1)+0.0001  x_np(2)+0.01];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  -0.0001  -0.01];
-            ub = [+2 +200 +100 +20  +20  +0.0001  +0.01];
+            lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
+            ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
@@ -210,7 +205,6 @@ for kk=1:tempdiv
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
     
-    x = [x(1) x(2) x(3) x(4) x(5) x_np(1) x_np(2)];
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
