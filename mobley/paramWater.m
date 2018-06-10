@@ -19,7 +19,7 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=0;          % if ionflag=0, ions data are not included in the testset 
+ionflag=1;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
@@ -163,6 +163,8 @@ for kk=1:tempdiv
     options = optimoptions('lsqnonlin','Display','iter');
     [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
 
+    testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};%,'Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
+    
     curdir=pwd;
     for i=1:length(testset)
       dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
@@ -191,13 +193,9 @@ for kk=1:tempdiv
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(1)];
-    if ionflag==0
-        lb = [-2 -200 -100 -20  -0.1  x_np(1)-0.0001  x_np(2)-0.01];
-        ub = [+2 +200 +100 +20  +0.1  x_np(1)+0.0001  x_np(2)+0.01];
-    elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
-            ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
-    end
+    
+    lb = [-2 -200 -100 -20  -0.01  x_np(1)-0.0001  x_np(2)-0.01];
+    ub = [+2 +200 +100 +20  +0.01  x_np(1)+0.0001  x_np(2)+0.01];
 
     options = optimoptions('lsqnonlin','MaxIter',8);
     options = optimoptions(options,'Display', 'iter');
@@ -205,7 +203,44 @@ for kk=1:tempdiv
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
     
+    testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};
+    dG_list = dG_list_ion;
+    curdir=pwd;
+    for i=1:length(testset)
+      dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
+      chdir(dir);
+      pqrData = loadPqr('test.pqr');
+      pqrAll{i} = pqrData;
+      srfFile{i} = sprintf('%s/test_2.srf',dir);
+      chargeDist{i} = pqrData.q;%chargeDistribution;
+      foo = strcmp(all_solutes,testset{i});
+      index = find(foo);
+      if length(index) ~= 1
+        fprintf('error finding refdata!\n');
+        keyboard
+      end
+      referenceData{i} = dG_list(i);
+      surfArea{i} = surfArea_list(i+12);
+      chdir(curdir);
+      addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
+    end
+
+    
+    x0_static = [x(1) x(2) x(3) x(4) 0 x_np(1) x_np(1)];
+    
+    lb = [x(1)-0.001 x(2)-0.001 x(3)-0.001 x(4)-0.001 -20  x_np(1)-0.0001  x_np(2)-0.01];
+    ub = [x(1)+0.001 x(2)+0.001 x(3)+0.001 x(4)+0.001 +20  x_np(1)+0.0001  x_np(2)+0.01];
+
+    options = optimoptions('lsqnonlin','MaxIter',8);
+    options = optimoptions(options,'Display', 'iter');
+
+    y = @(x)ObjectiveFromBEMSA(x);
+    [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0_static,lb,ub,options);
+    
+    
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
+    
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
     xvec(kk,:)=x;refvec(kk,:)=ref;calcvec(kk,:)=calc;
