@@ -56,7 +56,7 @@ if calcflag==1
     %%% temperatures
     
     if ionflag==1
-        ParamWatInfo=load('OptWater_thermo');
+        ParamWatInfo=load('OptWater_thermo_ion_only');
     elseif ionflag==0
         ParamWatInfo=load('OptWater_thermo_wo_ion');
     end

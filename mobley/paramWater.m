@@ -147,22 +147,7 @@ for kk=1:tempdiv
         
     end
     
-        
-    %Optimizing non-polar part
     
-    npMinimizer  = @(x_np)(x_np(1).*surfArea_list(1:12) + x_np(2))-(dG_list(1:12)-dG_es_list(1:12));
-    
-    % Initialize the coefficients of the np function and upper/lower bounds.
-
-    x0_np=[0.0 0.0];
-    lb_np = [-0.1 -2];
-    ub_np = [+0.1 +2];
-    
-    % Calculate the new coefficients using LSQNONLIN.
-
-    options = optimoptions('lsqnonlin','Display','iter');
-    [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
-
     testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};
     
     curdir=pwd;
@@ -192,10 +177,10 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(1)];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
     
-    lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
-    ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
+    lb = [-2 -200 -100 -20  -20  -0.0001  -0.001];
+    ub = [+2 +200 +100 +20  +20  +0.0001  +0.001];
 
     options = optimoptions('lsqnonlin','MaxIter',8);
     options = optimoptions(options,'Display', 'iter');
@@ -215,5 +200,5 @@ end
 if ionflag==0
     save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 elseif ionflag==1
-    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo_ion_only','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 end
