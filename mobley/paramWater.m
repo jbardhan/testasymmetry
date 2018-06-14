@@ -80,15 +80,11 @@ for kk=1:tempdiv
                  'staticpotential',staticpotential);
 
 
-    if ionflag==1
-        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
-
-    elseif ionflag==0
-        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
-    end
+    testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
 
 
-    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
+
+    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed_ions.csv','r');
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
     
@@ -147,8 +143,11 @@ for kk=1:tempdiv
         
     end
     
-    
+    NpInfo=load('Np_opt');
+    xnp = NpInfo.x_np;
+    dG_list_ion = dG_list_ion - surfArea_list.*xnp(kk,1) - xnp(kk,2);
     testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};
+    
     
     curdir=pwd;
     for i=1:length(testset)
@@ -165,7 +164,8 @@ for kk=1:tempdiv
         keyboard
       end
       referenceData{i} = dG_list_ion(i);
-      surfArea{i} = surfArea_list(i+12);
+      surfArea{i} = surfArea_list(i);
+      
       chdir(curdir);
       addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
     end
@@ -179,14 +179,15 @@ for kk=1:tempdiv
     % alpha beta gamma mu phi_stat np_a np_b
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
     
-    lb = [-2 -200 -100 -20  -20  -0.0001  -0.001];
-    ub = [+2 +200 +100 +20  +20  +0.0001  +0.001];
+    lb = [-2 -200 -100 -20  -20  -0.00001  -0.0001];
+    ub = [+2 +200 +100 +20  +20  +0.00001  +0.0001];
 
     options = optimoptions('lsqnonlin','MaxIter',8);
     options = optimoptions(options,'Display', 'iter');
 
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
+    x = [x(1) x(2) x(3) x(4) x(5) xnp(kk,1) x(kk,2)];
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
