@@ -187,7 +187,7 @@ for kk=1:tempdiv
 
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
-    x = [x(1) x(2) x(3) x(4) x(5) xnp(kk,1) x(kk,2)];
+    x = [x(1) x(2) x(3) x(4) x(5) xnp(kk,1) xnp(kk,2)];
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
 
     x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
