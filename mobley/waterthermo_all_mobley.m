@@ -48,7 +48,7 @@ if calcflag==1
     %%% define the new tempereture vector 
     new_temp=linspace(temp_min,temp_max,tempdiv);
     
-    ionflag=1;      % if ionflag=0, ions data are not included in the testset 
+    ionflag=0;      % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 

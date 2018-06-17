@@ -19,13 +19,13 @@ repo_path=sprintf('%s/repos',Home);
 dropbox_path=sprintf('%s/Dropbox',Home);
 
 
-ionflag=1;          % if ionflag=0, ions data are not included in the testset 
+ionflag=0;          % if ionflag=0, ions data are not included in the testset 
                     % if ionflag=1, ions data are included in the testset
 
 temp_min=4.85;     % lower bound of the temperature interval 
 temp_max=44.85;    % upper bound in the temperature interval
 tempdiv=5;      % number of divisions in the temperature interval                     
-                        
+                    
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,11 +80,15 @@ for kk=1:tempdiv
                  'staticpotential',staticpotential);
 
 
-    testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
+    if ionflag==1
+        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
+
+    elseif ionflag==0
+        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
+    end
 
 
-
-    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed_ions.csv','r');
+    fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_dG_AND_sa_and_vol_fixed.csv','r');
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
     
@@ -125,7 +129,7 @@ for kk=1:tempdiv
       
         dG_list_ref_ion_at_298_15=[-529;-424;-352;-329;-306;-304;-278;-243]./joulesPerCalorie;         % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
         dS_list_ref_ion_at_298_15=[-0.164;-0.133;-0.096;-0.087;-0.081;-0.053;-0.037;-0.014]./joulesPerCalorie;   % with out florine Fawcett(Data in Fawcett are at 25C which is 298.15K. I ignored that 0.15K difference
-        CP_list_ref_ion_at_298_15=1e-3*[-23;-42;-72;-94;-108;-70;-74;-64]./joulesPerCalorie;
+        CP_list_ref_ion_at_298_15=1e-3*[-9;-28;-58;-80;-94;-56;-60;-50]./joulesPerCalorie;
         dG_list_ion=dG_list_ref_ion_at_298_15-dS_list_ref_ion_at_298_15*(TEMP(kk)-t_ref_ion)+CP_list_ref_ion_at_298_15*((TEMP(kk)-t_ref_ion)-(TEMP(kk)+KelvinOffset)*log(((TEMP(kk)+KelvinOffset))/((t_ref_ion+KelvinOffset))));
     
         
@@ -143,10 +147,25 @@ for kk=1:tempdiv
         
     end
     
-    NpInfo=load('Np_opt');
-    xnp = NpInfo.x_np;
-    dG_list_ion = dG_list_ion - surfArea_list.*xnp(kk,1) - xnp(kk,2);
-    testset  = {'Li','Na','K','Rb','Cs','Cl','Br','I'};
+        
+    %Optimizing non-polar part
+    
+    npMinimizer  = @(x_np)(x_np(1).*surfArea_list + x_np(2))-(dG_list-dG_es_list);
+    
+    % Initialize the coefficients of the np function and upper/lower bounds.
+
+    x0_np=[0.0 0.0];
+    lb_np = [-0.1 -2];
+    ub_np = [+0.1 +2];
+    
+    % Calculate the new coefficients using LSQNONLIN.
+
+    options = optimoptions('lsqnonlin','Display','iter');
+    [x_np,resnorm,residual,exitflag,output] = lsqnonlin(npMinimizer,x0_np,lb_np,ub_np,options);
+
+    
+    
+    
     
     
     curdir=pwd;
@@ -163,9 +182,8 @@ for kk=1:tempdiv
         fprintf('error finding refdata!\n');
         keyboard
       end
-      referenceData{i} = dG_list_ion(i);
+      referenceData{i} = dG_list(i);
       surfArea{i} = surfArea_list(i);
-      
       chdir(curdir);
       addProblemSA(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea{i});
     end
@@ -177,20 +195,22 @@ for kk=1:tempdiv
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
-    
-    lb = [-2 -200 -100 -20  -20  -0.00001  -0.0001];
-    ub = [+2 +200 +100 +20  +20  +0.00001  +0.0001];
+    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 x_np(1) x_np(2)];
+    if ionflag==0
+        lb = [-2 -200 -100 -20  -0.1  x_np(1)-0.00001  x_np(2)-0.001];
+        ub = [+2 +200 +100 +20  +0.1  x_np(1)+0.00001  x_np(2)+0.001];
+    elseif ionflag==1
+            lb = [-2 -200 -100 -20  -20  x_np(1)-0.0001  x_np(2)-0.01];
+            ub = [+2 +200 +100 +20  +20  x_np(1)+0.0001  x_np(2)+0.01];
+    end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
     options = optimoptions(options,'Display', 'iter');
 
     y = @(x)ObjectiveFromBEMSA(x);
     [x,resnorm,residual,exitflag,output] = lsqnonlin(y,x0,lb,ub,options);
-    x = [x(1) x(2) x(3) x(4) x(5) xnp(kk,1) xnp(kk,2)];
+    
     [err,calc,ref,es,np]=ObjectiveFromBEMSA(x);
-
-    x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)  0 0 0];
     [err0,calc0,ref0,es0,np0]=ObjectiveFromBEMSA(x0);
 
     xvec(kk,:)=x;refvec(kk,:)=ref;calcvec(kk,:)=calc;
@@ -201,5 +221,5 @@ end
 if ionflag==0
     save('OptWater_thermo_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 elseif ionflag==1
-    save('OptWater_thermo_ion_only','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
+    save('OptWater_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','testset','dS_list','CP_list','tempvec','ionflag','aca_num','ion_num','t_ref_aca','t_ref_ion');
 end
