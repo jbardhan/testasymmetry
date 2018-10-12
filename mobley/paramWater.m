@@ -81,10 +81,17 @@ for kk=1:tempdiv
 
 
     if ionflag==1
-        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
+        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide',...
+                    'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane','Li','Na','K','Rb','Cs','Cl','Br','I'};  % test set without florine
 
     elseif ionflag==0
-        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide', 'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
+        
+        
+        testset  = {'methane', 'ethanamide', 'methanethiol', 'n_butane', '2_methylpropane', 'methyl_ethyl_sulfide',...
+  ...,
+                    'toluene', 'methanol', 'ethanol', '3_methyl_1h_indole', 'p_cresol', 'propane'};
+                
+                
     end
 
 
@@ -162,8 +169,10 @@ for kk=1:tempdiv
         lb = [-2 -200 -100 -20  -0.1  -0.1  -2];
         ub = [+2 +200 +100 +20  +0.1  +0.1  +2];
     elseif ionflag==1
-            lb = [-2 -200 -100 -20  -20  -0.1  -2];
-            ub = [+2 +200 +100 +20  +20  +0.1  +2];
+        
+            lb = [-2 -200 -100 -20  -20         -0.1           -2];
+            
+            ub = [+2 +200 +100 +20  +20         +0.1           +2];
     end
 
     options = optimoptions('lsqnonlin','MaxIter',8);
