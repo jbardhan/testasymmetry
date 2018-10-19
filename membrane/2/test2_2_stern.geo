@@ -1,19 +1,22 @@
-﻿lc = 2;
-lc_fine = 0.4;
-stern_t = 54;//50 + 4
-stern_z = -2;//0 - 2
-R = 4;//stern R_diel + 2
-Point(1) = {R, R, stern_z, lc};
-Point(2) = {R, -R, stern_z, lc};
-Point(3) = {-R, -R, stern_z, lc};
-Point(4) = {-R, R, stern_z, lc};
-Point(5) = {0, 0, stern_z, lc_fine};
-Point(6) = {0, 0, stern_t - 2, lc_fine};
+//stern
+R_diel = 2;
+st_thickness = 2;
+R = R_diel + st_thickness;
+lc = 2;
+lc_fine = 0.05;
+hf = 50 + st_thickness;
+h0 = 0 - st_thickness;
+Point(1) = {R, 0, h0, lc};
+Point(2) = {0, R, h0, lc};
+Point(3) = {-R, 0, h0, lc};
+Point(4) = {0, -R, h0, lc};
+Point(5) = {0, 0, h0, lc};
+Point(6) = {0, 0, hf, lc_fine};
 Circle(1) = {4, 5, 1};
 Circle(2) = {1, 5, 2};
 Circle(3) = {2, 5, 3};
 Circle(4) = {3, 5, 4};
-Extrude {0, 0, stern_t} {
+Extrude {0, 0, hf - h0} {
   Line{4, 3, 2, 1};
 }
 //Line Loop(21) = {5, 17, 13, 9};
