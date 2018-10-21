@@ -20,6 +20,8 @@ curdir = pwd;
 chdir('../mobley');
 ParamWatInfo = load('OptWater_thermo');
 x = ParamWatInfo.xvec(3,:);
+x_PB = [0 0 0 0 0 ParamWatInfo.xvec(3,6:7)];
+
 chdir(curdir);
 lambdaFEP = linspace (0,1,11);
 
@@ -84,9 +86,12 @@ for j=5
         referenceData{i} = 0;
         addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea_list(j));
     end
-    [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-    membraneFileName = sprintf('RunMembrane_%d',j);
-    save(membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
+    [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
+    %membraneFileName = sprintf('RunMembrane_%d',j);
+    PB_membraneFileName = sprintf('RunMembranePB_%d',j);
+   
+    %save(membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
+    save(PB_membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
     clear ProblemSet errfinal calcE refE es np logfileName
     
     chdir(curdir)
