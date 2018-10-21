@@ -33,18 +33,22 @@ def membraneMeshGen (r_0, r_f, h):
 			if (item.endswith(".stl") or item.endswith(".geo") or
 				item.endswith(".vert") or item.endswith(".face") or
 				item.endswith(".msh") or item.endswith(".pqr") or
-				os.path.getsize(os.path.join(curDir, item)) == 0):
+				os.path.getsize(os.path.join(curDir, item)) == 0 or item.endswith(".info")):
 				os.remove(os.path.join(curDir, item))
 
 		copy2(os.path.join(pwd,'template.geo'),curDir)
 
 		# Generating *.geo file
-		lc = 0.5 * np.sqrt(r)
+		
+		# Defining mesh parameters
+		# Parameter c is set by trial and error for now and chanegs with the radius
+		c = 2
+		lc = 0.5 * np.sqrt(c*r)
 		lc_fine = 0.001 * r
-		lc_st = 0.5 * np.sqrt(r+2)
+		lc_st = 0.5 * np.sqrt(c*(r+2))
 		lc_fine_st = 0.001 * (r+2)
 		r_diel = r;
-		r_stern = r_diel + 2
+		
 
 		# diel.geo
 		f = open(dielgeo,"w+")   
@@ -54,7 +58,7 @@ def membraneMeshGen (r_0, r_f, h):
 
 		# stern.geo
 		f = open(sterngeo,"w+")   
-		meshCustomizeStern = "%s%1d%s\n%s%1d%s\n%s%5.3f%s\n%s%5.3f%s\n%s\n" % ('r = ', r_stern+ 2, ';', 'h = ', h, ';', 'lc =', lc_st, ';', 'lc_fine =', lc_fine_st, ';', 'st_thickness = 2;')
+		meshCustomizeStern = "%s%1d%s\n%s%1d%s\n%s%5.3f%s\n%s%5.3f%s\n%s\n" % ('r = ', r_diel + 2, ';', 'h = ', h, ';', 'lc =', lc_st, ';', 'lc_fine =', lc_fine_st, ';', 'st_thickness = 2;')
 		f.write(meshCustomizeStern)
 		f.close()
 
