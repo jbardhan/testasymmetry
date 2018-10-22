@@ -74,7 +74,7 @@ for r=cylinderRadius
     surfArea_list{r}=pi*(2*cylinderRadius(r)^2 + 2 * cylinderRadius(r) * h_Cylinder);
 end
 %for j=1:length(cylinderRadius)
-for j=5
+for j=1
     dir=sprintf('%s/%d',curdir,j);
     chdir(dir);
     for i=1:11

@@ -1,6 +1,6 @@
 r = 8;
 h = 50;
-lc =1.414;
+lc =2.049;
 lc_fine =0.008;
 st_thickness = 0;
 
