@@ -1,4 +1,4 @@
-function asymBem = makePanelAsymEcfCollocMatrices(surf, bem, pqr)
+function asymBem = makePanelAsymEcfCollocMatrices2(surf1, surf2, bem, pqr1, pqr2)
 
 Kp_NLBC = bem.surfsurfop.Kp; % i.e. Kp * sigma will be the electric
                          % field at the centroid.
