@@ -13,6 +13,8 @@ born/sternConvergenceBorn.png
 born/withstatic-renormalized.eps
 born/withstatic-renormalized.png
 *.aux
+*.ipynb
+*.out
 mobley/Mobley_Thermo.log
 mobley/Trainingset_Thermo.log
 mobley/Trainingset_Thermo.synctex.gz

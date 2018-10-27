@@ -1,4 +1,4 @@
-function [A, P] = calcPanelYoonSternAsymPert2(asymParams, asymBem, ...
+function [A, P] = calcPanelYoonSternAsymPert2(asymParams, asymBem1, asymBem2, ...
 					diel1SurfData,stern1SurfData, ...
                     diel2SurfData,stern2SurfData, ...
                     bem, pqr1, pqr2, epsIn1, epsIn2, ...
@@ -16,10 +16,10 @@ I1 = eye(length(diel1SurfData.areas));
 I2 = eye(length(diel2SurfData.areas));
 
 sigmaEff1 = bem.diel1Diel1Op.V\(bem.diel1Diel1Op.V * dphiDnDiel1Bndy - (-0.5*I1+bem.diel1Diel1Op.K)*phiDiel1Bndy);
-Efield1 = -asymBem.dphidnCoul1_NLBC * pqr1.q - asymBem.Kp1_NLBC*sigmaEff1; 
+Efield1 = -asymBem1.dphidnCoul_NLBC * pqr1.q - asymBem1.Kp_NLBC*sigmaEff1; 
 
 sigmaEff2 = bem.diel2Diel2Op.V\(bem.diel2Diel2Op.V * dphiDnDiel2Bndy - (-0.5*I2+bem.diel2Diel2Op.K)*phiDiel2Bndy);
-Efield2 = -asymBem.dphidnCoul2_NLBC * pqr2.q - asymBem.Kp2_NLBC*sigmaEff2; 
+Efield2 = -asymBem2.dphidnCoul_NLBC * pqr2.q - asymBem2.Kp_NLBC*sigmaEff2; 
 
  
  
@@ -30,12 +30,12 @@ h2 = (alpha*(tanh(beta*Efield2-EfieldOffset)) +deltaOffset);
 f2 = (epsIn2/(epsOut-epsIn2)) - h2;
 
 r1 = -sum(pqr1.q)/epsOut;
-r11 = sum(stern1SurfData.weights .* dphiDnStern1Bndy);
-r12 = sum(stern1SurfData.weights .* dphiDnStern2Bndy);
+r11 = sum(stern1SurfData.areas' .* dphiDnStern1Bndy);
+r12 = sum(stern1SurfData.areas' .* dphiDnStern2Bndy);
 
 r2 = -sum(pqr2.q)/epsOut;
-r21 = sum(stern2SurfData.weights .* dphiDnStern1Bndy);
-r22 = sum(stern2SurfData.weights .* dphiDnStern2Bndy);
+r21 = sum(stern2SurfData.areas' .* dphiDnStern1Bndy);
+r22 = sum(stern2SurfData.areas' .* dphiDnStern2Bndy);
 
 
 if (r1==r11) || (abs(r1)<1e-2)
