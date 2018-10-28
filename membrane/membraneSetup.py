@@ -110,7 +110,7 @@ def membraneMeshGen (r_0, r_f, h):
 		
 		# Creating test_2.srf and two empty files which run 
 		f=open("test_2.srf","w+")
-		f.write("f\nf\n./%s\n./%s\n\n\n0\n" % (dielFileName,sternFileName))
+		f.write("f\nf\n./%s\n./%s\n\n\n0\n" % (sternFileName,dielFileName))
 		f.close()
 		
 		
