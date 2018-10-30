@@ -1,5 +1,6 @@
 *.ipynb
 *.out
+*.geo~
 membrane/nohup.out
 born/convergence-pointbem-Born.eps
 born/convergence-pointbem-Born.png

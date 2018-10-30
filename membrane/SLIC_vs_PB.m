@@ -1,12 +1,13 @@
 
 curdir = pwd;
 i=10;
-fileName = sprintf("%s/%d/%s%d%s",curdir,i,'RunMembrane_',i,'.mat');
+fileName = sprintf('%s/%d/%s%d%s',curdir,i,'RunMembrane_',i,'.mat');
 S = load(fileName);
-fileNamePB = sprintf("%s/%d/%s%d%s",curdir,i,'RunMembranePB_',i,'.mat');
+fileNamePB = sprintf('%s/%d/%s%d%s',curdir,i,'RunMembranePB_',i,'.mat');
 SPB = load(fileNamePB);
 B = {S.es.',SPB.es.'};   
 x=(25:-2.5:0);
+x(11) = 0.1;
 colRed = colormap(hot(8));
 colGreen = colormap(summer);
 

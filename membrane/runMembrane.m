@@ -62,7 +62,7 @@ for k=1:length(lambdaFEP)
 end
 
 % Radius of the biggest cylinder to run SLIC (starting from R=1A with 1A spacing) 
-lastCylRadiusToCalc = 2;
+lastCylRadiusToCalc = 10;
 
 %Cylinder height (Angstrom)
 h_Cylinder = 50;
@@ -73,8 +73,8 @@ cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
 for r=cylinderRadius
     surfArea_list{r}=pi*(2*cylinderRadius(r)^2 + 2 * cylinderRadius(r) * h_Cylinder);
 end
-for j=1:length(cylinderRadius)
-    dir=sprintf('%s/%d',curdir,j);
+for j=9:length(cylinderRadius)
+    dir=sprintf('%s/%d_test1',curdir,j);
     chdir(dir);
     for i=1:11
         pqrFile=sprintf('%s.pqr',mol_list{i});
@@ -85,13 +85,13 @@ for j=1:length(cylinderRadius)
         referenceData{i} = 0;
         addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea_list(j));
     end
-    [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-    %[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-    membraneFileName = sprintf('RunMembrane_%d',j);
-    %PB_membraneFileName = sprintf('RunMembranePB_%d',j);
+    %[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+    [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
+    %membraneFileName = sprintf('RunMembrane_%d',j);
+    PB_membraneFileName = sprintf('RunMembranePB_%d',j);
    
-    save(membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
-    %save(PB_membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
+    %save(membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
+    save(PB_membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
     
     chdir(curdir)
     ProblemSet = [];
