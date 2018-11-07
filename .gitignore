@@ -12,7 +12,9 @@ born/sternConvergenceBorn.eps
 born/sternConvergenceBorn.png
 born/withstatic-renormalized.eps
 born/withstatic-renormalized.png
-*.aux
+two-region/two-region.aux
+two-region/two-region.log
+two-region/two-region.dvi
 *.ipynb
 *.out
 mobley/Mobley_Thermo.log

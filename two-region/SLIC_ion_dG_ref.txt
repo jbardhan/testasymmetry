@@ -1,0 +1,2 @@
+dG_Na = -101.979 kcal/mol
+dG_Cl = -71.795 kcal/mol

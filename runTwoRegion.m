@@ -6,6 +6,7 @@ addpath(sprintf('%s/repos/testasymmetry',Home));
 addpath(sprintf('%s/repos/testasymmetry/functions',Home));
 addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
 addpath(sprintf('%s/repos/testasymmetry/born',Home));
+addpath(sprintf('%s/repos/testasymmetry/two-region',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet2" which we'll use to hold the BEM systems.
@@ -49,32 +50,41 @@ UsefulConstants2 = struct('epsIn1',epsIn1,'epsIn2',epsIn2,'epsOut',epsOut,'kappa
 			 'staticpotential',staticpotential);
 
 % here we define the actual params for the NLBC test
+% assuming that meshes are generated using Python3 command
+% twoRegMeshGen(d0,spacing,df) (after running twoRegMeshGen.py)
+% this test is for d0 = 3.0 A, spacing = 0.5A and df = 12.0A
+i = 1; %problem index
+d0 = 1.0;
+spacing = 1.0;
+df = 10.0;
 
-curdir = pwd;
-for i=1
-  dir=sprintf('%s/%s',curdir,'two-region');
-  chdir(dir);
-  pqrData1 = loadPqr('test1.pqr');
-  pqrData2 = loadPqr('test2.pqr');
-  pqrAll1{i} = pqrData1;
-  pqrAll2{i} = pqrData2;
-  srfFile1{i} = sprintf('%s/test1_2.srf',dir);
-  srfFile2{i} = sprintf('%s/test2_2.srf',dir);
-  chargeDist1{i} = pqrData1.q;
-  chargeDist2{i} = pqrData2.q;
-  referenceData{i} = dG_list(i);
-  surfArea1{i} = surfArea_list1(i);
-  surfArea2{i} = surfArea_list2(i);
-  chdir(curdir);
-  addProblemSA2(mol_list1{i},mol_list2{i},pqrAll1{i},pqrAll2{i},srfFile1{i},srfFile2{i},...
+for j=d0:spacing:df
+    
+    dir=sprintf('%s/two-region/data/%3.1f',curdir,j);
+    chdir(dir);
+    pqrData1 = loadPqr('Cl.pqr');
+    pqrData2 = loadPqr('Na.pqr');
+    pqrAll1{i} = pqrData1;
+    pqrAll2{i} = pqrData2;
+    mol_list1{i} = 'Cl';
+    mol_list2{i} = 'Na';
+    srfFile1{i} = sprintf('%s/Cl.srf',dir);
+    srfFile2{i} = sprintf('%s/Na.srf',dir);
+    chargeDist1{i} = pqrData1.q;
+    chargeDist2{i} = pqrData2.q;
+    referenceData{i} = -180; %%%%%%%%%%% fix later
+    surfArea1{i} = surfArea_list1(1);
+    surfArea2{i} = surfArea_list2(1);
+    chdir(curdir);
+    addProblemSA2(mol_list1{i},mol_list2{i},pqrAll1{i},pqrAll2{i},srfFile1{i},srfFile2{i},...
                chargeDist1{i},chargeDist2{i},referenceData{i},surfArea1{i},surfArea2{i});
+    i = i + 1;
 end
-
-%[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x);
-%SLICFileName = sprintf('RunTwoRegionSLIC');
-%save(SLICFileName,'mol_list1','mol_list2','errfinal','calcE','refE','es','np');
+chdir(sprintf('%s/two-region',curdir));
+[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x);
+SLICFileName = sprintf('RunTwoRegionSLIC');
+save(SLICFileName,'j','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x_PB);
 PBFileName = sprintf('RunTwoRegionPB');
-save(PBFileName,'mol_list1','mol_list2','errfinal','calcE','refE','es','np');
+save(PBFileName,'j','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 
-   

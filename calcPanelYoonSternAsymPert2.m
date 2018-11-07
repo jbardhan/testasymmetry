@@ -11,7 +11,7 @@ function [A, P] = calcPanelYoonSternAsymPert2(asymParams, asymBem1, asymBem2, ..
 alpha = asymParams.alpha;
 beta  = asymParams.beta;
 EfieldOffset = asymParams.EfieldOffset;
-deltaOffset  = -alpha * tanh(beta*0-EfieldOffset);
+deltaOffset  = asymParams.mu;
 I1 = eye(length(diel1SurfData.areas));
 I2 = eye(length(diel2SurfData.areas));
 
@@ -31,10 +31,10 @@ f2 = (epsIn2/(epsOut-epsIn2)) - h2;
 
 r1 = -sum(pqr1.q)/epsOut;
 r11 = sum(stern1SurfData.areas' .* dphiDnStern1Bndy);
-r12 = sum(stern1SurfData.areas' .* dphiDnStern2Bndy);
+%r12 = sum(stern1SurfData.areas' .* dphiDnStern2Bndy);
 
 r2 = -sum(pqr2.q)/epsOut;
-r21 = sum(stern2SurfData.areas' .* dphiDnStern1Bndy);
+%r21 = sum(stern2SurfData.areas' .* dphiDnStern1Bndy);
 r22 = sum(stern2SurfData.areas' .* dphiDnStern2Bndy);
 
 
@@ -44,6 +44,7 @@ else
   r1Overr11 = r1/r11; %epsOut/epsOut;
 end
 
+%{
 if (r1==r12) || (abs(r1)<1e-2)
   r1Overr12 = 1;
 else
@@ -55,6 +56,7 @@ if (r2==r21) || (abs(r2)<1e-2)
 else
   r2Overr21 = r2/r21; %epsOut/epsOut;
 end
+%}
 
 if (r2==r22) || (abs(r2)<1e-2)
   r2Overr22 = 1;
@@ -68,11 +70,11 @@ end
 A = [bem.A11 bem.A12 bem.A13 bem.A14 bem.A15 bem.A16 bem.A17 bem.A18;
      bem.A21 bem.A22_base*diag(f1./(1+f1)) bem.A23 bem.A24 bem.A25 bem.A26 bem.A27 bem.A28;
      bem.A31 bem.A32_base*diag(f1./(1+f1)) bem.A33 bem.A34 bem.A35 bem.A36 bem.A37 bem.A38;
-     bem.A41 bem.A42 bem.A43 bem.A44_base*(r1Overr11) bem.A45 bem.A46 bem.A47 bem.A48_base*(r1Overr12);
+     bem.A41 bem.A42 bem.A43 bem.A44_base*(r1Overr11) bem.A45 bem.A46 bem.A47 bem.A48_base*(r2Overr22);
      bem.A51 bem.A52 bem.A53 bem.A54 bem.A55 bem.A56 bem.A57 bem.A58;
      bem.A61 bem.A62 bem.A63 bem.A64 bem.A65 bem.A66_base*diag(f2./(1+f2)) bem.A67 bem.A68;
      bem.A71 bem.A72 bem.A73 bem.A74 bem.A75 bem.A76_base*diag(f2./(1+f2)) bem.A77 bem.A78;
-     bem.A81 bem.A82 bem.A83 bem.A84_base*(r2Overr21) bem.A85 bem.A86 bem.A87 bem.A88_base*(r2Overr22)];
+     bem.A81 bem.A82 bem.A83 bem.A84_base*(r1Overr11) bem.A85 bem.A86 bem.A87 bem.A88_base*(r2Overr22)];
      
 if nargout > 1
     P = sparse([diag(diag(bem.A11)) diag(diag(bem.A12)) 0*bem.A13 0*bem.A14 0*bem.A15 0*bem.A16 0*bem.A17 0*bem.A18;
