@@ -34,22 +34,22 @@ def twoRegMeshGen (d0,spacing,df):
         
         # Cl mesh
         f = open(ClDiel,"w+")   
-        #Cl_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,1.260) # Na-Na
-        Cl_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,2.312) # Cl-Cl or Na-Cl
+        Cl_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,1.260) # Na-Na or Na-Na(-)
+        #Cl_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,2.312) # Cl-Cl or Na-Cl
         f.write(Cl_D_xyzr)
         f.close()
 
         # Na mesh
         f = open(NaDiel,"w+")   
-        Na_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,1.260) # Na-Cl or Na-Na
+        Na_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,1.260) # Na-Cl or Na-Na or Na-Na(-)
         #Na_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,2.312) # Cl-Cl
         f.write(Na_D_xyzr)
         f.close()
 
         # Cl stern mesh
         f = open(ClStern,"w+")   
-        #Cl_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,3.260) # Na-Na
-        Cl_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,4.312) # Cl-Cl or Na-Cl
+        Cl_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,3.260) # Na-Na or Na-Na(-)
+        #Cl_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,4.312) # Cl-Cl or Na-Cl
         f.write(Cl_S_xyzr)
         f.close()
 
@@ -100,7 +100,7 @@ def twoRegMeshGen (d0,spacing,df):
         Na_pqrName = "Na.pqr"
 
         f = open(Cl_pqrName,"w+")
-        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'Cl','TMP',1,x_Cl,0,0,-1,1.0))
+        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'Cl','TMP',1,x_Cl,0,0,0,1.0))
         #f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_Cl,0,0,-1,1.2979))
         f.close()
 
