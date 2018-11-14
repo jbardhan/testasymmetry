@@ -1,3 +1,3 @@
 import matlab.engine
 eng = matlab.engine.start_matlab()
-eng.runMembrane(nargout=0)
+eng.run2D2S_membrane(nargout=0)
