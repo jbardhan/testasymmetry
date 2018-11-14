@@ -15,7 +15,7 @@ born/withstatic-renormalized.png
 two-region/two-region.aux
 two-region/two-region.log
 two-region/two-region.dvi
-two-region/mesh-data/*
+two-region/*.log
 *.ipynb
 *.out
 mobley/Mobley_Thermo.log

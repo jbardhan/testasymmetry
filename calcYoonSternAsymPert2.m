@@ -11,6 +11,7 @@ function [A, P] = calcYoonSternAsymPert2(asymParams, ...
 alpha = asymParams.alpha;
 beta  = asymParams.beta;
 EfieldOffset = asymParams.EfieldOffset;
+%deltaOffset  = asymParams.mu;
 deltaOffset  = -alpha * tanh(beta*0-EfieldOffset);
 
 Efield1 = -bem.diel1ChargeOp.dphidnCoul * pqr1.q - bem.diel1Diel1Op.K'*dphiDnDiel1Bndy ...
