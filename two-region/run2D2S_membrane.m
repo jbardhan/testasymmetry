@@ -56,7 +56,7 @@ i = 1; %problem index
 d0 = 10.0;
 spacing = 0.5;
 df = 3.5;
-r_mem = 20.0;
+r_mem = 15.0;
 h_mem = 50;
 
 for j=df:spacing:d0

@@ -120,9 +120,9 @@ def memMeshGen2D2S (d0,spacing,df,r,h):
         copy2(os.path.join(curDir,'template.geo'),dirPath)
 
         # Generating *.geo file
-        lc = 0.7 * np.sqrt(r)
+        lc = 0.8 * np.sqrt(r)
         lc_fine = 0.001 * r
-        lc_st = 0.8 * np.sqrt(r+2)
+        lc_st = 0.9 * np.sqrt(r+2)
         lc_fine_st = 0.001 * (r+2)
         r_diel = r;
         r_stern = r_diel + 2
