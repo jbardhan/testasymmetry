@@ -1,4 +1,3 @@
-﻿
 import os, errno
 from pathlib import Path
 import pymesh
@@ -16,7 +15,7 @@ def insert(originalfile, string, newname):
 def membraneMeshGen (r_0, spacing, r_f, h):
 	pwd = os.getcwd()
 	radiiRange= np.arange(r_0,r_f+0.0001,spacing)
-	meshDataPath = os.path.join(pwd,'mesh-data')
+	meshDataPath = os.path.join(pwd,'mesh-membrane')
 	try:
 	    os.makedirs(meshDataPath)
 	except OSError as e:
@@ -75,8 +74,10 @@ def membraneMeshGen (r_0, spacing, r_f, h):
 		insert('template.geo',meshCustomizeStern,sterngeo)
 
 		# converting *.geo files to *.stl using Gmsh
-		dielMeshCommand = "%s%s%s%s" % ('gmsh ',dielgeo,' -2 -format stl ',dielstl)
-		sternMeshCommand = "%s%s%s%s" % ('gmsh ',sterngeo,' -2 -format stl ',sternstl)
+		gmsh = '/Applications/Gmsh.app/Contents/MacOS/gmsh ' #MacOS
+		#gmsh = 'gmsh ' #Linux
+		dielMeshCommand = "%s%s%s%s" % (gmsh,dielgeo,' -2 -format stl ',dielstl)
+		sternMeshCommand = "%s%s%s%s" % (gmsh,sterngeo,' -2 -format stl ',sternstl)
 
 		os.system(dielMeshCommand)
 		os.system(sternMeshCommand)

@@ -13,7 +13,7 @@ addpath(sprintf('%s/repos/testasymmetry/membrane',Home));
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-logfileName = 'water.out';
+logfileName = 'membrane.out';
 epsOut = 78.36;
 
 curdir = pwd;
@@ -56,25 +56,25 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 % here we define the actual params for the NLBC test
 
 
-lambdaFEP = linspace (0,1,11);
+lambdaFEP = linspace (0,10,11);
 for k=1:length(lambdaFEP)
     mol_list{k}=sprintf('test_lambda_%3.1f',lambdaFEP(k));
 end
 
 % Radius of the biggest cylinder to run SLIC (starting from R=1A with 1A spacing) 
-lastCylRadiusToCalc = 10;
+%lastCylRadiusToCalc = 10;
 
 %Cylinder height (Angstrom)
 h_Cylinder = 50;
-
+r0 = 10;
+spacing = 5;
+rf = 25;
+radii = linspace(r0,rf,spacing-1);
 % Cylinder (membrane) radii (Angstrom)
-cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
+%cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
 
-for r=cylinderRadius
-    surfArea_list{r}=pi*(2*cylinderRadius(r)^2 + 2 * cylinderRadius(r) * h_Cylinder);
-end
-for j=9:length(cylinderRadius)
-    dir=sprintf('%s/%d_test1',curdir,j);
+for r=radii
+    dir=sprintf('%s/mesh-membrane/%3.1f',curdir,r);
     chdir(dir);
     for i=1:11
         pqrFile=sprintf('%s.pqr',mol_list{i});
@@ -83,15 +83,16 @@ for j=9:length(cylinderRadius)
         srfFile{i} = sprintf('%s/test_2.srf',dir);
         chargeDist{i} = pqrData.q;
         referenceData{i} = 0;
-        addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea_list(j));
+        surfArea_list = pi*(2*r^2 + 2 * r * h_Cylinder);
+        addProblemSA(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},surfArea_list);
     end
-    %[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+    distance=radii.';
+    [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+    SLIC_membraneFileName = sprintf('RunMembraneSLIC_%d',r);
+    save(SLIC_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-    %membraneFileName = sprintf('RunMembrane_%d',j);
-    PB_membraneFileName = sprintf('RunMembranePB_%d',j);
-   
-    %save(membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
-    save(PB_membraneFileName,'mol_list','errfinal','calcE','refE','es','np');
+    PB_membraneFileName = sprintf('RunMembranePB_%d',r);
+    save(PB_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     
     chdir(curdir)
     ProblemSet = [];
