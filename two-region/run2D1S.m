@@ -50,8 +50,8 @@ UsefulConstants3 = struct('epsIn1',epsIn1,'epsIn2',epsIn2,'epsOut',epsOut,'kappa
 % twoRegMeshGen(d0,spacing,df) (after running meshGen2D1S.py)
 % this test is for d0 = 2.6 A, spacing = 0.3A and df = 6.5A
 i = 1; %problem index
-d0 = 2.6;
-spacing = 0.3;
+d0 = 3.0;
+spacing = 0.5;
 df = 6.5;
 
 for j=d0:spacing:df
@@ -62,8 +62,8 @@ for j=d0:spacing:df
     pqrData2 = loadPqr('mol2.pqr');
     pqrAll1{i} = pqrData1;
     pqrAll2{i} = pqrData2;
-    mol_list1{i} = 'Na0';
-    mol_list2{i} = 'Na';
+    mol_list1{i} = 'Na+';
+    mol_list2{i} = 'Na-';
     srfFile1{i} = sprintf('%s/mol1.srf',dir);
     srfFile2{i} = sprintf('%s/mol2.srf',dir);
     srfFile3{i} = sprintf('%s/mol12.srf',dir);
@@ -79,9 +79,9 @@ end
 chdir(curdir);
 distance=(d0:spacing:df).';
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA3(x);
-SLICFileName = sprintf('Run2D1S_SLIC_Na(0)_Na(1)');
+SLICFileName = sprintf('Run2D1S_SLIC_Na+_Na-');
 save(SLICFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA3(x_PB);
-PBFileName = sprintf('Run2D1S_PB_Na(0)_Na(1)');
+PBFileName = sprintf('Run2D1S_PB_Na+_Na-');
 save(PBFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 
