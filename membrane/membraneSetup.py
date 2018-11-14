@@ -1,8 +1,9 @@
-
-import os
+﻿
+import os, errno
 from pathlib import Path
 import pymesh
 import numpy as np
+import shutil
 from shutil import copy2
 
 def insert(originalfile, string, newname):
@@ -12,20 +13,32 @@ def insert(originalfile, string, newname):
             f2.write(f.read())
     os.rename('newfile.txt',newname)
 
-def membraneMeshGen (r_0, r_f, h):
+def membraneMeshGen (r_0, spacing, r_f, h):
 	pwd = os.getcwd()
-	
+	radiiRange= np.arange(r_0,r_f+0.0001,spacing)
+	meshDataPath = os.path.join(pwd,'mesh-data')
+	try:
+	    os.makedirs(meshDataPath)
+	except OSError as e:
+	    if e.errno != errno.EEXIST:
+	        raise
+	for root, dirs, files in os.walk(meshDataPath):
+	    for f in files:
+	        os.unlink(os.path.join(root,f))
+	    for d in dirs:
+	        shutil.rmtree(os.path.join(root,d))  	
 	# r = Cylinder (membrane) radius
-	for r in range(r_0, r_f+1):
+	for r in radiiRange:
 
-		curDir = pwd + "/%d" % r
-		
-		os.chdir(curDir)
+		dirPath = os.path.join(meshDataPath,"%3.1f" % r)
+		os.makedirs(dirPath)
+		os.chdir(dirPath)
+
 		dielgeo = "diel%d.geo" % (r)
 		sterngeo = "stern%d.geo" % (r)
 		dielstl = "diel%d.stl" % (r)
 		sternstl = "stern%d.stl" % (r)
-		listDir = os.listdir(curDir)
+		listDir = os.listdir(dirPath)
 
 		# Removing old files		
 		for item in listDir:
@@ -34,21 +47,17 @@ def membraneMeshGen (r_0, r_f, h):
 				item.endswith(".vert") or item.endswith(".face") or
 				item.endswith(".msh") or item.endswith(".pqr") or
 				os.path.getsize(os.path.join(curDir, item)) == 0 or item.endswith(".info")):
-				os.remove(os.path.join(curDir, item))
+				os.remove(os.path.join(dirPath, item))
 
-		copy2(os.path.join(pwd,'template.geo'),curDir)
+		copy2(os.path.join(pwd,'template.geo'),dirPath)
 
 		# Generating *.geo file
-		
-		# Defining mesh parameters
-		# Parameter c is set by trial and error for now and chanegs with the radius
-		c = 2
-		lc = 0.5 * np.sqrt(c*r)
+		lc = 0.7 * np.sqrt(r)
 		lc_fine = 0.001 * r
-		lc_st = 0.5 * np.sqrt(c*(r+2))
+		lc_st = 0.8 * np.sqrt(r+2)
 		lc_fine_st = 0.001 * (r+2)
 		r_diel = r;
-		
+		r_stern = r_diel + 2
 
 		# diel.geo
 		f = open(dielgeo,"w+")   
@@ -77,7 +86,7 @@ def membraneMeshGen (r_0, r_f, h):
 		# other information such as charge distribution for each charge location (*.pqr).
 		# Geomtry file (*.geo) that is used to enerate each geometry is also included.
 		# These folders are setup in a way that it needs minimal change in order to be read
-		# by SLIC Matlab code
+		# by SLIC Matl                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          km,ab code
 		
 		
 		#Dielectric surface generation
@@ -116,36 +125,35 @@ def membraneMeshGen (r_0, r_f, h):
 		
 		test_2_Diel = "diel%d" % r
 		test_2_Stern = "stern%d" % r
-		Path('%s/%s' % (curDir,test_2_Diel)).touch()
-		Path('%s/%s' % (curDir,test_2_Stern)).touch()
+		Path('%s/%s' % (dirPath,test_2_Diel)).touch()
+		Path('%s/%s' % (dirPath,test_2_Stern)).touch()
 
 		
 		# writing pqr files in each folder
-		lambda_0 = 0
-		lambda_1 = 1
-		lambdaSteps = 10
-		for lambdaFEP in np.linspace(lambda_0,lambda_1,lambdaSteps+1):
+		lambda_z = [25.0,30.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5]
+		k=0
+		for lambdaFEP in lambda_z:
 		    
 		    # Charge locations
 		    x_q = 0;
 		    y_q = 0;
 		    
 		    # Charge moves from the center of the membrane toward the top plane on z-axis
-		    z_q = h/2 * (1 + lambdaFEP)
+		    # z_q = h/2 * (1 + lambdaFEP)
 		    
 		    q = 1
-		    R_q = 2.27 # Ask Jay!
-		    pqrFileName = "test_lambda_%3.1f.pqr" % lambdaFEP
+		    R_q = 1 # Ask Jay!
+		    pqrFileName = "test_lambda_%3.1f.pqr" % k
 		    f = open(pqrFileName,"w+")
-		    f.write("%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_q,y_q,z_q,q,R_q))
+		    f.write("%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_q,y_q,lambdaFEP,q,R_q))
 		    f.close()
+		    k += 1
 		meshInfo = "%s%d\n%s%d\n%s%d\n%s%d\n%s%d%s" % ('# Elements in dielectric mesh = ',meshDiel.num_elements,
-		                                       '# Vertices in dielectric mesh = ',meshDiel.num_vertices,
-		                                       '# Elements in stern layer mesh = ',meshStern.num_elements,
+		                                       '# Vertices in dielectric mesh = ',meshDiel.num_vertices,		                                       '# Elements in stern layer mesh = ',meshStern.num_elements,
 		                                       '# Vertices in stern layer mesh = ',meshStern.num_vertices,
 		                                       'Surface area = ',np.pi*(2 * r ** 2 + 2 * r * h),' AA')
 		f = open('mesh.info',"w+")
 		f.write(meshInfo)
 		f.close()
-		os.remove(os.path.join(curDir,'template.geo'))
-		os.chdir(pwd)
+		os.remove(os.path.join(dirPath,'template.geo'))
+		os.chdir(meshDataPath)
