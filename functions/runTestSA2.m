@@ -41,7 +41,7 @@ dG_asym = 0.5 * (pqrData1.q'* phiReac1 + pqrData2.q'* phiReac2);
 % potential field that arises due to water structure around even
 % uncharged solutes.  we model it as a constant field so the extra
 % free energy = potential * totalCharge
-electrostatic = dG_asym + params.phiStatic*sum(pqrData1.q + pqrData2.q);
+electrostatic = dG_asym + params.phiStatic*sum(sum(pqrData1.q) + sum(pqrData2.q));
 
 % now account for the nonpolar solvation term
 nonpolar = params.surfAreaConstant * (problem.surfArea1 + problem.surfArea2) + 2 * params.NPoffset;

@@ -1,5 +1,5 @@
 function [calculatedE, referenceE,electrostatic,nonpolar ] = CalculateEnergiesFromBEMSA2(Params)
-global UsefulConstants ProblemSet2 saveMemory writeLogfile logfileName
+global UsefulConstants2 ProblemSet2 saveMemory writeLogfile logfileName
 
 % define empty vectors so we can extend them easily
 calculatedE  = [];

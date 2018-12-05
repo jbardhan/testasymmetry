@@ -1,21 +1,20 @@
 
 curdir = pwd;
-i=10;
-fileName = sprintf('%s/%d/%s%d%s',curdir,i,'RunMembrane_',i,'.mat');
+i=20;
+fileName = sprintf('%s/convergence/%3.1f/%s%3.1f%s',curdir,i,'RunMembrane_',i,'.mat');
 S = load(fileName);
-fileNamePB = sprintf('%s/%d/%s%d%s',curdir,i,'RunMembranePB_',i,'.mat');
+fileNamePB = sprintf('%s/convergence/%3.1f/%s%3.1f%s',curdir,i,'RunMembranePB_',i,'.mat');
 SPB = load(fileNamePB);
 B = {S.es.',SPB.es.'};   
-x=(25:-2.5:0);
-x(11) = 0.1;
+x=[25.0,30.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5];
 colRed = colormap(hot(8));
-colGreen = colormap(summer);
+colGreen = colormap(winter(8));
 
 hL =zeros(2,1);
 face = {colGreen(6,:),colRed(4,:)};
 style={'-o','-s'};
 for i=1:2
-hL(i) = plot(x,B{i},style{i},...
+hL(i) = plot(50-x,B{i},style{i},...
         'Color',face{i},...
         'LineWidth',2,...
         'MarkerEdgeColor','k',...
@@ -26,3 +25,27 @@ end
 xlabel('Membrane depth (A)')
 ylabel('Electrostatic energy (kcal/mol)') 
 hLeg = legend(hL,'SLIC','PB');
+
+
+Radii = [5.0,7.5,10.0,15.0,20.0,30.0,40.0];
+x = x(6:11);
+style={'-o','-s','-d','-x','-*','+','^'};
+face = {colGreen(6,:),colRed(4,:),'b','c','m','y','k'};
+i = 1;
+for R=Radii
+    SLfileName = sprintf('%s/convergence/%3.1f/%s%3.1f%s',curdir,R,'RunMembrane_',R,'.mat');
+    SLICdata = load(SLfileName);
+    hL(i) = plot(x,SLICdata.es(6:11),style{i},...
+        'Color',face{i},...
+        'LineWidth',2,...
+        'MarkerEdgeColor','k',...
+        'MarkerFaceColor',face{i},...
+        'MarkerSize',10);
+    i =+ 1;
+hold on
+end
+xlabel('Membrane depth (A)')
+ylabel('Electrostatic energy (kcal/mol)') 
+%hLeg = legend(hL,'SLIC','PB');
+
+

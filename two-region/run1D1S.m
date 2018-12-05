@@ -7,14 +7,16 @@ addpath(sprintf('%s/repos/testasymmetry/functions',Home));
 addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
 addpath(sprintf('%s/repos/testasymmetry/born',Home));
 addpath(sprintf('%s/repos/testasymmetry/two-region',Home));
-addpath(sprintf('%s/repos/testasymmetry/membrane',Home));
 
+%This is the original SLIC code (one dielectric surface and its
+%corresponding stern layer in solvent) which is used to validate the other
+%extensions of SLIC (two-region, membrane etc.)
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet2" which we'll use to hold the BEM systems.
 loadConstants
 convertKJtoKcal = 1/joulesPerCalorie;
-global UsefulConstants2 ProblemSet2 saveMemory writeLogfile logfileName
-logfileName = '2D2S.out';
+global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
+logfileName = '1D1S.out';
 epsOut = 78.36;
 
 curdir = pwd;
@@ -27,16 +29,16 @@ fid = fopen('two-region.csv','r');
 Data = textscan(fid,'%s %s %f %f %f','delimiter',',');
 fclose(fid);
 mol_list1 = Data{1};
-mol_list2 = Data{2};
+%mol_list2 = Data{2};
 all_surfAreas1 = Data{3};
-all_surfAreas2 = Data{4};
+%all_surfAreas2 = Data{4};
 dG_list = Data{5};
 surfArea_list1 = all_surfAreas1;
-surfArea_list2 = all_surfAreas2;
+%surfArea_list2 = all_surfAreas2;
 saveMemory = 1;
 writeLogfile = 1;
-epsIn1  =  1;
-epsIn2  =  1;
+epsIn  =  1;
+%epsIn2  =  1;
 Tbase = 300; mytemp=Tbase;
 staticpotential = 0.0;
 KelvinOffset = 273.15;
@@ -44,7 +46,7 @@ conv_factor = 332.112;
 %staticpotential = 0.0; % this only affects charged molecules;
 
 kappa = 0.0;  % should be zero, meaning non-ionic solutions!
-UsefulConstants2 = struct('epsIn1',epsIn1,'epsIn2',epsIn2,'epsOut',epsOut,'kappa', ...
+UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 			 kappa,'conv_factor',conv_factor,...
 			 'staticpotential',staticpotential);
 
@@ -53,40 +55,38 @@ UsefulConstants2 = struct('epsIn1',epsIn1,'epsIn2',epsIn2,'epsOut',epsOut,'kappa
 % twoRegMeshGen(d0,spacing,df) (after running twoRegMeshGen.py)
 % this test is for d0 = 3.0 A, spacing = 0.5A and df = 12.0A
 i = 1; %problem index
-d0 = 7.0;
-spacing = 0.5;
-df = 3.5;
-r_mem = 15.0;
-h_mem = 50;
+%d0 = 10.0;
+%spacing = 10.0;
+%df = 30.0;
 
-for j=df:spacing:d0
+for j=1
     
-    dir=sprintf('%s/I-M-2D2S/%3.1f',curdir,j);
+    dir=sprintf('%s/%s',curdir,'Na');
     chdir(dir);
-    pqrData1 = loadPqr('mem_w_po4.pqr');
-    pqrData2 = loadPqr('mol.pqr');
+    pqrData1 = loadPqr('test.pqr');
+    %pqrData2 = loadPqr('mol2.pqr');
     pqrAll1{i} = pqrData1;
-    pqrAll2{i} = pqrData2;
-    mol_list1{i} = 'mem';
-    mol_list2{i} = 'mol';
-    srfFile1{i} = sprintf('%s/mem.srf',dir);
-    srfFile2{i} = sprintf('%s/mol.srf',dir);
+    %pqrAll2{i} = pqrData2;
+    mol_list1{i} = 'Na';
+    %mol_list2{i} = 'Na-';
+    srfFile1{i} = sprintf('%s/test_2.srf',dir);
+    %srfFile2{i} = sprintf('%s/mol2.srf',dir);
     chargeDist1{i} = pqrData1.q;
-    chargeDist2{i} = pqrData2.q;
-    referenceData{i} = -180; %%%%%%%%%%% fix later
-    surfArea1{i} = pi*(2*r_mem^2 + 2 * r_mem * h_mem);
-    surfArea2{i} = surfArea_list1(1);
+    %chargeDist2{i} = pqrData2.q;
+    referenceData{i} = ParamWatInfo.refvec(3,14); %Na
+    surfArea1{i} = surfArea_list1(1);
+    %surfArea2{i} = surfArea_list2(1);
     chdir(curdir);
-    addProblemSA2(mol_list1{i},mol_list2{i},pqrAll1{i},pqrAll2{i},srfFile1{i},srfFile2{i},...
-               chargeDist1{i},chargeDist2{i},referenceData{i},surfArea1{i},surfArea2{i});
+    addProblemSA(mol_list1{i},pqrAll1{i},srfFile1{i},...
+               chargeDist1{i},referenceData{i},surfArea1{i});
     i = i + 1;
 end
 chdir(curdir);
-distance=(df:spacing:d0).';
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x);
-SLICFileName = sprintf('Run2D2Smem_po4_SLIC');
-save(SLICFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x_PB);
-PBFileName = sprintf('Run2D2Smem_po4_PB');
-save(PBFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
+%distance=(d0:spacing:df).';
+[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
+SLICFileName = sprintf('Run1D1S_SLIC_Na');
+save(SLICFileName,'mol_list1','errfinal','calcE','refE','es','np');
+[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
+PBFileName = sprintf('Run1D1S_PB_Na');
+save(PBFileName,'mol_list1','errfinal','calcE','refE','es','np');
 

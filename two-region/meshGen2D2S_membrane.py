@@ -3,6 +3,7 @@ import os, errno
 from pathlib import Path
 import pymesh
 import numpy as np
+import pandas as pd
 import shutil
 from shutil import copy2
 
@@ -203,6 +204,32 @@ def memMeshGen2D2S (d0,spacing,df,r,h):
         lambda_z = [25.0,30.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5]
         k=0
         #for lambdaFEP in lambda_z:
+
+        f = open(os.path.join(curDir,'po4_new.pqr'))
+        lines = f.readlines()
+        f.close()
+        list =[];
+        for id in range(0,len(lines)):
+            list.append(lines[id].split())
+
+        df=pd.DataFrame(list,columns=["Type", "Atom_number", "Atom_type", "AA type", "Chain", "X", "Y", "Z", "q", "r"])
+        df[["Atom_number", "Chain"]] = df[["Atom_number", "Chain"]].apply(pd.to_numeric)
+        df[["X", "Y", "Z", "q", "r"]] = df[["X", "Y", "Z", "q", "r"]].apply(pd.to_numeric)
+        df = df[((df.X)**2 + (df.Y)**2   < (r-5)**2)].sort_values("Chain")
+        df = pd.concat(g for _, g in df.groupby("Chain") if len(g) > 24)
+        df = df.sort_values("Atom_number")
+        df['Type'] = df['Type'].map('{0:5s}'.format)
+        df['Atom_number'] = df['Atom_number'].map('{0:6d}'.format)
+        df['Atom_type'] = df['Atom_type'].map('{0:6s}'.format)
+        df['AA type'] = df['AA type'].map('{0:5s}'.format)
+        df['Chain'] = df['Chain'].map('{0:5d}'.format)
+        df['X'] = df['X'].map('{0:14.6f}'.format)
+        df['Y'] = df['Y'].map('{0:12.6f}'.format)
+        df['Z'] = df['Z'].map('{0:12.6f}'.format)
+        df['q'] = df['q'].map('{0:11.6f}'.format)
+        df['r'] = df['r'].map('{0:11.6f}'.format)
+        np.savetxt('mem_w_po4.pqr', df.values, fmt='%s')
+
         for lambdaFEP in range(1,2):
             
             # Charge locations
