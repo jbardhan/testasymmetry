@@ -28,13 +28,8 @@ f1 = (epsIn1/(epsOut-epsIn1)) - h1;
 h2 = (alpha*(tanh(beta*Efield2-EfieldOffset)) +deltaOffset);
 f2 = (epsIn2/(epsOut-epsIn2)) - h2;
 
-r1 = -sum(pqr1.q+pqr2.q)/epsOut;
+r1 = -sum(sum(pqr1.q) + sum(pqr2.q))/epsOut;
 r11 = sum(stern3SurfData.areas' .* dphiDnStern3Bndy);
-%r12 = sum(stern1SurfData.areas' .* dphiDnStern2Bndy);
-
-%r2 = -sum(pqr2.q)/epsOut;
-%r21 = sum(stern2SurfData.areas' .* dphiDnStern1Bndy);
-%r22 = sum(stern2SurfData.areas' .* dphiDnStern2Bndy);
 
 
 if (r1==r11) || (abs(r1)<1e-2)
@@ -42,26 +37,6 @@ if (r1==r11) || (abs(r1)<1e-2)
 else
   r1Overr11 = r1/r11; %epsOut/epsOut;
 end
-
-%{
-if (r1==r12) || (abs(r1)<1e-2)
-  r1Overr12 = 1;
-else
-  r1Overr12 = r1/r12; %epsOut/epsOut;
-end
-
-if (r2==r21) || (abs(r2)<1e-2)
-  r2Overr21 = 1;
-else
-  r2Overr21 = r2/r21; %epsOut/epsOut;
-end
-%}
-
-%if (r2==r22) || (abs(r2)<1e-2)
-%  r2Overr22 = 1;
-%else
-%  r2Overr22 = r2/r22; %epsOut/epsOut;
-%end
 
 
 

@@ -66,14 +66,14 @@ end
 
 %Cylinder height (Angstrom)
 h_Cylinder = 50;
-r0 = 10;
-spacing = 5;
-rf = 25;
+r0 = 15;
+spacing = 3;
+rf = 20;
 radii = linspace(r0,rf,spacing-1);
 % Cylinder (membrane) radii (Angstrom)
 %cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
 
-for r=radii
+for r=20
     dir=sprintf('%s/mesh-membrane/%3.1f',curdir,r);
     chdir(dir);
     for i=1:11
@@ -88,10 +88,10 @@ for r=radii
     end
     distance=radii.';
     [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-    SLIC_membraneFileName = sprintf('RunMembraneSLIC_%d',r);
+    SLIC_membraneFileName = sprintf('RunMembraneSLIC_po4_%d',r);
     save(SLIC_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-    PB_membraneFileName = sprintf('RunMembranePB_%d',r);
+    PB_membraneFileName = sprintf('RunMembranePB_po4_%d',r);
     save(PB_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     
     chdir(curdir)

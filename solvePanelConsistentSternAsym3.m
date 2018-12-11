@@ -19,7 +19,7 @@ dphiDnDiel1Bndy = x(numDiel1Panels+1:2*numDiel1Panels);
 phiDiel2Bndy = x(2*numDiel1Panels+1:2*numDiel1Panels+numDiel2Panels);
 dphiDnDiel2Bndy = x(2*numDiel1Panels+numDiel2Panels+1:2*(numDiel1Panels+numDiel2Panels));
 phiStern3Bndy = x(2*(numDiel1Panels+numDiel2Panels)+1:2*(numDiel1Panels+numDiel2Panels)+numStern3Panels);
-dphiDnStern3Bndy = ones(numStern3Panels,1)*(-sum(pqr1.q + pqr2.q)/ epsOut)/sum(stern3SurfData.areas);
+dphiDnStern3Bndy = ones(numStern3Panels,1)*(-sum(sum(pqr1.q) + sum(pqr2.q))/ epsOut)/sum(stern3SurfData.areas);
 
 for picardIter = 1:picardIterLimit
   if picardIter ==1

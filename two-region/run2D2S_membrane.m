@@ -53,7 +53,7 @@ UsefulConstants2 = struct('epsIn1',epsIn1,'epsIn2',epsIn2,'epsOut',epsOut,'kappa
 % twoRegMeshGen(d0,spacing,df) (after running twoRegMeshGen.py)
 % this test is for d0 = 3.0 A, spacing = 0.5A and df = 12.0A
 i = 1; %problem index
-d0 = 7.0;
+d0 = 10.0;
 spacing = 0.5;
 df = 3.5;
 r_mem = 15.0;

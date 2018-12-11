@@ -2,6 +2,7 @@ import os, errno
 from pathlib import Path
 import pymesh
 import numpy as np
+import pandas as pd
 import shutil
 from shutil import copy2
 
@@ -13,9 +14,9 @@ def insert(originalfile, string, newname):
     os.rename('newfile.txt',newname)
 
 def membraneMeshGen (r_0, spacing, r_f, h):
-	pwd = os.getcwd()
+	curDir = os.getcwd()
 	radiiRange= np.arange(r_0,r_f+0.0001,spacing)
-	meshDataPath = os.path.join(pwd,'mesh-membrane')
+	meshDataPath = os.path.join(curDir,'mesh-membrane')
 	try:
 	    os.makedirs(meshDataPath)
 	except OSError as e:
@@ -48,7 +49,7 @@ def membraneMeshGen (r_0, spacing, r_f, h):
 				os.path.getsize(os.path.join(curDir, item)) == 0 or item.endswith(".info")):
 				os.remove(os.path.join(dirPath, item))
 
-		copy2(os.path.join(pwd,'template.geo'),dirPath)
+		copy2(os.path.join(curDir,'template.geo'),dirPath)
 
 		# Generating *.geo file
 		lc = 0.7 * np.sqrt(r)
@@ -131,8 +132,36 @@ def membraneMeshGen (r_0, spacing, r_f, h):
 
 		
 		# writing pqr files in each folder
+
+		f = open(os.path.join(curDir,'po4_new.pqr'))
+		lines = f.readlines()
+		f.close()
+		list =[];
+		for id in range(0,len(lines)):
+			list.append(lines[id].split())
+
+		df=pd.DataFrame(list,columns=["Type", "Atom_number", "Atom_type", "AA type", "Chain", "X", "Y", "Z", "q", "r"])
+		df[["Atom_number", "Chain"]] = df[["Atom_number", "Chain"]].apply(pd.to_numeric)
+		df[["X", "Y", "Z", "q", "r"]] = df[["X", "Y", "Z", "q", "r"]].apply(pd.to_numeric)
+		df = df[((df.X)**2 + (df.Y)**2   < (r-5)**2)].sort_values("Chain")
+		df = pd.concat(g for _, g in df.groupby("Chain") if len(g) > 24)
+		df = df.sort_values("Atom_number")
+		df['Type'] = df['Type'].map('{0:5s}'.format)
+		df['Atom_number'] = df['Atom_number'].map('{0:6d}'.format)
+		df['Atom_type'] = df['Atom_type'].map('{0:6s}'.format)
+		df['AA type'] = df['AA type'].map('{0:5s}'.format)
+		df['Chain'] = df['Chain'].map('{0:5d}'.format)
+		df['X'] = df['X'].map('{0:14.6f}'.format)
+		df['Y'] = df['Y'].map('{0:12.6f}'.format)
+		df['Z'] = df['Z'].map('{0:12.6f}'.format)
+		df['q'] = df['q'].map('{0:11.6f}'.format)
+		df['r'] = df['r'].map('{0:11.6f}'.format)
+		np.savetxt('mem_w_po4.pqr', df.values, fmt='%s')
+
+        
 		lambda_z = [25.0,30.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5]
 		k=0
+
 		for lambdaFEP in lambda_z:
 		    
 		    # Charge locations
@@ -146,9 +175,12 @@ def membraneMeshGen (r_0, spacing, r_f, h):
 		    R_q = 1 # Ask Jay!
 		    pqrFileName = "test_lambda_%3.1f.pqr" % k
 		    f = open(pqrFileName,"w+")
-		    f.write("%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_q,y_q,lambdaFEP,q,R_q))
+		    pqr_ion = "%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f\n" % ('ATOM',1,'NA','TMP',1,x_q,y_q,lambdaFEP,q,R_q)
+		    f.write(pqr_ion)
 		    f.close()
 		    k += 1
+		    insert('mem_w_po4.pqr',pqr_ion,pqrFileName)
+
 		meshInfo = "%s%d\n%s%d\n%s%d\n%s%d\n%s%d%s" % ('# Elements in dielectric mesh = ',meshDiel.num_elements,
 		                                       '# Vertices in dielectric mesh = ',meshDiel.num_vertices,		                                       '# Elements in stern layer mesh = ',meshStern.num_elements,
 		                                       '# Vertices in stern layer mesh = ',meshStern.num_vertices,

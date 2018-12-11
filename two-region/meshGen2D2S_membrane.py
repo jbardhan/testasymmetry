@@ -16,7 +16,7 @@ def insert(originalfile, string, newname):
 
 def memMeshGen2D2S (d0,spacing,df,r,h):
 
-    distRange = np.arange(d0,df-0.001,spacing)
+    distRange = np.arange(d0,df+0.001,spacing)
     curDir = os.getcwd() #in the two-region folder
     dataFilesPath = os.path.join(curDir,'I-M-2D2S')
     try:

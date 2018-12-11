@@ -61,15 +61,15 @@ i = 1; %problem index
 
 for j=1
     
-    dir=sprintf('%s/%s',curdir,'Na');
+    dir=sprintf('%s/%s',curdir,'mem');
     chdir(dir);
-    pqrData1 = loadPqr('test.pqr');
+    pqrData1 = loadPqr('mem_w_po4.pqr');
     %pqrData2 = loadPqr('mol2.pqr');
     pqrAll1{i} = pqrData1;
     %pqrAll2{i} = pqrData2;
-    mol_list1{i} = 'Na';
+    mol_list1{i} = 'mem';
     %mol_list2{i} = 'Na-';
-    srfFile1{i} = sprintf('%s/test_2.srf',dir);
+    srfFile1{i} = sprintf('%s/mem.srf',dir);
     %srfFile2{i} = sprintf('%s/mol2.srf',dir);
     chargeDist1{i} = pqrData1.q;
     %chargeDist2{i} = pqrData2.q;
@@ -84,9 +84,9 @@ end
 chdir(curdir);
 %distance=(d0:spacing:df).';
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-SLICFileName = sprintf('Run1D1S_SLIC_Na');
+SLICFileName = sprintf('Run1D1S_SLIC_po4_membrane');
 save(SLICFileName,'mol_list1','errfinal','calcE','refE','es','np');
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-PBFileName = sprintf('Run1D1S_PB_Na');
+PBFileName = sprintf('Run1D1S_PB_po4_membrane');
 save(PBFileName,'mol_list1','errfinal','calcE','refE','es','np');
 
