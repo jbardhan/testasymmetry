@@ -73,7 +73,7 @@ radii = linspace(r0,rf,spacing-1);
 % Cylinder (membrane) radii (Angstrom)
 %cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
 
-for r=20
+for r=15
     dir=sprintf('%s/mesh-membrane/%3.1f',curdir,r);
     chdir(dir);
     for i=1:11

@@ -288,6 +288,7 @@ def memMeshGen2D1S (d0,spacing,df,r_ion,r_mem,h):
         mesh_mol = pymesh.form_mesh(vert_mol, face_mol)
         #mesh_mem = pymesh.load_mesh("stern15.stl")
         mergedSternMesh = pymesh.boolean(mesh_mol, meshStern,operation="union", engine = "cork")
+        pymesh.save_mesh("ali.stl", output_mesh);
         elementsMergedStern = np.copy(mergedSternMesh.elements)
 
         #Because element numbers in PyMesh start from zero!

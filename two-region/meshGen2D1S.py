@@ -22,7 +22,7 @@ def meshGen2D1S (d0,spacing,df):
         for d in dirs:
             shutil.rmtree(os.path.join(root, d))
     for distance in distRange:
-        dirPath = os.path.join(dataFilesPath,"%3.1f" % distance)
+        dirPath = os.path.join(dataFilesPath,"%4.2f" % distance)
         os.makedirs(dirPath)
         os.chdir(dirPath)
         mol1Diel = "mol1_diel_%3.1f.xyzr" % (distance)
@@ -125,7 +125,7 @@ def meshGen2D1S (d0,spacing,df):
         mol2_pqrName = "mol2.pqr"
 
         f = open(mol1_pqrName,"w+")
-        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'Cl','TMP',1,x_mol1,0,0,0,1.0))
+        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'Cl','TMP',1,x_mol1,0,0,-1,1.0))
         #f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_Cl,0,0,-1,1.2979))
         f.close()
 
