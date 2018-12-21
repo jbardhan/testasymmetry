@@ -9,7 +9,7 @@ colGreen = colormap(winter(8));
 %face = {colGreen(6,:),colRed(4,:),'b','c','m','y','k'};
 i = 1;
 for R=Radii
-SLfileName = sprintf('%s/convergence/%3.1f/%s%3.1f%s',curdir,R,'RunMembrane_',R,'.mat');
+SLfileName = sprintf('%s/convergence_neg/%3.1f/%s%3.1f%s',curdir,R,'RunMembrane_SLIC_',R,'.mat');
 SLICdata = load(SLfileName);
 hL(i) = plot(x,SLICdata.es(2:11),style{i},...
         'Color',colRed(i,:),...
@@ -25,7 +25,7 @@ set(gca,'XTickLabel',a,'FontName','Helvetica','fontsize',16)
 
 xlabel('Membrane depth (A)', 'FontSize', 14)
 ylabel('Electrostatic energy (kcal/mol)', 'FontSize', 14)
-title_text = sprintf('Electrostatic energy at different charge locations as the  \nradius of the membrane varies from %d to %d Angstroms',5,40)
+title_text = sprintf('Electrostatic energy at different charge locations (-1 charge) as the  \nradius of the membrane varies from %d to %d Angstroms',5,40);
 title(title_text)
 legend(leg);
 
