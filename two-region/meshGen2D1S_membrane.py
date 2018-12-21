@@ -82,7 +82,7 @@ def memMeshGen2D1S (d0,spacing,df,r_ion,r_mem,h):
         mol_pqrName = "mol.pqr"
         
         f = open(mol_pqrName,"w+")
-        f.write("%s %5d %4s %5s %5d %9.6f %9.6f %s %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,0,0,z_mol,1,1.0))
+        f.write("%s %5d %4s %5s %5d %9.6f %9.6f %s %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,0,0,z_mol,-1,1.0))
         #f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_Cl,0,0,-1,1.2979))
         f.close()
 
@@ -288,7 +288,7 @@ def memMeshGen2D1S (d0,spacing,df,r_ion,r_mem,h):
         mesh_mol = pymesh.form_mesh(vert_mol, face_mol)
         #mesh_mem = pymesh.load_mesh("stern15.stl")
         mergedSternMesh = pymesh.boolean(mesh_mol, meshStern,operation="union", engine = "cork")
-        pymesh.save_mesh("ali.stl", output_mesh);
+        #pymesh.save_mesh("ali.stl", output_mesh);
         elementsMergedStern = np.copy(mergedSternMesh.elements)
 
         #Because element numbers in PyMesh start from zero!

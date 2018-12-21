@@ -5,7 +5,7 @@ function [phiReac1, phiReac2, ...
     pqr1, pqr2, bem, epsIn1, epsIn2, epsOut, kappa, convFactor, ...
 				  asymParams, asymBem1, asymBem2)
 
-picardIterLimit = 20;
+picardIterLimit = 30;
 maxGMRESIter = min(100, size(bem.A,1));
 numDiel1Panels = length(diel1SurfData.areas);
 numDiel2Panels = length(diel2SurfData.areas);

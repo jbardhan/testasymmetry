@@ -63,7 +63,7 @@ for j=df:spacing:d0
     
     dir=sprintf('%s/I-M-2D2S/%3.1f',curdir,j);
     chdir(dir);
-    pqrData1 = loadPqr('mem_w_po4.pqr');
+    pqrData1 = loadPqr('mem.pqr');
     pqrData2 = loadPqr('mol.pqr');
     pqrAll1{i} = pqrData1;
     pqrAll2{i} = pqrData2;
@@ -72,7 +72,7 @@ for j=df:spacing:d0
     srfFile1{i} = sprintf('%s/mem.srf',dir);
     srfFile2{i} = sprintf('%s/mol.srf',dir);
     chargeDist1{i} = pqrData1.q;
-    chargeDist2{i} = pqrData2.q;
+    chargeDist2{i} = -1;
     referenceData{i} = -180; %%%%%%%%%%% fix later
     surfArea1{i} = pi*(2*r_mem^2 + 2 * r_mem * h_mem);
     surfArea2{i} = surfArea_list1(1);
@@ -84,9 +84,9 @@ end
 chdir(curdir);
 distance=(df:spacing:d0).';
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x);
-SLICFileName = sprintf('Run2D2Smem_po4_SLIC');
+SLICFileName = sprintf('Run2D2S_SLIC_neg_mem');
 save(SLICFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA2(x_PB);
-PBFileName = sprintf('Run2D2Smem_po4_PB');
+PBFileName = sprintf('Run2D2_PB_neg_mem');
 save(PBFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 

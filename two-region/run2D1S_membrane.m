@@ -60,9 +60,10 @@ for j=d0:spacing:df
     chdir(dir);
     pqrData1 = loadPqr('mol.pqr');
     pqrData2 = loadPqr('mem_w_po4.pqr');
+    %pqrData2 = loadPqr('mem.pqr');
     pqrAll1{i} = pqrData1;
     pqrAll2{i} = pqrData2;
-    mol_list1{i} = 'Na';
+    mol_list1{i} = 'Na-';
     mol_list2{i} = 'mem';
     srfFile1{i} = sprintf('%s/mol.srf',dir);
     srfFile2{i} = sprintf('%s/mem.srf',dir);
@@ -79,9 +80,9 @@ end
 chdir(curdir);
 distance=(d0:spacing:df).';
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA3(x);
-SLICFileName = sprintf('Run2D1S_SLIC_po4_mem');
+SLICFileName = sprintf('Run2D1S_SLIC_neg_mem_po4.mat');
 save(SLICFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA3(x_PB);
-PBFileName = sprintf('Run2D1S_PB_po4_mem');
+PBFileName = sprintf('Run2D1S_PB_neg_mem_po4.mat');
 save(PBFileName,'distance','mol_list1','mol_list2','errfinal','calcE','refE','es','np');
 

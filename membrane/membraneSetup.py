@@ -13,7 +13,7 @@ def insert(originalfile, string, newname):
             f2.write(f.read())
     os.rename('newfile.txt',newname)
 
-def membraneMeshGen (r_0, spacing, r_f, h):
+def membraneMeshGen (r_0,spacing, r_f, h):
 	curDir = os.getcwd()
 	radiiRange= np.arange(r_0,r_f+0.0001,spacing)
 	meshDataPath = os.path.join(curDir,'mesh-membrane')
@@ -171,7 +171,7 @@ def membraneMeshGen (r_0, spacing, r_f, h):
 		    # Charge moves from the center of the membrane toward the top plane on z-axis
 		    # z_q = h/2 * (1 + lambdaFEP)
 		    
-		    q = 1
+		    q = -1
 		    R_q = 1 # Ask Jay!
 		    pqrFileName = "test_lambda_%3.1f.pqr" % k
 		    f = open(pqrFileName,"w+")
