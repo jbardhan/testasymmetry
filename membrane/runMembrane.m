@@ -18,7 +18,7 @@ epsOut = 78.36;
 
 curdir = pwd;
 chdir('../mobley');
-ParamWatInfo = load('OptWater_thermo');
+ParamWatInfo = load('OptWater_thermo_Picard_20');
 x = ParamWatInfo.xvec(3,:);
 x_PB = [0 0 0 0 0 ParamWatInfo.xvec(3,6:7)];
 
@@ -70,14 +70,14 @@ r0 = 15;
 spacing = 3;
 rf = 20;
 radii = linspace(r0,rf,spacing-1);
-Radii = [5.0,7.5,10.0,15.0,20.0,30.0,40.0];
+Radii = 20.0;%[5.0,7.5,10.0,15.0,20.0,30.0,40.0];
 % Cylinder (membrane) radii (Angstrom)
 %cylinderRadius = linspace(1,lastCylRadiusToCalc,lastCylRadiusToCalc);
 
-for j=1:length(Radii)
-    dir=sprintf('%s/convergence_neg/%3.1f',curdir,Radii(j));
+for j=1%:length(Radii)
+    dir=sprintf('%s/mesh-membrane/%3.1f',curdir,Radii(j));
     chdir(dir);
-    for i=1:11
+    for i=1%:11
         pqrFile=sprintf('%s.pqr',mol_list{i});
         pqrData = loadPqr(pqrFile);
         pqrAll{i} = pqrData;
@@ -89,10 +89,10 @@ for j=1:length(Radii)
     end
     distance=radii.';
     [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-    SLIC_membraneFileName = sprintf('RunMembrane_SLIC_%3.1f',Radii(j));
+    SLIC_membraneFileName = sprintf('RunMembrane_SLIC_po4_%3.1f.mat',Radii(j));
     save(SLIC_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-    PB_membraneFileName = sprintf('RunMembrane_PB_%3.1f',Radii(j));
+    PB_membraneFileName = sprintf('RunMembrane_PB_po4_%3.1f.mat',Radii(j));
     save(PB_membraneFileName,'distance','mol_list','errfinal','calcE','refE','es','np');
     
     chdir(curdir)
