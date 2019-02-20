@@ -23,6 +23,7 @@ curdir = pwd;
 
 ParamWatInfo = load('OptWater_thermo');
 x = ParamWatInfo.xvec(3,:);
+x(5) =0 ;
 x_PB = [0 0 0 0 0 ParamWatInfo.xvec(3,6:7)];
 
 fid = fopen('two-region.csv','r');
@@ -84,9 +85,9 @@ end
 chdir(curdir);
 %distance=(d0:spacing:df).';
 [errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x);
-SLICFileName = sprintf('Run1D1S_SLIC_Na(+1)');
+SLICFileName = sprintf('Run1D1S_SLIC_Picard100_Na(-1)_test');
 save(SLICFileName,'mol_list1','errfinal','calcE','refE','es','np');
-[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
-PBFileName = sprintf('Run1D1S_PB_Na(+1)');
-save(PBFileName,'mol_list1','errfinal','calcE','refE','es','np');
+%[errfinal,calcE,refE,es,np]=ObjectiveFromBEMSA(x_PB);
+%PBFileName = sprintf('Run1D1S_PB_Na(-1)');
+%save(PBFileName,'mol_list1','errfinal','calcE','refE','es','np');
 

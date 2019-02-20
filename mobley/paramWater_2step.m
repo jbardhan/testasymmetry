@@ -104,8 +104,8 @@ for kk=1:tempdiv
         all_solutes = Data{1}(1:502);
         all_dG = Data{2}(1:502);
         all_surfAreas = Data{3}(1:502);
-        dG_np = Data{6}(1:502);% nonpolar energies (no ion)
-        dG_es = Data{7}(1:502);% electrotatic energies
+        dG_np = Data{6}(1:502);% nonpolar energies mobley
+        dG_es = Data{7}(1:502);% electrostatic energies mobley
         
     end
 

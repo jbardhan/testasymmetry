@@ -5,9 +5,9 @@ import numpy as np
 import shutil
 from shutil import copy2
 
-def meshGen2D1S (d0,spacing,df):
+def meshGen2D1S (distRange):
 
-    distRange = np.arange(d0,df+0.001,spacing)
+    #distRange = np.arange(d0,df+0.001,spacing)
     curDir = os.getcwd() #in the two-region folder
     dataFilesPath = os.path.join(curDir,'mesh-2D1S')
     try:
@@ -35,42 +35,42 @@ def meshGen2D1S (d0,spacing,df):
         
         # Cl mesh
         f = open(mol1Diel,"w+")   
-        mol1_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,1.260) # Na-Na or Na-Na(-)
+        mol1_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,2.312) # Na-Na or Na-Na(-)
         #Cl_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,2.312) # Cl-Cl or Na-Cl
         f.write(mol1_D_xyzr)
         f.close()
 
         # Na mesh
         f = open(mol2Diel,"w+")   
-        mol2_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,1.260) # Na-Cl or Na-Na or Na-Na(-)
+        mol2_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,2.312) # Na-Cl or Na-Na or Na-Na(-)
         #Na_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,2.312) # Cl-Cl
         f.write(mol2_D_xyzr)
         f.close()
         
         # merged diel mesh
         f = open(mol12Diel,"w+")   
-        mol12_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,3.260,distance/2,0,0,3.260) # Na-Cl or Na-Na
+        mol12_D_xyzr = "%8.5f%8.5f%8.5f%8.5f\n%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,4.312,distance/2,0,0,4.312) # Na-Cl or Na-Na
         #Na_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,4.312) # Cl-Cl 
         f.write(mol12_D_xyzr)
         f.close()
 
         # Cl stern mesh
         f = open(mol1Stern,"w+")   
-        mol1_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,1.260) # Na-Na or Na-Na(-)
+        mol1_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,2.312) # Na-Na or Na-Na(-)
         #Cl_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,4.312) # Cl-Cl or Na-Cl
         f.write(mol1_S_xyzr)
         f.close()
 
         # Na stern mesh
         f = open(mol2Stern,"w+")   
-        mol2_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,1.260) # Na-Cl or Na-Na
+        mol2_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,2.312) # Na-Cl or Na-Na
         #Na_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,4.312) # Cl-Cl 
         f.write(mol2_S_xyzr)
         f.close()
 
         # merged stern mesh
         f = open(mol12Stern,"w+")   
-        mol12_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,3.260,distance/2,0,0,3.260) # Na-Cl or Na-Na
+        mol12_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n%8.5f%8.5f%8.5f%8.5f\n" % (-distance/2,0,0,4.312,distance/2,0,0,4.312) # Na-Cl or Na-Na
         #Na_S_xyzr = "%8.5f%8.5f%8.5f%8.5f\n" % (distance/2,0,0,4.312) # Cl-Cl 
         f.write(mol12_S_xyzr)
         f.close()
@@ -130,7 +130,7 @@ def meshGen2D1S (d0,spacing,df):
         f.close()
 
         f = open(mol2_pqrName,"w+")
-        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_mol2,0,0,1,1.0))
+        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'Cl','TMP',1,x_mol2,0,0,-1,1.0))
         f.close()
 
         # Removing the first 3 lines from msms output files

@@ -5,9 +5,9 @@ import numpy as np
 import shutil
 from shutil import copy2
 
-def meshGen2D2S (d0,spacing,df):
+def meshGen2D2S (distRange):
 
-    distRange = np.arange(d0,df+0.001,spacing)
+    #distRange = np.arange(d0,df+0.001,spacing)
     curDir = os.getcwd() #in the two-region folder
     dataFilesPath = os.path.join(curDir,'mesh-2D2S')
     try:
@@ -105,7 +105,7 @@ def meshGen2D2S (d0,spacing,df):
         f.close()
 
         f = open(mol2_pqrName,"w+")
-        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_mol2,0,0,1,1.0))
+        f.write("%s %5d %4s %5s %5d %s %9.6f %9.6f %9.6f %9.6f" % ('ATOM',1,'NA','TMP',1,x_mol2,0,0,-1,1.0))
         f.close()
 
         # Removing the first 3 lines from msms output files

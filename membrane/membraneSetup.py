@@ -13,7 +13,7 @@ def insert(originalfile, string, newname):
             f2.write(f.read())
     os.rename('newfile.txt',newname)
 
-def membraneMeshGen (r_0,spacing, r_f, h):
+def membraneMeshGen (r_0,spacing, r_f, h,particleCharge):
 	curDir = os.getcwd()
 	radiiRange= np.arange(r_0,r_f+0.0001,spacing)
 	meshDataPath = os.path.join(curDir,'mesh-membrane')
@@ -28,16 +28,16 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 	    for d in dirs:
 	        shutil.rmtree(os.path.join(root,d))  	
 	# r = Cylinder (membrane) radius
-	for r in radiiRange:
+	for r_mem in radiiRange:
 
-		dirPath = os.path.join(meshDataPath,"%3.1f" % r)
+		dirPath = os.path.join(meshDataPath,"%3.1f" % r_mem)
 		os.makedirs(dirPath)
 		os.chdir(dirPath)
 
-		dielgeo = "diel%d.geo" % (r)
-		sterngeo = "stern%d.geo" % (r)
-		dielstl = "diel%d.stl" % (r)
-		sternstl = "stern%d.stl" % (r)
+		dielgeo = "diel%d.geo" % (r_mem)
+		sterngeo = "stern%d.geo" % (r_mem)
+		dielstl = "diel%d.stl" % (r_mem)
+		sternstl = "stern%d.stl" % (r_mem)
 		listDir = os.listdir(dirPath)
 
 		# Removing old files		
@@ -52,11 +52,11 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		copy2(os.path.join(curDir,'template.geo'),dirPath)
 
 		# Generating *.geo file
-		lc = 0.7 * np.sqrt(r)
-		lc_fine = 0.001 * r
-		lc_st = 0.8 * np.sqrt(r+2)
-		lc_fine_st = 0.001 * (r+2)
-		r_diel = r;
+		lc = 0.65 * np.sqrt(r_mem)
+		lc_fine = 0.00001 * r_mem
+		lc_st = 0.8 * np.sqrt(r_mem+2)
+		lc_fine_st = 0.001 * (r_mem+2)
+		r_diel = r_mem;
 		r_stern = r_diel + 2
 
 		# diel.geo
@@ -93,6 +93,7 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		
 		#Dielectric surface generation
 		meshDiel = pymesh.load_mesh(dielstl)
+		meshDiel, info = pymesh.collapse_short_edges(meshDiel, abs_threshold=0.4 , preserve_feature=False) ##### New
 		meshDiel, info = pymesh.remove_duplicated_vertices(meshDiel)
 		meshDiel, info = pymesh.remove_duplicated_faces(meshDiel)
 		elementsDiel = np.copy(meshDiel.elements)
@@ -102,8 +103,10 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 
 		#Stern surface generation        
 		meshStern = pymesh.load_mesh(sternstl)
+		meshStern, info = pymesh.collapse_short_edges(meshStern, abs_threshold=0.4 , preserve_feature=False) ##### New
 		meshStern, info = pymesh.remove_duplicated_vertices(meshStern)
 		meshStern, info = pymesh.remove_duplicated_faces(meshStern)
+		
 		elementsStern = np.copy(meshStern.elements)
 
 		#Because element numbers in PyMesh start from zero!
@@ -111,8 +114,8 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		    for j in range(elementsStern.shape[1]):
 		        elementsStern[i,j]+=1
 		    
-		dielFileName = "diel%d" % r
-		sternFileName = "stern%d" % r
+		dielFileName = "diel%d" % r_mem
+		sternFileName = "stern%d" % r_mem
 
 		np.savetxt("%s.vert" % dielFileName,meshDiel.vertices,fmt='%5.3f',delimiter=' ')
 		np.savetxt("%s.face" % dielFileName,elementsDiel,fmt='%5.0f',delimiter=' ')
@@ -125,25 +128,29 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		f.close()
 		
 		
-		test_2_Diel = "diel%d" % r
-		test_2_Stern = "stern%d" % r
+		test_2_Diel = "diel%d" % r_mem
+		test_2_Stern = "stern%d" % r_mem
 		Path('%s/%s' % (dirPath,test_2_Diel)).touch()
 		Path('%s/%s' % (dirPath,test_2_Stern)).touch()
 
 		
-		# writing pqr files in each folder
+		# writing membrane pqr files 
 
-		f = open(os.path.join(curDir,'po4_new.pqr'))
+		#chargedMembrane = True
+
+		fullMembraneChargeDist = 'po4_full.pqr'
+		
+		
+		f = open(os.path.join(curDir,fullMembraneChargeDist))
 		lines = f.readlines()
 		f.close()
 		list =[];
 		for id in range(0,len(lines)):
 			list.append(lines[id].split())
-
 		df=pd.DataFrame(list,columns=["Type", "Atom_number", "Atom_type", "AA type", "Chain", "X", "Y", "Z", "q", "r"])
 		df[["Atom_number", "Chain"]] = df[["Atom_number", "Chain"]].apply(pd.to_numeric)
 		df[["X", "Y", "Z", "q", "r"]] = df[["X", "Y", "Z", "q", "r"]].apply(pd.to_numeric)
-		df = df[((df.X)**2 + (df.Y)**2   < (r-5)**2)].sort_values("Chain")
+		df = df[((df.X)**2 + (df.Y)**2   < (r_mem-5)**2)].sort_values("Chain")
 		df = pd.concat(g for _, g in df.groupby("Chain") if len(g) > 24)
 		df = df.sort_values("Atom_number")
 		df['Type'] = df['Type'].map('{0:5s}'.format)
@@ -156,11 +163,12 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		df['Z'] = df['Z'].map('{0:12.6f}'.format)
 		df['q'] = df['q'].map('{0:11.6f}'.format)
 		df['r'] = df['r'].map('{0:11.6f}'.format)
-		np.savetxt('mem_w_po4.pqr', df.values, fmt='%s')
+		np.savetxt('halfMempo4.pqr',df[0:int(len(df)/2)],fmt='%s')
+		np.savetxt('fullMempo4.pqr', df.values, fmt='%s')
 
         
-		lambda_z = [25.0,30.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5]
-		k=0
+		lambda_z = [25.0,35.0,40.0,42.5,45.0,46.0,47.0,47.5,48.0,48.5]
+		k=1
 
 		for lambdaFEP in lambda_z:
 		    
@@ -171,22 +179,26 @@ def membraneMeshGen (r_0,spacing, r_f, h):
 		    # Charge moves from the center of the membrane toward the top plane on z-axis
 		    # z_q = h/2 * (1 + lambdaFEP)
 		    
-		    q = -1
+		    
 		    R_q = 1 # Ask Jay!
-		    pqrFileName = "test_lambda_%3.1f.pqr" % k
+		    fullpo4PqrFileName = "test_lambda_full_po4_%d.pqr" % k
+		    halfpo4PqrFileName = "test_lambda_half_po4_%d.pqr" % k
+		    pqrFileName = "test_lambda_%d.pqr" % k
 		    f = open(pqrFileName,"w+")
-		    pqr_ion = "%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f\n" % ('ATOM',1,'NA','TMP',1,x_q,y_q,lambdaFEP,q,R_q)
+		    pqr_ion = "%s %5d %4s %5s %5d %15.6f %9.6f %9.6f %9.6f %9.6f\n" % ('ATOM',1,'NA','TMP',1,x_q,y_q,lambdaFEP,particleCharge,R_q)
 		    f.write(pqr_ion)
 		    f.close()
 		    k += 1
-		    insert('mem_w_po4.pqr',pqr_ion,pqrFileName)
+
+		    insert('fullMempo4.pqr',pqr_ion,fullpo4PqrFileName)
+		    insert('halfMempo4.pqr',pqr_ion,halfpo4PqrFileName)
 
 		meshInfo = "%s%d\n%s%d\n%s%d\n%s%d\n%s%d%s" % ('# Elements in dielectric mesh = ',meshDiel.num_elements,
 		                                       '# Vertices in dielectric mesh = ',meshDiel.num_vertices,		                                       '# Elements in stern layer mesh = ',meshStern.num_elements,
 		                                       '# Vertices in stern layer mesh = ',meshStern.num_vertices,
-		                                       'Surface area = ',np.pi*(2 * r ** 2 + 2 * r * h),' AA')
+		                                       'Surface area = ',np.pi*(2 * r_mem ** 2 + 2 * r_mem * h),' AA')
 		f = open('mesh.info',"w+")
 		f.write(meshInfo)
 		f.close()
 		os.remove(os.path.join(dirPath,'template.geo'))
-		os.chdir(meshDataPath)
+		os.chdir(dirPath)
