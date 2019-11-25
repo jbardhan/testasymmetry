@@ -39,3 +39,4 @@ dG_asym = 0.5 * pqrData.q' * phiReac;
 % uncharged solutes.  we model it as a constant field so the extra
 % free energy = potential * totalCharge
 E = dG_asym + staticpotential*sum(pqrData.q);
+E = dG_asym + params.phiStatic*sum(pqrData.q);
