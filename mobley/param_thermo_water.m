@@ -23,7 +23,7 @@ addpath(sprintf('%s/testasymmetry/mobley/reference-data',repo_path));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ionflag=1; % ionflag=0 : ions data are not included in the testset 
+ionflag=0; % ionflag=0 : ions data are not included in the testset 
            % ionflag=1 : ions data are included in the testset
 
 temp_min= 4.85; % lower bound of the temperature interval

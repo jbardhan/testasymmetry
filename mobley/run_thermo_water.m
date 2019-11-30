@@ -23,7 +23,7 @@ addpath(sprintf('%s/testasymmetry/mobley/reference-data',repo_path));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-ionflag=1; % ionflag=0 : ions data are not included in the testset 
+ionflag=0; % ionflag=0 : ions data are not included in the testset 
            % ionflag=1 : ions data are included in the testset
 
 calcflag=1; % calcflag=0 : we load (previously calculated) dGs and then calculate other thermodynamic properties
@@ -55,8 +55,8 @@ if calcflag==1
         loadConstants
         convertKJtoKcal = 1/joulesPerCalorie;
         global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
-        saveMemory = 0;
-        writeLogfile = 0;
+        saveMemory = 1;
+        writeLogfile = 1;
         logfileName = 'junklogfile';
         epsIn  =  1; % dielectric constant of the solutes
         KelvinOffset = 273.15;
@@ -107,8 +107,11 @@ if calcflag==1
             surfArea_list = all_surfAreas(index);
             
         elseif strcmp(dataset,'mobley')
-
+            
             mol_list = Data.Var1;
+            if ionflag == 0
+                mol_list = Data.Var1(1:502);
+            end
             dG_list = Data.Var2;
             surfArea_list = Data.Var3;
             dG_Mobley = Data.Var7(1:502);
@@ -186,7 +189,7 @@ end
 
  dg_rms_298_MD=0;
  dg_rms_298=rms(calcE-refE);
- 
+
  if strcmp(dataset,'mobley')
     dg_rms_298_mol=rms(calcE(index,1:502)-refE(index,1:502));
     dg_rms_298_MD_mol=rms(dG_Mobley'-refE(index,1:502));
@@ -196,7 +199,11 @@ end
 if strcmp(dataset,'mnsol')
     output_name='RunWater_thermo_Mnsol';
 elseif strcmp(dataset,'mobley')
-    output_name='RunWater_thermo_Mobley';
+    if ionflag == 1
+        output_name='RunWater_thermo_Mobley_w_ions';
+    elseif ionflag == 0
+       output_name='RunWater_thermo_Mobley_wo_ions';
+    end
 end
     
 save(output_name,'errfinal','calcE','refE','es','np','TEMP',...
