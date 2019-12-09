@@ -12,20 +12,22 @@ solvents = {'[Emim][Tf2N]_p_1','[Emim][Tf2N]_p_2','[Emim][Tf2N]_p_4',...
             '[Bmim][Cl]_l_2',...
             '[Omim][Tf2N]_p_2'};   
 % solventName_referenceThermoData_referenceEpsilonData
-% referenceThermoData: p=Paluch12, l=Latif, \varepsilon = '+eps4
+% referenceThermoData: p=Paluch12, l=Latif
 % referenceEpsilonData: 1=Wakai05, 2=Rybinska14, 3=Hunger09, 4=Huang11
-% See 'thermo_and_IL_results/IL_res.xls' fo, \varepsilon = r+eps more details
+% See 'thermo_and_IL_results/IL_res.xls' for+eps more details
  
 Data = readtable(sprintf('%s/IL_res.csv',resultsFolderPath));
 Data_eps = readtable(sprintf('%s/eps_data.csv',refDataPath)); 
 
 % for solvents{k}: Data.Var2k-1 = ref_data, Data.Var2k = calc_data
+% See the example below
 %
-% example: solvents{6}=[Bmim][BF4]_l_1 is for [Bmim][BF4] with Latif, \varepsilon=' + eps4 as 
-% the reference for dG and Wakai05 as the reference for epsilon
-% 2k=12 ==> Data.Var11 = reference dG from Latif, \varepsilon='+eps% , \varepsilon =  +eps         Data.Var12 = calcula t ed dG
+% example: solvents{6}=[Bmim][BF4]_l_1 is for [Bmim][BF4] with Latif as 
+% the reference for dG and Wakai05 as the reference for dielectric constant
+% 2k=12 ==> Data.Var11 = reference dG from Latif 
+%           Data.Var12 = calculated dG
 
-% Plot all data, \varepsilon = 
+% Plot data
 figure
   i = 1;
   solvent=solvents{i};
@@ -82,9 +84,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -103,9 +105,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -124,9 +126,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -145,9 +147,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -166,9 +168,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -187,9 +189,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -208,9 +210,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -229,9 +231,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -250,9 +252,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -271,9 +273,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -292,9 +294,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -313,9 +315,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
@@ -334,9 +336,9 @@ figure
   xlabel(['\Delta','G_{expt}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   ylabel(['\Delta','G_{calc}^{solv, ',solvent(1:length(solvent)-4),'}',' (kcal/mol)'])
   if solvent(length(solvent)-2)=='l'
-      legend("SLIC-Latif, \epsilon = "+eps+")")
+      legend("SLIC-Latif, (\epsilon = "+eps+")")
   else
-      legend("SLIC-Paluch, \epsilon = "+eps+")")
+      legend("SLIC-Paluch, (\epsilon = "+eps+")")
   end
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,solvent);
