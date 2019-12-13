@@ -22,7 +22,7 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                     % if paramboundflag=1 there is abound
                    
 temp_min=24.85;     % lower bound of the temperature interval 
-temp_max=44.85;    % upper bound in the temperature interval
+temp_max=84.85;    % upper bound in the temperature interval
 tempdiv=3;      % number of divisions in the temperature interval                     
                     
                     
@@ -42,7 +42,7 @@ addpath(sprintf('%s/testasymmetry/mobley/reference-data',repo_path));
 addpath(sprintf('%s/testasymmetry/mobley',repo_path));
 addpath(sprintf('%s/testasymmetry/born',repo_path));                    
 
-TEMP=linspace(temp_min,temp_max,tempdiv); % create the temperature vector
+TEMP=linspace(temp_min,temp_max,tempdiv) % create the temperature vector
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
