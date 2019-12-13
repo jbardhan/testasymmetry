@@ -12,7 +12,7 @@ training_set = ["methane","ethanamide","methanethiol","n_butane","2_methylpropan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%  ENTROPY  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+fig = figure('Renderer', 'painters', 'Position', [12 8 1200 800]);
   plot(Data_entropy_all.Var2,Data_entropy_all.Var3,'ro','markers',12,'linewidth',2)
   xmax = max([max(Data_entropy_all.Var3) max(Data_entropy_all.Var2)]);
   xmin = min([min(Data_entropy_all.Var3) min(Data_entropy_all.Var2)]);
@@ -26,8 +26,9 @@ figure
   legend("SLIC-RMSE = 1.23 kcal/mol")
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,"entropy_wo_ion_all");
-  saveas(gcf,fileName)
-figure
+  orient(fig,'landscape')
+  print(fig,fileName,'-dpdf')
+fig = figure('Renderer', 'painters', 'Position', [12 8 1200 800]);
   plot(Data_entropy.Var2,Data_entropy.Var3,'bo','markers',12,'linewidth',2)
   xmax = max([max(Data_entropy.Var3) max(Data_entropy.Var2)]);
   xmin = min([min(Data_entropy.Var3) min(Data_entropy.Var2)]);
@@ -41,8 +42,9 @@ figure
   legend("SLIC-RMSE = 0.88 kcal/mol")
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,"entropy_wo_ion_no_alkanols");
-  saveas(gcf,fileName)
-figure
+  orient(fig,'landscape')
+  print(fig,fileName,'-dpdf')
+fig = figure('Renderer', 'painters', 'Position', [12 8 1200 800]);
   plot(Data_cp.Var2,Data_cp.Var3,'bo','markers',12,'linewidth',2)
   xmax = max([max(Data_cp.Var3) max(Data_cp.Var2)]);
   xmin = min([min(Data_cp.Var3) min(Data_cp.Var2)]);
@@ -56,8 +58,9 @@ figure
   title('Solvation Heat Capacitities - 111 data points')
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,"heat_capacity");
-  saveas(gcf,fileName)
-fig = figure('Renderer', 'painters', 'Position', [16 10 1600 1000]);
+  orient(fig,'landscape')
+  print(fig,fileName,'-dpdf')
+fig = figure('Renderer', 'painters', 'Position', [12 8 800 600]);
   Data = Data_all_thermo_vars_110;
   
   % Data.Var1   |   Var2   |   Var3   |   Var4   |   Var5 
@@ -153,5 +156,7 @@ fig = figure('Renderer', 'painters', 'Position', [16 10 1600 1000]);
   legend({"RMSE Test-set = "+rmsErr+" kcal/mol/K","RMSE Training-set = "+rmsErrTr+" kcal/mol/K"},'FontSize',8)
   set(legend,'location','northwest')
   fileName=sprintf('%s/%s.pdf',figDirPath,"thermo_all_110");
-  saveas(gcf,fileName)
+  orient(fig,'landscape')
+  print(fig,fileName,'-dpdf')
+  
   
