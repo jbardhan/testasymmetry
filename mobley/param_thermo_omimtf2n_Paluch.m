@@ -62,9 +62,8 @@ for j=1:tempdiv
     staticpotential = 0.0; % this only affects charged molecules;
     kappa = 0.0;  % should be zero, meaning non-ionic solutions!
     tempKelvin=TEMP(j)+KelvinOffset;
-    epsOut = (0.2132e-3)*tempKelvin^2-0.20371*tempKelvin+51.647; 
-    % From: Lide, 1995. CRC handbook of chemistry and physics: 
-    %       a ready-reference book of chemical and physical data. CRC press.
+    epsOut = 12.85; 
+    % See Choi13 (Fig 8) or Krossing06
 
     
     % the staticpotential below should not be used any more, please check
@@ -90,7 +89,7 @@ for j=1:tempdiv
     surfArea_list = all_surfAreas(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     
-    [dGs,error_code] = determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_octanol.csv',testset,tempKelvin);
+    [dGs,error_code] = determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_omim_tf2n.csv',testset,tempKelvin);
     dG_list = dGs*kB*tempKelvin;
     %return;
     if error_code > 0
@@ -122,7 +121,7 @@ for j=1:tempdiv
   
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b 
-    x0 = [0.49	-14.67	0.51	-0.63	-0.08	-0.02	2.97]; 
+    x0 = [1.333	-77.589	-2.229	-1.538	0.078	-0.018	3.382]; 
     %from SLIC w/o ion for octanol 298
     
     if ionflag==0

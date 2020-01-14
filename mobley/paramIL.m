@@ -37,7 +37,7 @@ Data_eps = readtable('reference-data/eps_data.csv');
 
 epsOutWater = 78.34;% from mnsol Database
 epsIn  =  1;
-epsOut = Data_eps.Var2(14);
+epsOut = 11.6;%Wakai05 and Krossing06  ;Data_eps.Var2(14);
 KelvinOffset = 273.15;
 conv_factor = 332.112;
 staticpotential = 0.0; % this only affects charged molecules;
@@ -74,8 +74,8 @@ Data_l = readtable('reference-data/latif_all.csv');
 
 Data = Data_p;
 mol_list = Data.Var1;
-dG_list = Data.Var6; %omimtf2n_paluch
-OptFileName = sprintf('Opt_%s.mat','omimtf2n_paluch_ref2');
+dG_list = Data.Var5; %bmimtf2n_paluch
+OptFileName = sprintf('Opt_%s.mat','bmimtf2n_paluch_ref1'); %11.6 Wakai05
 
 fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_sa.csv','r');
 Data = textscan(fid,'%s %f','delimiter',',');
