@@ -19,8 +19,9 @@ logfileName = 'water.out';
 epsOut = 78.36;
 allData = readtable('all_cosmo_data.csv'); 
 
-ParamWatInfo = load('OptCosmonewHB.mat');
+ParamWatInfo = load('OptCosmoHBFixed.mat');
 x = ParamWatInfo.x;
+training_set = ParamWatInfo.training_set;
 mol_list = allData.solute;
 dG_list = allData.dG_expt;
 
@@ -40,15 +41,10 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 %COSMO H-bond atom types
 allHbondTypes = {'n_amine','n_amide','n_nitro',...
                  'n_other','o_carbonyl','o_ester',...
-                 'o_nitro','o_hydroxyl','fluorine'};
+                 'o_nitro','o_hydroxyl','fluorine',...
+                 'h_oh','h_nh','h_other'};
 
 % here we define the actual params for the NLBC test
-dG_list = allData.dG_expt; 
-all_solutes = allData.solute;
-%all_surfAreas = allData.SASA;
-%all_VdW_vols = allData.VdWV;
-%all_VdW_areas = allData.VdWA;
-mol_list = all_solutes;
 solventAreas = allData{495,9:79};
 solventATypes = allData{495,80:144};
 solventHbData = allData{495,145:end};
@@ -99,6 +95,7 @@ es_SLIC= allData.es_SLIC;
 % xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
 % 
 % x = xIonsAnd8Iter;
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_slsv,comb]=ObjectiveFromBEMCosmo(x);
-save('RunCosmonewHB.mat','mol_list','err','calc','ref','es','np','hb','disp','disp_slsl','disp_slsv','comb',...
+[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,comb]=ObjectiveFromBEMCosmo(x);
+save('RunCosmoFixed.mat','mol_list','training_set','err','calc','ref','es','np','hb',...
+    'disp','disp_slsl','disp_svsl','disp_svsv','comb',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC','es_SLIC');

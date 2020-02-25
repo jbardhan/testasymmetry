@@ -1,4 +1,5 @@
-function [E,electrostatic,nonpolar,hb,disp,disp_sl,disp_sv,comb] = runTestCosmo(params, problem, chargeDistribution)
+function [E,electrostatic,nonpolar,hb,disp,...
+          disp_sl_sl,disp_sv_sl,disp_sv_sv,comb] = runTestCosmo(params, problem, chargeDistribution)
 global UsefulConstants ProblemSet
 
 %alpha = params.alpha;
@@ -68,25 +69,27 @@ vol_solvent = solvent_data(4);
 % hbond term
 if newhb==1
     hb = CalcHbondE(solute_hbond_data,solvent_hbond_data,hbond_coeffs)-...
-     area_solute/area_solvent*CalcHbondE(solvent_hbond_data,solvent_hbond_data,hbond_coeffs);
+    area_solute/area_solvent*CalcHbondE(solvent_hbond_data,solvent_hbond_data,hbond_coeffs);
 else
     hb = CalcHbondE(solute_hbond_data,solvent_hbond_data,hbond_coeffs);
 end
 
 % dispersion term
-disp_sv = (( vol_solute/vol_solvent)*CalcDispE(solvent_data,solvent_atom_types,...
+
+disp_sv_sv = (vol_solute/vol_solvent)*CalcDispE(solvent_data,solvent_atom_types,...
+              solvent_data,solvent_atom_types,disp_coeffs,q_s);
+
+disp_sv_sl = CalcDispE(solute_data,solute_atom_types,...
                     solvent_data,solvent_atom_types,...
-                    disp_coeffs,q_s)-...
-                    2*CalcDispE(solute_data,solute_atom_types,...
-                    solvent_data,solvent_atom_types,...
-                    disp_coeffs,q_s));
+                    disp_coeffs,q_s);
                 
-disp_sl = -(CalcDispE(solute_data,solute_atom_types,...
+disp_sl_sl = -(CalcDispE(solute_data,solute_atom_types,...
                     solute_data,solute_atom_types,...
                     disp_coeffs,q_s));
-                
-disp = -disp_sv + disp_sl;
-                
+disp_sl = disp_sl_sl;
+disp_sv = (disp_sv_sv - 2*disp_sv_sl);              
+disp = disp_sl - disp_sv;
+
 % combinatorial term
 comb = -kB*temp*CalcCombE(solute_vdw_a,solute_vdw_v,...
                     solvent_vdw_a,solvent_vdw_v,z_comb);

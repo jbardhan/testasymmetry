@@ -32,7 +32,8 @@ allData = readtable('all_cosmo_data.csv');
 %COSMO H-bond atom types
 allHbondTypes = {'n_amine','n_amide','n_nitro',...
                  'n_other','o_carbonyl','o_ester',...
-                 'o_nitro','o_hydroxyl','fluorine'};
+                 'o_nitro','o_hydroxyl','fluorine',...
+                 'h_oh','h_nh','h_other'};
              
 epsOutWater = 78.34;% from mnsol Database
 epsIn  =  1;
@@ -49,7 +50,7 @@ UsefulConstants = struct('epsIn',epsIn,'epsOut',epsOut,'kappa', ...
 %             'all_atom_types',all_atom_types);
  
 
-testset  = {'4_bromophenol', 'ethanamide', 'teflurane', '4_chloroaniline',...
+training_set  = {'4_bromophenol', 'ethanamide', 'teflurane', '4_chloroaniline',...
             '2_methylpropane', '222_trifluoroethanol', '2_fluorophenol',...
             '2_iodopropane', 'iodobenzene', '1_nitropentane', '3_cyanophenol',...
             'pyridine','4_nitroaniline','14_dioxane','acetic_acid','butan_1_ol',...
@@ -88,14 +89,14 @@ soluteVdWV = allData{:,12};
 temp = 24.85 + KelvinOffset;
 curdir=pwd;
 
-for i=1:length(testset)
-  dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
+for i=1:length(training_set)
+  dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,training_set{i});
   chdir(dir);
   pqrData = loadPqr('test.pqr');
   pqrAll{i} = pqrData;
   srfFile{i} = sprintf('%s/test_2.srf',dir);
   chargeDist{i} = pqrData.q;%chargeDistribution;
-  foo = strcmp(mol_list,testset{i});
+  foo = strcmp(mol_list,training_set{i});
   index = find(foo);
   if length(index) ~= 1
     fprintf('error finding refdata!\n');
@@ -115,7 +116,7 @@ for i=1:length(testset)
   temperature{i} = temp;
   newHB{i} = 0;
   chdir(curdir);
-  addProblemCosmo(testset{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},...
+  addProblemCosmo(training_set{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},...
                   soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
                   solute_VdWV{i},solute_VdWA{i},...
                   solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
@@ -152,9 +153,9 @@ options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMCosmo(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_slsv,comb]=ObjectiveFromBEMCosmo(x);
-[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_slsv0,comb0]=ObjectiveFromBEMCosmo(x0);
-[~,id]=ismember(testset,mol_list);
+[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,comb]=ObjectiveFromBEMCosmo(x);
+[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,comb0]=ObjectiveFromBEMCosmo(x0);
+[~,id]=ismember(training_set,mol_list);
 disp_mob = allData.disp_mobley(id); 
 cav_mob = allData.cav_mobley(id); 
 np_mob = allData.np_mobley(id); 
@@ -162,10 +163,10 @@ es_mob = allData.es_mobley(id);
 np_SLIC = allData.np_SLIC(id); 
 es_SLIC= allData.es_SLIC(id);
 rmse = rms(calc-ref);
-save('OptCosmonew.mat','x','rmse','ref','calc','es','np','hb','disp',...
-     'disp_slsl','disp_slsv','comb',...
+save('OptCosmoFixed.mat','x','training_set','rmse','ref','calc','es','np','hb','disp',...
+     'disp_slsl','disp_svsl','disp_svsv','comb',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC',...
-     'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_slsv0',...
-     'comb0','epsOut');
+     'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
+     'disp_svsv0','comb0','epsOut');
 
 

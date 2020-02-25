@@ -1,6 +1,6 @@
 function dispE = CalcDispE(solute_data,solute_atom_types,...
     solvent_data,solvent_atom_types,...
-    disp_coeffs,q_s,Temp)
+    disp_coeffs,q_s)
 
 all_atom_types = {'br','c-sp','c-sp2','c-sp3','cl',...
                   'f','h','i','n-sp','n-sp3',...
@@ -30,7 +30,7 @@ for i=1:length(unique_atom_types_solvent)
     [m, ~] = ismember(solvent_types.Variables,{solvent_atom_type});
     areas_solvent = solvent_areas(m);
     m_tau_solvent = sum(areas_solvent.^q_s);
-    dispSouteSolvent=0;
+    dispSoluteSolvent=0;
     for j=1:length(unique_atom_types_solute)
         
         solute_atom_type = unique_atom_types_solute{j};
@@ -39,11 +39,11 @@ for i=1:length(unique_atom_types_solvent)
         [m, ~] = ismember(solute_types.Variables,{solute_atom_type});
         areas_solute = solute_areas(m);
         m_tau_solute = sum(areas_solute.^q_s);
-        dispSouteSolvent = dispSouteSolvent + m_tau_solute*sqrt(coeff_solute);
+        dispSoluteSolvent = dispSoluteSolvent + m_tau_solute*sqrt(coeff_solute);
         
     end
     
-    dispE = dispE + m_tau_solvent*sqrt(coeff_solvent)*dispSouteSolvent;
+    dispE = dispE + m_tau_solvent*sqrt(coeff_solvent)*dispSoluteSolvent;
     
 end
 kB = 0.001987;
