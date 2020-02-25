@@ -1,0 +1,45 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2019 The MathWorks, Inc.
+                  R2019a (9.6.0.1072779) 64-bit (glnxa64)
+                               March 8, 2019
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+Starting parallel pool (parpool) using the 'local' profile ...
+[Warning: The Cluster reported an error while destroying a job. The error was:
+Unable to read file
+'/home/mehdizadehrahimi.a/.matlab/local_cluster_jobs/R2019a/Job542.in.mat'. No
+such file or directory..] 
+[> In parallel.internal.cluster.CJSJobMethods.destroyOneJob (line 79)
+  In parallel.job.CJSConcurrentJob>@(job)CJSJobMethods.destroyOneJob(job.Parent,job,job.Support,job.SupportID) (line 52)
+  In parallel.job.CJSConcurrentJob/destroyJob (line 52)
+  In parallel.Job>iDeleteJobs (line 1513)
+  In parallel.internal.cluster.hetfun (line 57)
+  In parallel.Job/delete (line 1303)
+  In parallel.Cluster/hDeleteOneJob (line 1031)
+  In parallel.internal.pool.InteractiveClient>iDeleteJobs (line 875)
+  In parallel.internal.pool.InteractiveClient/pRemoveOldJobs (line 483)
+  In parallel.internal.pool.InteractiveClient/start (line 317)
+  In parallel.Pool>iStartClient (line 796)
+  In parallel.Pool.hBuildPool (line 585)
+  In parallel.internal.pool.doParpool (line 18)
+  In parpool (line 98)] 
+{Error using parpool (line 113)
+Parallel pool failed to start with the following error. For more detailed
+information, validate the profile 'local' in the Cluster Profile Manager.
+
+Caused by:
+    Error using parallel.internal.pool.InteractiveClient>iThrowWithCause (line
+    678)
+    Failed to locate and destroy old interactive jobs.
+        Error using parallel.Job>iDeleteJobs (line 1515)
+        The job storage metadata file
+        '/home/mehdizadehrahimi.a/.matlab/local_cluster_jobs/R2019a/matlab_metadata.mat'
+        does not exist or is corrupt. For assistance recovering job data,
+        contact MathWorks Support Team. Otherwise, delete all files in the
+        JobStorageLocation and try again.
+} 
