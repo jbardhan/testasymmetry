@@ -165,6 +165,20 @@ for kk=1:tempdiv
             lb = [-2 -200 -100 -20  -20  -0.1  -2];
             ub = [+2 +200 +100 +20  +20  +0.1  +2];
     end
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     options = optimoptions('lsqnonlin','MaxIter',8);
     options = optimoptions(options,'Display', 'iter');

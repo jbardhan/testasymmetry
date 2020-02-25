@@ -196,7 +196,7 @@ for j=1:tempdiv
     
     
     if ionflag==0
-        x0 = [0.476 -121.47 -1.392 -0.59 0.001 0.005 0.079]; 
+        x0 = [0.256	-66.660	57.780	-1.072	0.078	-0.018	2.00]; 
         % A good initial guess for water from previous calculations
         lb = [0  -200 -100 -20  -0.1  -0.1  -4];
         ub = [+2 +200 +100 +20  +0.1  +0.1  +4];

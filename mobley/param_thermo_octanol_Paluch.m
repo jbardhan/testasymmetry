@@ -23,11 +23,6 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                    
 temp_min=24.85;     % lower bound of the temperature interval 
 temp_max=84.85;    % upper bound in the temperature interval
-<<<<<<< HEAD
-tempdiv=5;      % number of divisions in the temperature interval                     
-=======
-tempdiv=3;      % number of divisions in the temperature interval                     
->>>>>>> 77dec7ce332ba84ea33427b280e412e5b267dfc6
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,7 +121,7 @@ for j=1:tempdiv
   
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % alpha beta gamma mu phi_stat np_a np_b 
-    x0 = [0.49	-14.67	0.51	-0.63	-0.08	-0.02	2.97]; 
+    x0 = [0.93	-76.14	-4.37	-1.76	-0.10	-0.02	4.00]; 
     %from SLIC w/o ion for octanol 298
     
     if ionflag==0

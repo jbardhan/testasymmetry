@@ -83,12 +83,9 @@ for j=1:tempdiv
     Data = textscan(fid,'%s %f  %f  %f  %f  %f  %f  %f','delimiter',',');
     fclose(fid);
     all_solutes = Data{1};
-    all_dG = Data{2};
     all_surfAreas = Data{3};
     [m, index] = ismember(testset,all_solutes);
     surfArea_list = all_surfAreas(index);
-    t_ref_aca=24.85; %reference tempereture for amino acid analogues
-    
     [dGs,error_code] = determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_emim_tf2n.csv',testset,tempKelvin);
     dG_list = dGs*kB*tempKelvin;
     %return;

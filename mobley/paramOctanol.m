@@ -26,8 +26,8 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                     
 
 temp_min=24.85;     % lower bound of the temperature interval 
-temp_max=44.85;    % upper bound in the temperature interval
-tempdiv=3;      % number of divisions in the temperature interval                     
+temp_max=84.85;    % upper bound in the temperature interval
+tempdiv=5;      % number of divisions in the temperature interval                     
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,13 +46,13 @@ addpath(sprintf('%s/testasymmetry/mobley/reference-data',repo_path));
 addpath(sprintf('%s/testasymmetry/mobley',repo_path));
 addpath(sprintf('%s/testasymmetry/born',repo_path));                    
 
-TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
-
+%TEMP=linspace(temp_min,temp_max,tempdiv);        % create the temperature vector
+TEMP = 24.85;
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
 
-for kk=1:tempdiv
+for kk=1:1
     clear global
     loadConstants
     convertKJtoKcal = 1/joulesPerCalorie;
@@ -62,9 +62,7 @@ for kk=1:tempdiv
     logfileName = 'junklogfile';
 
     epsIn  =  1;
-    Tbase = 300; 
     
-    mytemp=Tbase;
     KelvinOffset = 273.15;
     conv_factor = 332.112;
     staticpotential = 0.0; % this only affects charged molecules;
@@ -95,13 +93,14 @@ for kk=1:tempdiv
     surfArea_list = all_surfAreas(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     
-    [dG_list,error_code] = ...
+    [dG_list_raw,error_code] = ...
 	determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_octanol.csv',testset,tempKelvin);
-    return;
+    %return;
     if error_code > 0
       fprintf(['Halting optimization because' ...
 	       ' determinePaluchSolvationFreeEnergy failed.\n']);
     end
+    dG_list = kB*tempKelvin*dG_list_raw;
     curdir=pwd;
     for i=1:length(testset)
       dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,testset{i});
@@ -169,14 +168,14 @@ for kk=1:tempdiv
 end
 if ionflag==0
     if paramboundflag==1
-        save('OptOctanol_wo_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_Pal_new_','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     else
         save('OptOctanol_wo_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
     end
 elseif ionflag==1
     if paramboundflag==1
         %save('OptOctanol_w_ion','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
-        save('OptOctanol_thermo','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
+        save('OptOctanol_Paluch_new_','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');
 
     else
         save('OptOctanol_w_ion_wo_bound','xvec','refvec','calcvec','esvec','npvec','x0vec','calc0vec','es0vec','np0vec','tempvec');

@@ -24,9 +24,10 @@ Data_eps = readtable('reference-data/eps_data.csv');
 % check reference-data/RTIL.xls for more details on dG and epsOut of ILs
 % Reference articles are available at Dropbox/lab/
 % ref1 = Wakai05, ref2 = Rybinska14, ref3 = Hunger09, ref4 = Huang11 
+% ref5 = Nakamura10
 % Data_eps.Var2 = dielectric constant 
 % Var2.(1) emimtf2n_ref1     (2) emimtf2n_ref2      (3) emimtf2n_ref4  
-%      (4) bmimtf2n_ref2 
+%      (4) bmimtf2n_ref2     (5) bmimtf2n_ref2
 %      (5) bmimbf4_ref1      (6) bmimbf4_ref2       (7) bmimbf4_ref3 
 %      (8) bmimpf6_ref1      (9) bmimpf6_ref2       (10)bmimpf6_ref3   
 %      (11)bmimtfo_ref2      (12)bmimtfo_ref4    
@@ -37,7 +38,7 @@ Data_eps = readtable('reference-data/eps_data.csv');
 
 epsOutWater = 78.34;% from mnsol Database
 epsIn  =  1;
-epsOut = 11.6;%Wakai05 and Krossing06  ;Data_eps.Var2(14);
+epsOut = 12.85;%Wakai05 and Krossing06  ;Data_eps.Var2(14);
 KelvinOffset = 273.15;
 conv_factor = 332.112;
 staticpotential = 0.0; % this only affects charged molecules;
@@ -74,8 +75,8 @@ Data_l = readtable('reference-data/latif_all.csv');
 
 Data = Data_p;
 mol_list = Data.Var1;
-dG_list = Data.Var5; %bmimtf2n_paluch
-OptFileName = sprintf('Opt_%s.mat','bmimtf2n_paluch_ref1'); %11.6 Wakai05
+dG_list = Data.Var6; %omimtf2n_paluch
+OptFileName = sprintf('Opt_%s.mat','omimtf2n_paluch_ref2'); %16.8 Nkamura10
 
 fid = fopen('~/repos/testasymmetry/mobley/mnsol/mobley_sa.csv','r');
 Data = textscan(fid,'%s %f','delimiter',',');

@@ -2,7 +2,7 @@ function [dG_list,error_code] = determinePaluchSolvationFreeEnergy(filename,mol_
 						  temp)
 dG_list = [];
 error_code = 0;
-[mol,t1,g1,t2,g2,t3,g3,ds,junk]=textread('reference-data/mobley_paluch_octanol.csv','%s%f%f%f%f%f%f%f%f','delimiter',',');
+[mol,t1,g1,t2,g2,t3,g3,ds,junk]=textread(filename,'%s%f%f%f%f%f%f%f%f','delimiter',',');
 
 T = [t1 t2 t3];
 G = [g1 g2 g3];
