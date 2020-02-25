@@ -23,11 +23,7 @@ paramboundflag=1;   % if paramboundflag=0 there is no bound for parameters in th
                    
 temp_min=24.85;     % lower bound of the temperature interval 
 temp_max=84.85;    % upper bound in the temperature interval
-<<<<<<< HEAD
 tempdiv=5;      % number of divisions in the temperature interval                     
-=======
-tempdiv=3;      % number of divisions in the temperature interval                     
->>>>>>> 77dec7ce332ba84ea33427b280e412e5b267dfc6
                     
                     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,7 +42,7 @@ addpath(sprintf('%s/testasymmetry/mobley/reference-data',repo_path));
 addpath(sprintf('%s/testasymmetry/mobley',repo_path));
 addpath(sprintf('%s/testasymmetry/born',repo_path));                    
 
-TEMP=linspace(temp_min,temp_max,tempdiv) % create the temperature vector
+TEMP=linspace(temp_min,temp_max,tempdiv); % create the temperature vector
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -66,9 +62,8 @@ for j=1:tempdiv
     staticpotential = 0.0; % this only affects charged molecules;
     kappa = 0.0;  % should be zero, meaning non-ionic solutions!
     tempKelvin=TEMP(j)+KelvinOffset;
-    epsOut = (0.2132e-3)*tempKelvin^2-0.20371*tempKelvin+51.647; 
-    % From: Lide, 1995. CRC handbook of chemistry and physics: 
-    %       a ready-reference book of chemical and physical data. CRC press.
+    epsOut = 11.6; 
+    % See Choi13 (Fig 8) or Krossing06
 
     
     % the staticpotential below should not be used any more, please check
@@ -94,7 +89,7 @@ for j=1:tempdiv
     surfArea_list = all_surfAreas(index);
     t_ref_aca=24.85; %reference tempereture for amino acid analogues
     
-    [dGs,error_code] = determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_octanol.csv',testset,tempKelvin);
+    [dGs,error_code] = determinePaluchSolvationFreeEnergy('reference-data/mobley_paluch_bmim_tf2n.csv',testset,tempKelvin);
     dG_list = dGs*kB*tempKelvin;
     %return;
     if error_code > 0
