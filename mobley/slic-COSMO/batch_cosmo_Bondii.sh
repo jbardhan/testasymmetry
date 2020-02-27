@@ -9,4 +9,4 @@
 module load matlab/R2019a 
 module load anaconda3/3.7
 module unload anaconda2/2018.12
-matlab -nosplash -nodesktop -r "parpool('local',12);runCosmo_Bondii;exit"
+matlab -nosplash -nodesktop -r "parpool('local',12);paramCosmo_Bondii;runCosmo_Bondii;exit"
