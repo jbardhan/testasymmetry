@@ -19,3 +19,8 @@ mobley/Trainingset_Thermo.synctex.gz
 mobley/junklogfile
 mobley/slic-COSMO/*.sh
 mobley/slic-COSMO/*.out
+mobley/slic-COSMO/*.pdf
+mobley/RunEmim*
+mobley/RunOmim*
+mobley/RunBmim*
+mobley/RunOctanol*
