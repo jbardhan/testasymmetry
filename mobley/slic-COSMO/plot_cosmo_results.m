@@ -4,7 +4,7 @@ label_font = 'Helvetica';
 title_font_size = 18;
 legend_font_size = 14;
 label_font_size = 18;
-data = load('RunCosmoBondiiFixed.mat');
+data = load('RunCosmoFixed.mat');
 
 [~, index] = ismember(data.training_set,data.mol_list);
 close all
