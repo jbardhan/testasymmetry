@@ -19,7 +19,7 @@ logfileName = 'water.out';
 epsOut = 78.36;
 allData = readtable('all_Bondii_data.csv'); 
 
-ParamWatInfo = load('OptCosmoBondiiFixed.mat');
+ParamWatInfo = load('OptCosmoBondii.mat');
 x = ParamWatInfo.x;
 training_set = ParamWatInfo.training_set;
 mol_list = allData.solute;
@@ -50,7 +50,7 @@ solventATypes = allData{495,80:144};
 solventHbData = allData{495,145:end};
 solventVdWA = allData{495,11};
 solventVdWV = allData{495,12};
-temp = 24.85 + KelvinOffset;
+temperature = 24.85 + KelvinOffset;
 curdir = pwd;
 for i=1:length(mol_list)
   dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,mol_list{i});
@@ -69,7 +69,8 @@ for i=1:length(mol_list)
   solventHbondData{i} = solventHbData;
   solvent_VdWA{i} = solventVdWA;
   solvent_VdWV{i} = solventVdWV;
-  temperature{i} = temp;
+  atom_vols{i} = allData{index,14};
+  temp{i} = temperature;
   referenceData{i} = dG_list(i);
   newHB{i} = 0;
   chdir(curdir);
@@ -78,7 +79,7 @@ for i=1:length(mol_list)
                   solute_VdWV{i},solute_VdWA{i},...
                   solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
                   solvent_VdWV{i},solvent_VdWA{i},...
-                  temperature{i},newHB{i});
+                  atom_vols{i},temp{i},newHB{i});
 
 
 
@@ -95,7 +96,7 @@ es_SLIC= allData.es_SLIC;
 % xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
 % 
 % x = xIonsAnd8Iter;
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,comb]=ObjectiveFromBEMCosmo(x);
-save('RunCosmoBondiiFixed.mat','mol_list','training_set','err','calc','ref','es','np','hb',...
-    'disp','disp_slsl','disp_svsl','disp_svsv','comb',...
+[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmo(x);
+save('RunCosmoBondii.mat','mol_list','training_set','err','calc','ref','es','np','hb',...
+    'disp','disp_slsl','disp_svsl','disp_svsv','cav','comb',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC','es_SLIC');

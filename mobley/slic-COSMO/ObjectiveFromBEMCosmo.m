@@ -1,5 +1,5 @@
 function [Error,calculatedE,referenceE,electrostatic,nonpolar,...
-          hb,disp,disp_sl_sl,disp_sv_sl,disp_sv_sv,comb] = ...
+          hb,disp,disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = ...
           ObjectiveFromBEMCosmo(x)
 %ERROR          Returns the deviance of the experimental MD FEP energy results from the
 %               calculated FEP free energy.  OBJECTIVEFUNCTION(Params)
@@ -15,7 +15,7 @@ Params = MakeParamsStructCosmo(x);
    
 % physical simulations and obtain reference results
 [calculatedE,referenceE,electrostatic,nonpolar,hb,disp,...
-    disp_sl_sl,disp_sv_sl,disp_sv_sv,comb] = CalculateEnergiesFromBEMCosmo(Params); 
+    disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = CalculateEnergiesFromBEMCosmo(Params); 
 
 % "unwrap" physical simulation results into optimization problem
 Error = referenceE - calculatedE;

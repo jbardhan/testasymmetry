@@ -1,5 +1,5 @@
 function [E,electrostatic,nonpolar,hb,disp,...
-          disp_sl_sl,disp_sv_sl,disp_sv_sv,comb] = runTestCosmo(params, problem, chargeDistribution)
+          disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = runTestCosmo(params, problem, chargeDistribution)
 global UsefulConstants ProblemSet
 
 %alpha = params.alpha;
@@ -61,11 +61,14 @@ disp_coeffs = params.dispCoeffs;
 hbond_coeffs = params.hbondCoeffs;
 z_comb = params.zComb;
 q_s = params.q_s;
+cavity_coeff = params.cavity_coeff;
+atom_vols = problem.atom_vols;
 area_solute = solute_data(3);
 area_solvent = solvent_data(3);
 vol_solute = solute_data(4);
 vol_solvent = solvent_data(4);
-
+%shape_factor = (pi^(1/3))*((6*vol_solute)^(2/3))/area_solute;
+%np.round((total_vol-vdwv_solute)/total_vol,3)
 % hbond term
 if newhb==1
     hb = CalcHbondE(solute_hbond_data,solvent_hbond_data,hbond_coeffs)-...
@@ -86,13 +89,11 @@ disp_sv_sl = CalcDispE(solute_data,solute_atom_types,...
 disp_sl_sl = -(CalcDispE(solute_data,solute_atom_types,...
                     solute_data,solute_atom_types,...
                     disp_coeffs,q_s));
-disp_sl = disp_sl_sl;
-disp_sv = (disp_sv_sv - 2*disp_sv_sl);              
-disp = disp_sl - disp_sv;
-
+disp = (disp_sv_sv - 2*disp_sv_sl);              
+cav = kB*temp*CalcCavE(area_solute,vol_solute,atom_vols,cavity_coeff);
 % combinatorial term
 comb = -kB*temp*CalcCombE(solute_vdw_a,solute_vdw_v,...
                     solvent_vdw_a,solvent_vdw_v,z_comb);
-nonpolar = comb + disp;
+nonpolar = comb + disp + cav;
 
 E = electrostatic + nonpolar + hb;

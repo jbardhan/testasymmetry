@@ -86,7 +86,7 @@ soluteATypes = allData{:,80:144};
 soluteHbData = allData{:,145:end};
 soluteVdWA = allData{:,11};
 soluteVdWV = allData{:,12};
-temp = 24.85 + KelvinOffset;
+temperature = 24.85 + KelvinOffset;
 curdir=pwd;
 
 for i=1:length(training_set)
@@ -113,7 +113,8 @@ for i=1:length(training_set)
   solventHbondData{i} = solventHbData;
   solvent_VdWA{i} = solventVdWA;
   solvent_VdWV{i} = solventVdWV;
-  temperature{i} = temp;
+  atom_vols{i} = allData{index,14};
+  temp{i} = temperature;
   newHB{i} = 1;
   chdir(curdir);
   addProblemCosmo(training_set{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},...
@@ -121,7 +122,7 @@ for i=1:length(training_set)
                   solute_VdWV{i},solute_VdWA{i},...
                   solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
                   solvent_VdWV{i},solvent_VdWA{i},...
-                  temperature{i},newHB{i});
+                  atom_vols{i},temp{i},newHB{i});
 end
 
 
@@ -132,29 +133,29 @@ end
 
 x0 = [0.5 -60 -0.5   -0.5*tanh(- -0.5)     0 ... slic-es x(1:5)
       64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
-      36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
       0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond x(24:35)
       12 ... %combinatorial x(36)
-      ];
+      1.5]; %cavity correction coeff
 ub = [+2 +200 +100 +20  +0.1 ...
       100000 100000 100000 100000 100000 100000 100000 200000 100000 ...
       100000 100000 100000 100000 100000 100000 100000 100000 1 ...
       2 2 2 2 2 2 2 2 2 2 2 2 ...
       40 ...
-      ];
+      4];
 lb = [-2 -200 -100 -20  -0.1 ...
       0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ...
-      0 0 0 0 0 0 0 0 0 0 0 0 ...
-      0 ...
-      ];
+      0 0 0 0 0 0 0 0 0 0 0 0.05 ...
+      1 ...
+      0.5];
 
 options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMCosmo(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,comb]=ObjectiveFromBEMCosmo(x);
-[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,comb0]=ObjectiveFromBEMCosmo(x0);
+[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmo(x);
+[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,cav0,comb0]=ObjectiveFromBEMCosmo(x0);
 [~,id]=ismember(training_set,mol_list);
 disp_mob = allData.disp_mobley(id); 
 cav_mob = allData.cav_mobley(id); 
@@ -163,10 +164,10 @@ es_mob = allData.es_mobley(id);
 np_SLIC = allData.np_SLIC(id); 
 es_SLIC= allData.es_SLIC(id);
 rmse = rms(calc-ref);
-save('OptCosmoBondiiHBFixed.mat','x','training_set','rmse','ref','calc','es','np','hb','disp',...
-     'disp_slsl','disp_svsl','disp_svsv','comb',...
+save('OptCosmoBondiiHB.mat','x','training_set','mol_list','rmse','ref','calc','es','np','hb','disp',...
+     'disp_slsl','disp_svsl','disp_svsv','comb','cav',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC',...
      'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
-     'disp_svsv0','comb0','epsOut');
+     'disp_svsv0','comb0','cav0','epsOut');
 
 

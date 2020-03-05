@@ -1,5 +1,4 @@
-function combinatorialE = CalcCombE(solute_vdw_a,solute_vdw_v,...
-                                    solvent_vdw_a,solvent_vdw_v,z)
+function combinatorialE = CalcCombE(solute_vdw_a,solute_vdw_v,solvent_vdw_a,solvent_vdw_v,z)
 q = solute_vdw_a/solvent_vdw_a;
 r = solute_vdw_v/solvent_vdw_v;
 

@@ -1,6 +1,6 @@
 function [calculatedE, referenceE, electrostatic, nonpolar,...
           dG_hb, dG_disp, dG_disp_sl_sl, dG_disp_sv_sl,...
-          dG_disp_sv_sv, dG_comb] = calculateProblemCosmo(problem,params)
+          dG_disp_sv_sv,dG_cav,dG_comb] = calculateProblemCosmo(problem,params)
 
 % this function is intended to be called by
 % CalculateEnergiesFromBEM.  you are supposed to pass in a problem
@@ -15,7 +15,7 @@ calculatedE = zeros(numTestsInProblem,1);
 %keyboard
 for i=1:numTestsInProblem
   [calculatedE(i),electrostatic(i),nonpolar(i),dG_hb(i),dG_disp(i),...
-   dG_disp_sl_sl(i),dG_disp_sv_sl(i),dG_disp_sv_sv(i),dG_comb(i)] = ...
+   dG_disp_sl_sl(i),dG_disp_sv_sl(i),dG_disp_sv_sv(i),dG_cav(i),dG_comb(i)] = ...
    runTestCosmo(params, problem, problem.chargeDistribution(:,i));
 end
 

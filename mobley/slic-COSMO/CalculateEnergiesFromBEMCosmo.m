@@ -1,5 +1,5 @@
 function [calculatedE, referenceE,electrostatic,nonpolar,...
-          hb,disp,disp_sl_sl,disp_sv_sl,disp_sv_sv,comb] = CalculateEnergiesFromBEMCosmo(Params)
+          hb,disp,disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = CalculateEnergiesFromBEMCosmo(Params)
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 
 % define empty vectors so we can extend them easily
@@ -12,6 +12,7 @@ disp = [];
 disp_sl_sl= [];
 disp_sv_sl= [];
 disp_sv_sv= [];
+cav = [];
 comb = [];
 
 % how many problem geometries do we have ?  note that this can be
@@ -23,7 +24,7 @@ for i=1:numProblems
     i
   curProblem = ProblemSet(i);
   [newCalculatedE, newReferenceE,newElectrostatic,newNonpolar,newHb,newDisp,...
-      newDisp_sl_sl,newDisp_sv_sl,newDisp_sv_sv,newComb] = ...
+      newDisp_sl_sl,newDisp_sv_sl,newDisp_sv_sv,newCav,newComb] = ...
       calculateProblemCosmo(curProblem, Params);
 
 if saveMemory
@@ -50,6 +51,7 @@ end
   disp_sl_sl = [disp_sl_sl; newDisp_sl_sl];
   disp_sv_sl = [disp_sv_sl; newDisp_sv_sl];
   disp_sv_sv = [disp_sv_sv; newDisp_sv_sv];
+  cav = [cav; newCav];
   comb = [comb; newComb];
   
 end
