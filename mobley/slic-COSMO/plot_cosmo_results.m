@@ -4,7 +4,7 @@ label_font = 'Helvetica';
 title_font_size = 18;
 legend_font_size = 14;
 label_font_size = 18;
-data = load('RunCosmoFixed.mat');
+data = load('RunCosmoBondii.mat');
 
 [~, index] = ismember(data.training_set,data.mol_list);
 close all
@@ -43,7 +43,7 @@ orient(fig,'landscape')
 print(fig,fileName,'-dpdf')
 %% NONPOLAR
 fig = figure('Renderer', 'painters', 'Position', [8 6 800 600]);
-np_cosmo = data.np;
+np_cosmo = np;
 plot(data.np_mob,np_cosmo,'bo','markers',12,'linewidth',2);
 hold on
 plot(data.np_mob(index),np_cosmo(index),'r*','markers',10,'linewidth',3)
@@ -78,7 +78,7 @@ print(fig,fileName,'-dpdf')
 
 %% Dispersion
 fig = figure('Renderer', 'painters', 'Position', [8 6 800 600]);
-disp_cosmo = data.disp_svsv - 2*data.disp_svsl;
+disp_cosmo = data.disp;
 plot(data.disp_mob,disp_cosmo,'bo','markers',12,'linewidth',2);
 hold on
 plot(data.disp_mob(index),disp_cosmo(index),'r*','markers',10,'linewidth',3)
@@ -112,7 +112,7 @@ orient(fig,'landscape')
 print(fig,fileName,'-dpdf')
 %% Cavity
 fig = figure('Renderer', 'painters', 'Position', [8 6 800 600]);
-cav_cosmo = (data.comb-data.disp_slsl);
+cav_cosmo = data.cav;%+data.comb;
 plot(data.cav_mob,cav_cosmo,'bo','markers',12,'linewidth',2);
 hold on
 plot(data.cav_mob(index),cav_cosmo(index),'r*','markers',10,'linewidth',3)
