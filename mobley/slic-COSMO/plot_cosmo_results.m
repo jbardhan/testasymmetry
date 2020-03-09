@@ -1,9 +1,11 @@
+clear all
 title_font = 'Helvetica';
 legend_font = 'Helvetica';
 label_font = 'Helvetica';
 title_font_size = 18;
 legend_font_size = 14;
 label_font_size = 18;
+load('RunCosmoBondii.mat');
 data = load('RunCosmoBondii.mat');
 
 [~, index] = ismember(data.training_set,data.mol_list);
