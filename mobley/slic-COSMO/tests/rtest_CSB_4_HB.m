@@ -8,6 +8,8 @@ addpath(sprintf('%s/repos/panelbem',Home));
 addpath(sprintf('%s/repos/testasymmetry',Home));
 addpath(sprintf('%s/repos/testasymmetry/functions',Home));
 addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley/slic-COSMO',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley/slic-COSMO/tests',Home));
 addpath(sprintf('%s/repos/testasymmetry/born',Home));
 
 % a bunch of useful variables and constants. also defining the global
@@ -17,9 +19,9 @@ convertKJtoKcal = 1/joulesPerCalorie;
 global UsefulConstants ProblemSet saveMemory writeLogfile logfileName
 logfileName = 'water.out';
 epsOut = 78.36;
-allData = readtable('all_Bondii_data.csv'); 
+allData = readtable('../all_Bondii_data.csv'); 
 
-ParamWatInfo = load('OptCosmoBondii.mat');
+ParamWatInfo = load('OptCosmoBondiiFinal_4_HB.mat');
 x = ParamWatInfo.x;
 training_set = ParamWatInfo.training_set;
 mol_list = allData.solute;
@@ -72,7 +74,7 @@ for i=1:length(mol_list)
   atom_vols{i} = allData{i,14};
   temp{i} = temperature;
   referenceData{i} = dG_list(i);
-  newHB{i}=0;
+  newHB{i}=1;
   chdir(curdir);
   addProblemCosmo(mol_list{i},pqrAll{i},srfFile{i},chargeDist{i},referenceData{i},...
                   soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
@@ -97,6 +99,6 @@ es_SLIC= allData.es_SLIC;
 % 
 % x = xIonsAnd8Iter;
 [err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmo(x);
-save('RunCosmoBondii.mat','mol_list','training_set','err','calc','ref','es','np','hb',...
+save('RunCosmoBondiiFinal_4_HB.mat','mol_list','training_set','err','calc','ref','es','np','hb',...
     'disp','disp_slsl','disp_svsl','disp_svsv','cav','comb',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC','es_SLIC');
