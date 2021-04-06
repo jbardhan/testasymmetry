@@ -51,26 +51,30 @@ area_solute = solute_data(3);
 area_solvent = solvent_data(3);
 vol_solute = solute_data(4);
 vol_solvent = solvent_data(4);
-%shape_factor = (pi^(1/3))*((6*vol_solute)^(2/3))/area_solute;
-%np.round((total_vol-vdwv_solute)/total_vol,3)
+lambda=2;
 
-% dispersion term
+% Cavity
+cav = kB*temp*CalcCavityE(area_solute, vol_solute, atom_vols, cavity_coeff, temp);
 
-disp_sv_sv = (vol_solute/vol_solvent)*CalcDispE(solvent_data,solvent_atom_types,...
-              solvent_data,solvent_atom_types,disp_coeffs,q_s);
+% Dispersion
+disp_sv_sv = (vol_solute/vol_solvent)*...
+             CalcDispersionE(solvent_data, solvent_atom_types, ...
+                             solvent_data, solvent_atom_types, ...
+                             disp_coeffs, q_s, lambda, temp);
 
-disp_sv_sl = CalcDispE(solute_data,solute_atom_types,...
-                    solvent_data,solvent_atom_types,...
-                    disp_coeffs,q_s);
+disp_sv_sl = CalcDispersionE(solute_data, solute_atom_types, ...
+                             solvent_data, solvent_atom_types, ...
+                             disp_coeffs, q_s, lambda, temp);
                 
-disp_sl_sl = -(CalcDispE(solute_data,solute_atom_types,...
-                    solute_data,solute_atom_types,...
-                    disp_coeffs,q_s));
-disp = (disp_sv_sv - 2*disp_sv_sl);              
-cav = kB*temp*CalcCavExpE3(area_solute,vol_solute,atom_vols,cavity_coeff1,cavity_coeff2);
-% combinatorial term
-comb = -kB*temp*CalcCombE(solute_vdw_a,solute_vdw_v,...
-                    solvent_vdw_a,solvent_vdw_v,z_comb);
+disp_sl_sl = (CalcDispersionE(solute_data, solute_atom_types, ...
+                               solute_data, solute_atom_types, ...
+                               disp_coeffs, q_s, lambda, temp));
+                           
+disp = 2*disp_sv_sl - disp_sv_sv + disp_sl_sl;
+
+%Combinatorial
+comb = -kB*temp*CalcCombinatorialE(solute_vdw_a, solute_vdw_v, ...
+                    solvent_vdw_a, solvent_vdw_v, z_comb);
 nonpolar = comb + disp + cav;
 
 E = nonpolar;

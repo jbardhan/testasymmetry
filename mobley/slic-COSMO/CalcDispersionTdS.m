@@ -1,4 +1,4 @@
-function dispE = CalcHelmholtzDispersionE(solute_data,solute_atom_types,...
+function dispTdS = CalcDispersionTdS(solute_data,solute_atom_types,...
     solvent_data,solvent_atom_types,...
     disp_coeffs,q_s,lambda,temperature)
 
@@ -37,11 +37,11 @@ for i=1:length(unique_atom_types_solvent)
     radii_solvent = all_atom_radii(id_coeff_solvent);
     radii_solvent_value = cell2table(radii_solvent);
     radii_solvent = radii_solvent_value.Variables;
+    square_well_exp_solvent = coeff_solvent^2*exp(beta*coeff_solvent)*(lambda^3-1);
     [m, ~] = ismember(solvent_types.Variables,{solvent_atom_type});
     areas_solvent = solvent_areas(m);
     m_tau_solvent = sum(areas_solvent.^q_s);
     dispSoluteSolvent=0;
-    
     for j=1:length(unique_atom_types_solute)
         
         solute_atom_type = unique_atom_types_solute{j};
@@ -50,18 +50,16 @@ for i=1:length(unique_atom_types_solvent)
         radii_solute = all_atom_radii(id_coeff_solute);
         radii_solute_value = cell2table(radii_solute);
         radii_solute = radii_solute_value.Variables;
-        radii_ij = (radii_solvent+radii_solute)/2;
-        disp_coeff_ij = sqrt(coeff_solute*coeff_solvent);
-        square_well_exp = -radii_ij^3*(lambda^3-1)*...
-                           disp_coeff_ij*(1+disp_coeff_ij*beta/2);
+        radii = (radii_solvent+radii_solute)/2;
+        square_well_exp_solute = radii^3*coeff_solute^2*exp(beta*coeff_solute)*(lambda^3-1);
         [m, ~] = ismember(solute_types.Variables,{solute_atom_type});
         areas_solute = solute_areas(m);
         m_tau_solute = sum(areas_solute.^q_s);
-        dispSoluteSolvent = dispSoluteSolvent + m_tau_solute*square_well_exp;
+        dispSoluteSolvent = dispSoluteSolvent + m_tau_solute*sqrt(square_well_exp_solute);
         
     end
     
-    dispE = dispE + m_tau_solvent*dispSoluteSolvent;
+    dispTdS = dispTdS + m_tau_solvent*sqrt(square_well_exp_solvent)*dispSoluteSolvent;
     
 end
-dispE = dispE/vol_mix; %in kcal/mol
+dispTdS = -dispTdS/vol_mix/temperature/kB; %in kcal/mol
