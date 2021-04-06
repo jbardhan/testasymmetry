@@ -1,6 +1,8 @@
 function Params = MakeParamsStructCosmoNp(x)
 Params = struct('dispCoeffs',x(1:17),'q_s',x(18),...
-        'zComb',x(19),'cavity_coeff',x(20));
+        'zComb',x(19),...
+        'cavity_coeff1',x(20),'cavity_coeff2',x(21));
+        %'cavity_coeff1',x(20));
         
 fprintf('Params: c-sp_coeff = %f\tc-sp2_coeff = %f\tc-sp3_coeff = %f\tcl_coeff = %f\n',x(1),x(2), ...
 	x(3),x(4));

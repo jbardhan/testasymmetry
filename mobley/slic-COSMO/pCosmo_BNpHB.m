@@ -9,6 +9,7 @@ addpath(sprintf('%s/repos/testasymmetry',Home));
 addpath(sprintf('%s/repos/testasymmetry/functions',Home));
 addpath(sprintf('%s/repos/testasymmetry/mobley',Home));
 addpath(sprintf('%s/repos/testasymmetry/born',Home));
+addpath(sprintf('%s/repos/testasymmetry/mobley/slic-COSMO',Home));
 
 % a bunch of useful variables and constants. also defining the global
 % variable "ProblemSet" which we'll use to hold the BEM systems.
@@ -19,7 +20,7 @@ saveMemory = 0;
 writeLogfile = 0;
 logfileName = 'junklogfile';
 
-allData = readtable('all_Bondii_data.csv'); 
+allData = readtable('../../all_Bondii_data.csv'); 
 
 %%
 %%
@@ -114,14 +115,21 @@ for i=1:length(training_set)
   solvent_VdWA{i} = solventVdWA;
   solvent_VdWV{i} = solventVdWV;
   atom_vols{i} = allData{index,14};
+  newHB{i}=0; %0: no + HB and linear cavity
+                %1:  + HB and exp cavity
+                %2: no + HB and exp cavity (alpha)
+                %3:  + HB and exp cavity (alpha)
+                %2: no + HB and exp cavity (eta)
+                %3:  + HB and exp cavity (eta)
+                
   temp{i} = temperature;
   chdir(curdir);
-  addProblemCosmoNp(training_set{i},chargeDist{i},referenceData{i},...
-                  soluteAtomAreas{i},soluteAtomTypes{i},...
+  addProblemCosmoNpHB(training_set{i},chargeDist{i},referenceData{i},...
+                  soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
                   solute_VdWV{i},solute_VdWA{i},...
-                  solventAtomAreas{i},solventAtomTypes{i},...
+                  solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
                   solvent_VdWV{i},solvent_VdWA{i},...
-                  atom_vols{i},temp{i});
+                  atom_vols{i},temp{i},newHB{i});
 end
 
 
@@ -140,149 +148,179 @@ es_SLIC= allData.es_SLIC(id);
 
 x0_1 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.2 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       0.5]; %cavity correction coeff
 
 x0_2 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.2 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.0]; %cavity correction coeff
 
 x0_3 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.2 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.5]; %cavity correction coeff
 
 x0_4 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.2 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.0]; %cavity correction coeff
 
 x0_5 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.3 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       0.5]; %cavity correction coeff
 
 x0_6 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.3 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.0]; %cavity correction coeff
 
 x0_7 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.3 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.5]; %cavity correction coeff
 
 x0_8 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.3 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.0]; %cavity correction coeff
 
 x0_9 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       0.5]; %cavity correction coeff
 
 x0_10 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.0]; %cavity correction coeff
 
 x0_11 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.5]; %cavity correction coeff
 
 x0_12 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.0]; %cavity correction coeff
 
 x0_13 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       0.5]; %cavity correction coeff
 
 x0_14 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.0]; %cavity correction coeff
 
 x0_15 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.5]; %cavity correction coeff
 
 x0_16 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.0]; %cavity correction coeff
 
 x0_17 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.6 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       0.5]; %cavity correction coeff
 
 x0_18 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.6 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.0]; %cavity correction coeff
 
 x0_19 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.6 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       1.5]; %cavity correction coeff
 
 x0_20 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.6 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.0]; %cavity correction coeff
 
 x0_21 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.2 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.5]; %cavity correction coeff
 
 x0_22 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.3 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.5]; %cavity correction coeff
 
 x0_23 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.4 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.5]; %cavity correction coeff
 
 x0_24 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.5 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.5]; %cavity correction coeff
 
 x0_25 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
       36000 27800 7700 13000 11800 8200 56000 67000 0.6 ... % disp
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ... %hbond
       12 ... %combinatorial x(36)
       2.5]; %cavity correction coeff
 
-x0_26 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...  % disp x(6:23)
-      36000 27800 7700 13000 11800 8200 56000 67000 0.7 ... % disp
-      12 ... %combinatorial x(36)
-      2.5]; %cavity correction coeff
+x0_26 = [64170 23743 37793 42479 42223 8157 0 106000 5161 ...
+      36000 27800 7700 13000 11800 8200 56000 67000 0.7 ...
+      0.5 .05 0.3 0.2 0.2 0.2 0.2 0.5 1 0.2 0.2 0.1 ...
+      12 ...
+      2.5]; 
 
-
+x0=x0_1;
 
 ub = [100000 100000 100000 100000 100000 100000 100000 200000 100000 ...
       100000 100000 100000 100000 100000 100000 100000 100000 1 ...
+      2 2 2 2 2 2 2 2 2 2 2 2 ...
       40 ...
       4];
 lb = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ...
+      0 0 0 0 0 0 0 0 0 0 0 0 ...
       1 ...
       0.25];
-options = optimoptions('lsqnonlin','MaxIter',12);
+  
+options = optimoptions('lsqnonlin','MaxIter',8);
 options = optimoptions(options,'Display', 'iter');
-y = @(x)ObjectiveFromBEMCosmoNp(x);
+
+y = @(x)ObjectiveFromBEMCosmoNpHB(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNp(x);
-[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,cav0,comb0]=ObjectiveFromBEMCosmoNp(x0);
+[err,calc,ref,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNpHB(x);
+[err0,calc0,ref0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,cav0,comb0]=ObjectiveFromBEMCosmoNpHB(x0);
 [~,id]=ismember(training_set,mol_list);
 disp_mob = allData.disp_mobley(id); 
 cav_mob = allData.cav_mobley(id); 
@@ -291,11 +329,12 @@ es_mob = allData.es_mobley(id);
 np_SLIC = allData.np_SLIC(id); 
 es_SLIC= allData.es_SLIC(id);
 rmse = rms(calc-ref);
-save('OptCosmoBondiinp_1.mat','x','training_set','mol_list','rmse','ref','calc','es','np','hb','disp',...
+save('OptCosmoBondiinp_1_0.mat','x','training_set','mol_list','rmse','ref','calc','np','hb','disp',...
      'disp_slsl','disp_svsl','disp_svsv','comb','cav',...
      'disp_mob','cav_mob','np_mob','es_mob','np_SLIC',...
-     'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
+     'x0','calc0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
      'disp_svsv0','comb0','cav0','epsOut');
+
 
 
 

@@ -1,5 +1,5 @@
-function [E,nonpolar,disp,...
-          disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = runTestCosmoNp(params, problem, chargeDistribution)
+function [E,nonpolar,hb,disp,...
+          disp_sl_sl,disp_sv_sl,disp_sv_sv,cav,comb] = runTestCosmoNpHB(params, problem, chargeDistribution)
 global UsefulConstants ProblemSetNp
 
 %alpha = params.alpha;
@@ -35,17 +35,20 @@ solute_data = problem.soluteAtomAreas;
 solute_atom_types = problem.soluteAtomTypes;
 solute_vdw_v = problem.solute_VdWV;
 solute_vdw_a = problem.solute_VdWA;
+solute_hbond_data = problem.soluteHbondData;
 solvent_vdw_v = problem.solvent_VdWV;
 solvent_vdw_a = problem.solvent_VdWA;
 solvent_data = problem.solventAtomAreas;
 solvent_atom_types = problem.solventAtomTypes;
+solvent_hbond_data = problem.solventHbondData;
+newhb = problem.newHB;
 %all_atom_types = problem.allAtomTypess;
 temp = problem.temperature;
 disp_coeffs = params.dispCoeffs;
 z_comb = params.zComb;
 q_s = params.q_s;
-cavity_coeff1 = params.cavity_coeff1;
-cavity_coeff2 = params.cavity_coeff2;
+hbond_coeffs = params.hbondCoeffs;
+cavity_coeff = params.cavity_coeff;
 atom_vols = problem.atom_vols;
 area_solute = solute_data(3);
 area_solvent = solvent_data(3);
@@ -55,6 +58,20 @@ vol_solvent = solvent_data(4);
 %np.round((total_vol-vdwv_solute)/total_vol,3)
 
 % dispersion term
+if mod(newhb,2)
+    hb = CalcHbondE(solute_hbond_data,solvent_hbond_data,hbond_coeffs)-...
+    area_solute/area_solvent*CalcHbondE(solvent_hbond_data,solvent_hbond_data,hbond_coeffs);
+else
+    hb = CalcHbondE(solute_hbond_data,solvent_hbond_data,hbond_coeffs);
+end
+
+if newhb>3
+    cav = kB*temp*CalcCavExpE(area_solute,vol_solute,atom_vols,cavity_coeff);
+elseif newhb>1
+    cav = kB*temp*CalcCavExpE2(area_solute,vol_solute,atom_vols,cavity_coeff);
+else
+    cav = kB*temp*CalcCavE(area_solute,vol_solute,atom_vols,cavity_coeff);
+end
 
 disp_sv_sv = (vol_solute/vol_solvent)*CalcDispE(solvent_data,solvent_atom_types,...
               solvent_data,solvent_atom_types,disp_coeffs,q_s);
@@ -67,10 +84,10 @@ disp_sl_sl = -(CalcDispE(solute_data,solute_atom_types,...
                     solute_data,solute_atom_types,...
                     disp_coeffs,q_s));
 disp = (disp_sv_sv - 2*disp_sv_sl);              
-cav = kB*temp*CalcCavExpE3(area_solute,vol_solute,atom_vols,cavity_coeff1,cavity_coeff2);
+
 % combinatorial term
 comb = -kB*temp*CalcCombE(solute_vdw_a,solute_vdw_v,...
                     solvent_vdw_a,solvent_vdw_v,z_comb);
-nonpolar = comb + disp + cav;
+nonpolar = comb + disp + cav + hb;
 
 E = nonpolar;

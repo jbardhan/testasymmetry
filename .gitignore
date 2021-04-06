@@ -24,3 +24,7 @@ mobley/RunEmim*
 mobley/RunOmim*
 mobley/RunBmim*
 mobley/RunOctanol*
+
+mobley/slic-COSMO/tests/
+
+mobley/slic-COSMO/figures/

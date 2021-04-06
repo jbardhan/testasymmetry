@@ -3,7 +3,7 @@ function [phiReac, phiDielBndy, dphiDnDielBndy,x,curA] = ...
 			     epsIn, epsOut, kappa, convFactor, ...
 				  asymParams, asymBem)
 
-picardIterLimit = 20;
+picardIterLimit = 10;
 maxGMRESIter = min(100, size(bem.A,1));
 numDielPanels = length(dielSurfData.areas);
 numSternPanels = length(sternSurfData.areas);
