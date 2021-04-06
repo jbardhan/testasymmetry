@@ -19,7 +19,7 @@ logfileName = 'water.out';
 epsOut = 78.36;
 allData = readtable('all_Bondii_data.csv'); 
 
-ParamWatInfo = load('OptCosmoBondiinp_1_0.mat');
+ParamWatInfo = load('OptCosmoBondiinphb_1.mat');
 x = ParamWatInfo.x;
 training_set = ParamWatInfo.training_set;
 mol_list = allData.solute;
@@ -91,6 +91,6 @@ end
 % x = xIonsAnd8Iter;
 [err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNp(x);
 rmse = rms(np - np_mob);
-save('RunCosmoBondiinp_1_0.mat','mol_list','training_set','err','calc','ref','np',...
+save('RunCosmoBondiinphb_1.mat','mol_list','training_set','err','calc','ref','np',...
     'disp','disp_slsl','disp_svsl','disp_svsv','cav','comb',...
     'disp_mob','cav_mob','np_mob','np_SLIC');

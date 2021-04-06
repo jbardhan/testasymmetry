@@ -91,40 +91,40 @@ temperature = 24.85 + KelvinOffset;
 curdir=pwd;
 
 for i=1:length(training_set)
- dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,training_set{i});
- chdir(dir);
- pqrData = loadPqr('test.pqr');
- pqrAll{i} = pqrData;
- srfFile{i} = sprintf('%s/test_2.srf',dir);
- chargeDist{i} = pqrData.q;%chargeDistribution;
- foo = strcmp(mol_list,training_set{i});
- index = find(foo);
- if length(index) ~= 1
- fprintf('error finding refdata!\n');
- keyboard
- end
- soluteAtomAreas{i} = allData{index,9:79};
- soluteAtomTypes{i} = {allData{index,80:144}};
- soluteHbondData{i} = allData{index,145:158};
- referenceData{i} = dG_list(index) - dG_es_best(index);
- solute_VdWA{i} = allData{index,11};
- solute_VdWV{i} = allData{index,12};
- solventAtomAreas{i} = solventAreas;
- solventAtomTypes{i} = {solventATypes};
- solventHbondData{i} = solventHbData;
- solvent_VdWA{i} = solventVdWA;
- solvent_VdWV{i} = solventVdWV;
- atom_vols{i} = allData{index,14};
- newHB{i}=0; 
-    
- temp{i} = temperature;
- chdir(curdir);
- addProblemCosmoNpHB(training_set{i},chargeDist{i},referenceData{i},...
-     soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
-     solute_VdWV{i},solute_VdWA{i},...
-     solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
-     solvent_VdWV{i},solvent_VdWA{i},...
-     atom_vols{i},temp{i},newHB{i});
+  dir=sprintf('%s/lab/projects/slic-jctc-mnsol/nlbc-mobley/nlbc_test/%s',dropbox_path,training_set{i});
+  chdir(dir);
+  pqrData = loadPqr('test.pqr');
+  pqrAll{i} = pqrData;
+  srfFile{i} = sprintf('%s/test_2.srf',dir);
+  chargeDist{i} = pqrData.q;%chargeDistribution;
+  foo = strcmp(mol_list,training_set{i});
+  index = find(foo);
+  if length(index) ~= 1
+    fprintf('error finding refdata!\n');
+    keyboard
+  end
+  soluteAtomAreas{i} = allData{index,9:79};
+  soluteAtomTypes{i} = {allData{index,80:144}};
+  soluteHbondData{i} = allData{index,145:158};
+  referenceData{i} = dG_list(index) - dG_es_best(index);
+  solute_VdWA{i} = allData{index,11};
+  solute_VdWV{i} = allData{index,12};
+  solventAtomAreas{i} = solventAreas;
+  solventAtomTypes{i} = {solventATypes};
+  solventHbondData{i} = solventHbData;
+  solvent_VdWA{i} = solventVdWA;
+  solvent_VdWV{i} = solventVdWV;
+  atom_vols{i} = allData{index,14};
+  newHB{i}=0; 
+     
+  temp{i} = temperature;
+  chdir(curdir);
+  addProblemCosmoNpHB(training_set{i},chargeDist{i},referenceData{i},...
+      soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
+      solute_VdWV{i},solute_VdWA{i},...
+      solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
+      solvent_VdWV{i},solvent_VdWA{i},...
+      atom_vols{i},temp{i},newHB{i});
 end
 
 
@@ -147,57 +147,57 @@ x0_1 = [0.81 1.02 1.05 1.74 0.55 0.13 0.00 0.49 0.78 ... % disp x(6:14)
 1.44 ... % comb x(36)      
 2.69 ]; % cav x(37)      
 
-x0_ 2 =[ 0.23 0.47 0.57 0.38 0.22 0.74 0.74 0.61 0.30 ... % disp x(6:14)    
+x0_2 =[ 0.23 0.47 0.57 0.38 0.22 0.74 0.74 0.61 0.30 ... % disp x(6:14)    
    0.36 0.63 0.40 0.60 0.97 0.27 0.04 0.78 0.83 ... % disp x(15:23)    
    0.60 0.43 0.74 0.28 0.30 0.87 0.15 0.59 0.52 0.33 0.26 0.35 ... % hb x(24:35) 
    5.96 ... % comb x(36)            
    0.65 ]; % cav x(37)            
-x0_ 3 =[ 0.57 0.83 0.78 0.29 0.45 0.88 0.64 0.07 0.18 ... % disp x(6:14)    
+x0_3 =[ 0.57 0.83 0.78 0.29 0.45 0.88 0.64 0.07 0.18 ... % disp x(6:14)    
    0.34 0.24 0.58 0.04 0.25 0.19 0.95 0.95 0.44 ... % disp x(15:23)    
    0.79 0.22 0.55 0.48 0.39 0.75 0.69 0.17 0.67 0.50 0.54 0.34 ... % hb x(24:35) 
    1.67 ... % comb x(36)            
    0.19 ]; % cav x(37)            
-x0_ 4 =[ 0.27 0.53 0.96 0.21 0.10 0.11 0.45 0.84 0.01 ... % disp x(6:14)    
+x0_4 =[ 0.27 0.53 0.96 0.21 0.10 0.11 0.45 0.84 0.01 ... % disp x(6:14)    
    0.33 0.65 0.42 0.97 0.96 0.64 0.29 0.69 0.84 ... % disp x(15:23)    
    0.81 0.34 0.09 0.47 0.66 0.67 0.36 0.03 0.82 0.32 0.85 0.24 ... % hb x(24:35) 
    6.64 ... % comb x(36)            
    0.25 ]; % cav x(37)            
-x0_ 5 =[ 0.31 0.84 0.94 0.28 0.68 0.18 0.27 0.92 0.15 ... % disp x(6:14)    
+x0_5 =[ 0.31 0.84 0.94 0.28 0.68 0.18 0.27 0.92 0.15 ... % disp x(6:14)    
    0.35 0.74 0.59 0.53 0.88 0.50 0.74 0.64 0.11 ... % disp x(15:23)    
    0.93 0.93 0.79 0.39 0.15 0.98 0.34 0.64 0.87 0.35 0.43 0.79 ... % hb x(24:35) 
    0.54 ... % comb x(36)            
    0.42 ]; % cav x(37)            
-x0_ 6 =[ 0.09 0.57 0.01 0.33 0.08 0.39 0.63 0.29 0.54 ... % disp x(6:14)    
+x0_6 =[ 0.09 0.57 0.01 0.33 0.08 0.39 0.63 0.29 0.54 ... % disp x(6:14)    
    0.11 0.66 0.00 0.92 0.22 0.78 0.90 0.82 0.82 ... % disp x(15:23)    
    0.64 0.43 0.36 0.06 0.24 0.55 0.74 0.39 0.24 0.32 0.94 0.76 ... % hb x(24:35) 
    2.34 ... % comb x(36)            
    0.44 ]; % cav x(37)            
-x0_ 7 =[ 0.83 0.80 0.48 0.03 0.00 0.59 0.70 0.03 0.77 ... % disp x(6:14)    
+x0_7 =[ 0.83 0.80 0.48 0.03 0.00 0.59 0.70 0.03 0.77 ... % disp x(6:14)    
    0.93 0.19 0.84 0.71 0.49 0.99 0.81 0.69 0.46 ... % disp x(15:23)    
    0.28 0.80 0.66 0.76 0.89 0.52 0.36 0.23 0.23 0.14 0.41 0.25 ... % hb x(24:35) 
    9.96 ... % comb x(36)            
    0.37 ]; % cav x(37)            
-x0_ 8 =[ 0.55 0.97 0.83 0.85 0.24 0.59 0.73 0.54 0.59 ... % disp x(6:14)    
+x0_8 =[ 0.55 0.97 0.83 0.85 0.24 0.59 0.73 0.54 0.59 ... % disp x(6:14)    
    0.60 0.64 0.75 0.56 0.66 0.95 0.15 0.15 0.34 ... % disp x(15:23)    
    0.55 0.59 0.29 0.04 0.35 0.21 0.84 0.14 0.19 0.76 0.07 0.16 ... % hb x(24:35) 
    6.72 ... % comb x(36)            
    0.48 ]; % cav x(37)            
-x0_ 9 =[ 0.50 0.53 0.31 0.13 0.35 0.51 0.70 0.60 0.56 ... % disp x(6:14)    
+x0_9 =[ 0.50 0.53 0.31 0.13 0.35 0.51 0.70 0.60 0.56 ... % disp x(6:14)    
    0.41 0.34 0.55 0.88 0.78 0.35 0.13 0.99 0.54 ... % disp x(15:23)    
    0.14 0.20 0.66 0.74 0.94 0.50 0.70 0.51 0.91 0.70 0.34 0.25 ... % hb x(24:35) 
    5.92 ... % comb x(36)            
    0.82 ]; % cav x(37)            
-x0_ 10 =[ 0.70 0.27 0.28 0.85 0.43 0.84 0.42 0.39 0.33 ... % disp x(6:14)    
+x0_10 =[ 0.70 0.27 0.28 0.85 0.43 0.84 0.42 0.39 0.33 ... % disp x(6:14)    
    0.50 1.00 0.31 0.97 0.73 0.58 0.40 0.47 0.12 ... % disp x(15:23)    
    0.66 0.47 0.45 0.30 0.19 0.14 0.62 0.32 0.38 0.55 0.36 0.64 ... % hb x(24:35) 
    8.24 ... % comb x(36)            
    0.20 ]; % cav x(37)            
-x0_ 11 =[ 0.22 0.23 0.73 0.04 0.03 0.48 0.30 0.36 0.18 ... % disp x(6:14)    
+x0_11 =[ 0.22 0.23 0.73 0.04 0.03 0.48 0.30 0.36 0.18 ... % disp x(6:14)    
    0.63 0.43 0.68 0.91 0.82 0.89 0.85 0.48 0.03 ... % disp x(15:23)    
    0.99 0.89 0.48 0.91 0.01 0.04 0.20 0.85 0.06 0.63 0.74 0.66 ... % hb x(24:35) 
    4.57 ... % comb x(36)            
    0.71 ]; % cav x(37)            
-x0_ 12 =[ 0.80 0.89 0.04 0.11 0.79 0.27 0.65 0.51 0.92 ... % disp x(6:14)    
+x0_12 =[ 0.80 0.89 0.04 0.11 0.79 0.27 0.65 0.51 0.92 ... % disp x(6:14)    
    0.12 0.99 0.17 0.22 0.04 0.48 0.10 0.68 0.74 ... % disp x(15:23)    
    0.84 0.13 0.09 0.66 1.00 0.58 0.34 0.33 0.73 0.83 0.09 0.66 ... % hb x(24:35) 
    3.36 ... % comb x(36)            
@@ -230,7 +230,7 @@ es_mob = allData.es_mobley(id);
 np_SLIC = allData.np_SLIC(id); 
 es_SLIC= allData.es_SLIC(id);
 rmse = rms(calc-ref);
-save('OptCosmoBondiinp_1_0.mat','x','training_set','mol_list','rmse','ref','calc','es','np','hb','disp',...
+save('OptCosmoBondiinphb_1.mat','x','training_set','mol_list','rmse','ref','calc','es','np','hb','disp',...
   'disp_slsl','disp_svsl','disp_svsv','comb','cav',...
   'disp_mob','cav_mob','np_mob','es_mob','np_SLIC',...
   'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
