@@ -220,8 +220,8 @@ options = optimoptions(options,'Display', 'iter');
 
 y = @(x)ObjectiveFromBEMCosmoNpHB(x);
 [x,resnorm,residual,exitflag,output,] = lsqnonlin(y,x0,lb,ub,options);
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNpHB(x);
-[err0,calc0,ref0,es0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,cav0,comb0]=ObjectiveFromBEMCosmoNpHB(x0);
+[err,calc,ref,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNpHB(x);
+[err0,calc0,ref0,np0,hb0,disp0,disp_slsl0,disp_svsl0,disp_svsv0,cav0,comb0]=ObjectiveFromBEMCosmoNpHB(x0);
 [~,id]=ismember(training_set,mol_list);
 disp_mob = allData.disp_mobley(id); 
 cav_mob = allData.cav_mobley(id); 
@@ -230,10 +230,10 @@ es_mob = allData.es_mobley(id);
 np_SLIC = allData.np_SLIC(id); 
 es_SLIC= allData.es_SLIC(id);
 rmse = rms(calc-ref);
-save('OptCosmoBondiinphb_1.mat','x','training_set','mol_list','rmse','ref','calc','es','np','hb','disp',...
+save('OptCosmoBondiinphb_1.mat','x','training_set','mol_list','rmse','ref','calc','np','hb','disp',...
   'disp_slsl','disp_svsl','disp_svsv','comb','cav',...
   'disp_mob','cav_mob','np_mob','es_mob','np_SLIC',...
-  'x0','calc0','es0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
+  'x0','calc0','np0','hb0','disp0', 'disp_slsl0','disp_svsl0',...
   'disp_svsv0','comb0','cav0','epsOut','x');
 
 

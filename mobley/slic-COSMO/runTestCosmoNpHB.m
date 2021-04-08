@@ -77,11 +77,11 @@ disp = 2*disp_sv_sl - disp_sv_sv + disp_sl_sl;
 %Combinatorial
 comb = -kB*temp*CalcCombinatorialE(solute_vdw_a, solute_vdw_v, ...
                     solvent_vdw_a, solvent_vdw_v, z_comb);
-nonpolar = comb + disp + cav;
+
 %% Hydrogen bonding
 hbond_coeffs = params.hbondCoeffs;
 hb = CalcHBondE(solute_hbond_data, solvent_hbond_data, hbond_coeffs, temp);
 
-nonpolar = comb + disp + cav + hb;
+nonpolar = comb + disp + cav;
 
-E = nonpolar;
+E = nonpolar + hb;

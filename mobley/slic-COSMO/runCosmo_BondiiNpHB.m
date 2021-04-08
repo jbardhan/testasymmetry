@@ -28,6 +28,7 @@ disp_mob = allData.disp_mobley;
 cav_mob = allData.cav_mobley; 
 np_mob = allData.np_mobley; 
 np_SLIC = allData.np_SLIC; 
+dG_es_best = allData.best_elec;
 
 saveMemory = 1;
 writeLogfile = 1;
@@ -73,7 +74,7 @@ for i=1:length(mol_list)
   referenceData{i} = np_mob(i);
   newHB{i}=0;
   chdir(curdir);
-  addProblemCosmoNpHB(training_set{i},chargeDist{i},referenceData{i},...
+  addProblemCosmoNpHB(mol_list{i},chargeDist{i},referenceData{i},...
                   soluteAtomAreas{i},soluteAtomTypes{i},soluteHbondData{i},...
                   solute_VdWV{i},solute_VdWA{i},...
                   solventAtomAreas{i},solventAtomTypes{i},solventHbondData{i},...
@@ -89,8 +90,11 @@ end
 % xIonsAnd8Iter  = [   0.6260 -112.0291   -0.9296  -12.1084    0.0037    2.7546];
 % 
 % x = xIonsAnd8Iter;
-[err,calc,ref,es,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNp(x);
-rmse = rms(np - np_mob);
+[err,calc,ref,np,hb,disp,disp_slsl,disp_svsl,disp_svsv,cav,comb]=ObjectiveFromBEMCosmoNpHB(x);
+rmse = rms(dG_es_best+calc-dG_list);
+rmse_np = rms(np - hb - np_mob );
+rmse_disp = rms(disp - disp_mob);
+rmse_cav = rms(cav + comb - cav_mob);
 save('RunCosmoBondiinphb_1.mat','mol_list','training_set','err','calc','ref','np',...
     'disp','disp_slsl','disp_svsl','disp_svsv','cav','comb',...
-    'disp_mob','cav_mob','np_mob','np_SLIC');
+    'disp_mob','cav_mob','np_mob','np_SLIC','x','hb','rmse','rmse_np','rmse_disp','rmse_cav');
