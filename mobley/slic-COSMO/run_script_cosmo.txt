@@ -1,4 +1,4 @@
-for i in {1..12};  do  sed 's/OptCosmoBondiinphb\_1\.mat/OptCosmoBondiinphb_'"$i"'.mat/g' paramCosmo_BondiiNpHB.m > paramCosmo_BondiiNpHB_"$i".m; sed -i 's/x0\=x0\_1/x0\=x0\_'"$i"'/g' paramCosmo_BondiiNpHB_"$i".m; sed 's/OptCosmoBondiinphb\_1\.mat/OptCosmoBondiinphb_'"$i"'.mat/g' runCosmo_BondiiNpHB.m >  runCosmo_BondiiNpHB_"$i".m; sed -i 's/RunCosmoBondiinphb\_1\.mat/RunCosmoBondiinphb_'"$i"'.mat/g' runCosmo_BondiiNpHB_"$i".m; ./cosmobatch.sh "$i";sleep 10; done
+for i in {1..12};  do  sed 's/OptCosmoBondii\_1\.mat/OptCosmoBondii_'"$i"'.mat/g' paramCosmo_Bondii.m > paramCosmo_Bondii_"$i".m; sed -i 's/x0\=x0\_1/x0\=x0\_'"$i"'/g' paramCosmo_Bondii_"$i".m; sed 's/OptCosmoBondii\_1\.mat/OptCosmoBondii_'"$i"'.mat/g' runCosmo_Bondii.m >  runCosmo_Bondii_"$i".m; sed -i 's/RunCosmoBondii\_1\.mat/RunCosmoBondii_'"$i"'.mat/g' runCosmo_Bondii_"$i".m; ./cosmobatch.sh "$i";sleep 10; done
 
 #!/bin/bash
 file_name=$1
@@ -14,5 +14,5 @@ echo "#SBATCH --mem=0" >> batch_"$file_name".script
 echo "#SBATCH --ntasks-per-node=12" >> batch_"$file_name".script
 echo "module load matlab/R2019a" >> batch_"$file_name".script
 echo "module load anaconda3/3.7" >> batch_"$file_name".script
-echo "matlab -nosplash -nodesktop -r \"parpool('local',12);paramCosmo_BondiiNpHB_"$file_name";runCosmo_BondiiNpHB_"$file_name";exit\"" >> batch_"$file_name".script
+echo "matlab -nosplash -nodesktop -r \"parpool('local',12);paramCosmo_Bondii_"$file_name";runCosmo_Bondii_"$file_name";exit\"" >> batch_"$file_name".script
 /usr/bin/sbatch batch_"$file_name".script
